@@ -173,6 +173,125 @@ def pick(cols: List[str], *cands: str) -> str:
 def is_truthy(v: str) -> bool:
     return str(v).strip().lower() in ("true", "1", "yes", "y")
 
+_SPLIT_IPLIST_RE = re.compile(r"[;\t,\|]+")
+_SPLIT_INTERFACES_RE = re.compile(r"[;\n]+")
+
+def _extract_networks_from_include(include_value: str) -> List[ipaddress._BaseNetwork]:
+    s = (include_value or "").strip()
+    if not s:
+        return []
+
+    nets: List[ipaddress._BaseNetwork] = []
+    parts: List[str] = []
+    for p in _SPLIT_IPLIST_RE.split(s):
+        p = p.strip()
+        if not p:
+            continue
+        for q in p.split():
+            q = q.strip()
+            if q:
+                parts.append(q)
+
+    for tok in parts:
+        t = tok.strip()
+        if not t:
+            continue
+        if t.startswith("!"):
+            continue
+        if "#" in t:
+            t = t.split("#", 1)[0].strip()
+        if t.startswith("#"):
+            continue
+        try:
+            if "/" in t:
+                nets.append(ipaddress.ip_network(t, strict=False))
+            else:
+                ip = ipaddress.ip_address(t)
+                suffix = "/32" if ip.version == 4 else "/128"
+                nets.append(ipaddress.ip_network(f"{t}{suffix}", strict=False))
+        except Exception:
+            continue
+
+    uniq: Dict[Tuple[int, int, str], ipaddress._BaseNetwork] = {}
+    for n in nets:
+        key = (n.version, n.prefixlen, str(n))
+        uniq[key] = n
+    out = list(uniq.values())
+    out.sort(key=lambda n: (n.version, -n.prefixlen, str(n)))
+    return out
+
+def _load_zone_networks(raw_dir: Path, zone_name: str) -> Tuple[List[ipaddress._BaseNetwork], Optional[str]]:
+    ipl_csv = raw_dir / "export_iplists.csv"
+    if not ipl_csv.exists():
+        return [], f"{ipl_csv} not found (required for --network-zone)"
+
+    with ipl_csv.open("r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        cols = reader.fieldnames or []
+        if not cols:
+            return [], f"{ipl_csv} has no header (required for --network-zone)"
+
+        c_name = pick(cols, "name", "iplist_name")
+        c_inc = pick(cols, "include", "includes", "ip_ranges", "cidrs")
+        if not (c_name and c_inc):
+            return [], f"{ipl_csv} missing required columns for --network-zone (need name/include)"
+
+        zone_key = (zone_name or "").strip().lower()
+        zone_row: Optional[Dict[str, str]] = None
+
+        for r in reader:
+            n = (r.get(c_name, "") or "").strip().lower()
+            if n == zone_key:
+                zone_row = r
+                break
+
+        if zone_row is None:
+            return [], f"IPList '{zone_name}' not found in {ipl_csv.name} (column '{c_name}')"
+
+        nets = _extract_networks_from_include(zone_row.get(c_inc, "") or "")
+        if not nets:
+            sample = (zone_row.get(c_inc, "") or "")[:120]
+            return [], (
+                f"IPList '{zone_name}' has no parsable CIDRs in column '{c_inc}'. "
+                f"Example include='{sample}...'"
+            )
+
+        return nets, None
+
+def _extract_interface_ips(value: str) -> List[str]:
+    if not value:
+        return []
+    out: List[str] = []
+    for raw in _SPLIT_INTERFACES_RE.split(value):
+        tok = raw.strip()
+        if not tok:
+            continue
+        ip_part = tok.split(":", 1)[1].strip() if ":" in tok else tok
+        if not ip_part:
+            continue
+        try:
+            if "/" in ip_part:
+                ip = ipaddress.ip_interface(ip_part).ip
+            else:
+                ip = ipaddress.ip_address(ip_part)
+            out.append(str(ip))
+        except Exception:
+            continue
+    return out
+
+def _ip_in_zone(ip_s: str,
+                nets_v4: List[ipaddress.IPv4Network],
+                nets_v6: List[ipaddress.IPv6Network]) -> bool:
+    if not ip_s:
+        return False
+    try:
+        ip = ipaddress.ip_address(ip_s)
+    except Exception:
+        return False
+    if ip.version == 4:
+        return any(ip in n for n in nets_v4)
+    return any(ip in n for n in nets_v6)
+
 def explode_reason_to_matches(dup_rows: List[Dict[str, str]], dup_fn: List[str]) -> List[Dict[str, str]]:
     if "reason" not in (dup_fn or []):
         return []
@@ -716,6 +835,7 @@ def build_final_excel(
     include_flow_sheets: bool = True,
     add_elected_iplist_column: bool = False,
     enable_umgd_app_label_rules_sheet: bool = False,
+    network_zone_name: Optional[str] = None,
 ) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
     name_parts = [p for p in (app, envl, role) if p]
@@ -872,7 +992,29 @@ def build_final_excel(
             'href_unmanaged','hostname_unmanaged','name_unmanaged','interfaces_unmanaged','role_unmanaged','app_unmanaged','env_unmanaged','loc_unmanaged','os_unmanaged',
             'match_type','reason'
         ]
+        if network_zone_name:
+            insert_idx = dupe_cols.index('interfaces_managed') + 1
+            dupe_cols = dupe_cols[:insert_idx] + ['Inside Network Zone'] + dupe_cols[insert_idx:]
         df_dupe = pd.DataFrame(all_rows, columns=dupe_cols if all_rows else dupe_cols)
+        if network_zone_name:
+            nets, err = _load_zone_networks(raw_dir, network_zone_name)
+            if err:
+                msg = f"WARN: cannot compute Inside Network Zone ({err})"
+                print(msg)
+                try:
+                    logger.warning(msg)
+                except Exception:
+                    pass
+                df_dupe['Inside Network Zone'] = ["UNKNOWN"] * len(df_dupe.index)
+            else:
+                nets_v4 = [n for n in nets if isinstance(n, ipaddress.IPv4Network)]
+                nets_v6 = [n for n in nets if isinstance(n, ipaddress.IPv6Network)]
+                inside_vals: List[str] = []
+                for r in all_rows:
+                    ips = _extract_interface_ips(r.get('interfaces_managed', '') or '')
+                    in_zone = any(_ip_in_zone(ip_s, nets_v4, nets_v6) for ip_s in ips)
+                    inside_vals.append("Y" if in_zone else "N")
+                df_dupe['Inside Network Zone'] = inside_vals
         df_dupe.to_excel(writer, index=False, sheet_name='Workloads')
         ws_w = writer.sheets['Workloads']
         ws_w.freeze_panes = 'A2'
@@ -899,7 +1041,10 @@ def build_final_excel(
                 c.border = BORDER2
 
         paint('Info', fill_info)
-        for c in ['href_managed','hostname_managed','role_managed','app_managed','env_managed','loc_managed','os_managed','interfaces_managed','managed','enforcement']:
+        managed_cols = ['href_managed','hostname_managed','role_managed','app_managed','env_managed','loc_managed','os_managed','interfaces_managed','managed','enforcement']
+        if network_zone_name:
+            managed_cols.insert(managed_cols.index('interfaces_managed') + 1, 'Inside Network Zone')
+        for c in managed_cols:
             paint(c, fill_man)
         for c in ['href_unmanaged','hostname_unmanaged','name_unmanaged','interfaces_unmanaged','role_unmanaged','app_unmanaged','env_unmanaged','loc_unmanaged','os_unmanaged']:
             paint(c, fill_unm)
@@ -1781,8 +1926,24 @@ def main() -> int:
                 'href': r.get(c_href, '')
             })
 
-    final_xlsx = build_final_excel(xls, raw, all_rows, processes_rows, start, end, app, envl, role, lbl_groups_incl_scope, counts, exec_start_dt, include_flow_sheets=not args.excel_stream_update, add_elected_iplist_column=args.add_elected_iplist_column,
-        enable_umgd_app_label_rules_sheet=args.enable_umgd_app_label_rules_sheet)
+    final_xlsx = build_final_excel(
+        xls,
+        raw,
+        all_rows,
+        processes_rows,
+        start,
+        end,
+        app,
+        envl,
+        role,
+        lbl_groups_incl_scope,
+        counts,
+        exec_start_dt,
+        include_flow_sheets=not args.excel_stream_update,
+        add_elected_iplist_column=args.add_elected_iplist_column,
+        enable_umgd_app_label_rules_sheet=args.enable_umgd_app_label_rules_sheet,
+        network_zone_name=args.network_zone,
+    )
     print(f"POST-PROCESS: final CSV -> {final_csv}")
     print(f"POST-PROCESS: final XLSX -> {final_xlsx}")
     try:
@@ -2026,4 +2187,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
