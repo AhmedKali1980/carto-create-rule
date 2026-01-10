@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Runs / outputs
+RUNS/
+derived/
+*.xlsx
+*.csv
+*.log
+
+# Secrets
+*.key
+*.pem
+*.env
