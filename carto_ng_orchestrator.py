@@ -1504,6 +1504,13 @@ def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> 
         for cc in range(1, 7):
             ws.cell(row=rr, column=cc).border = BORDER
 
+    ws.column_dimensions["A"].width = 14
+    ws.column_dimensions["B"].width = 45
+    ws.column_dimensions["C"].width = 45
+    ws.column_dimensions["D"].width = 20
+    ws.column_dimensions["E"].width = 18
+    ws.column_dimensions["F"].width = 45
+
     ws.freeze_panes = 'A2'
     ws.auto_filter.ref = f"A1:F{len(rows)+1}" if rows else 'A1:F1'
 
