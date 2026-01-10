@@ -1015,6 +1015,7 @@ def build_final_excel(
                     if not iface_val:
                         iface_val = r.get('interfaces_unmanaged', '') or ''
                     ips = _extract_interface_ips(iface_val)
+                    ips = _extract_interface_ips(r.get('interfaces_managed', '') or '')
                     in_zone = any(_ip_in_zone(ip_s, nets_v4, nets_v6) for ip_s in ips)
                     inside_vals.append("Y" if in_zone else "N")
                 df_dupe['Inside Network Zone'] = inside_vals
