@@ -3984,7 +3984,8 @@ def build_egress_labels_proposed_rules_v1(
 
         # network-zone North/South special case:
         # keep NS rows only when the flow has NO existing rule match (to avoid bloating proposals)
-        if bool(p.get("nz_ns")):
+        is_ns = bool(p.get("nz_ns"))
+        if is_ns:
             if str(p.get("Info", "") or "").strip() != INFO_NOMATCH:
                 continue
 
@@ -4054,11 +4055,14 @@ def build_egress_labels_proposed_rules_v1(
                             "Ruleset": ruleset_name,
                             "_anchor_app": anchor_app,
                             "_anchor_env": anchor_env,
+                            "_east_west": "N" if is_ns else "Y",
                         }
                     else:
                         gg["_roles"].add(anchor_role)
                         gg["sum_num_flows"] = int(gg.get("sum_num_flows", 0) or 0) + ssum
                         gg["sum_num_flows_true"] = int(gg.get("sum_num_flows_true", 0) or 0) + ssum_true
+                        if is_ns:
+                            gg["_east_west"] = "N"
                     continue
 
                 if strategy == "blacklist" and _is_blacklisted(blacklist_intervals, proto, port_i):
@@ -4069,11 +4073,14 @@ def build_egress_labels_proposed_rules_v1(
                             "_roles": {anchor_role},
                             "sum_num_flows": ssum,
                             "sum_num_flows_true": ssum_true,
+                            "_east_west": "N" if is_ns else "Y",
                         }
                     else:
                         gg["_roles"].add(anchor_role)
                         gg["sum_num_flows"] = int(gg.get("sum_num_flows", 0) or 0) + ssum
                         gg["sum_num_flows_true"] = int(gg.get("sum_num_flows_true", 0) or 0) + ssum_true
+                        if is_ns:
+                            gg["_east_west"] = "N"
                     continue
 
                 # finegrained OR non-blacklisted in blacklist mode -> group by destination (not per-role)
@@ -4088,17 +4095,20 @@ def build_egress_labels_proposed_rules_v1(
                         "_svc_set": {tok},
                         "_svc_all": False,
                         "sum_num_flows": ssum,
-                            "sum_num_flows_true": ssum_true,
+                        "sum_num_flows_true": ssum_true,
                         "Rule Section": rule_section,
                         "Comment": "",
                         "Ruleset": ruleset_name,
                         "_anchor_app": anchor_app,
                         "_anchor_env": anchor_env,
+                        "_east_west": "N" if is_ns else "Y",
                     }
                 else:
                     gg["_roles"].add(anchor_role)
                     gg["_svc_set"].add(tok)
                     gg["sum_num_flows"] = int(gg.get("sum_num_flows", 0) or 0) + ssum
+                    if is_ns:
+                        gg["_east_west"] = "N"
 
     # Materialize grouped rows
     for gk in sorted(allow_groups.keys(), key=lambda k: (k[0], k[1], k[4], k[2], k[3])):
@@ -4119,6 +4129,7 @@ def build_egress_labels_proposed_rules_v1(
             "Rule Section": r.get("Rule Section", ""),
             "Comment": r.get("Comment", ""),
             "Ruleset": r.get("Ruleset", ""),
+            "East-West (Y/N)": r.get("_east_west", "Y"),
         }
 
         if rr.get("Services") != "All Services":
@@ -4144,6 +4155,7 @@ def build_egress_labels_proposed_rules_v1(
             "Rule Section": rule_section,
             "Comment": "Blacklist Exception",
             "Ruleset": ruleset_name,
+            "East-West (Y/N)": g.get("_east_west", "Y"),
         })
 
     return out_rows
@@ -4621,6 +4633,7 @@ def main() -> int:
                                 "Services": "All Services",
                                 "sum_num_flows": 1,
                                 "sum_num_flows_true": 0,
+                                "East-West (Y/N)": "N",
                                 "Rule Section": "North South default rule",
                                 "Comment": "North South default rule",
                                 "Ruleset": f"{app0}-{env0}-RS",
@@ -4646,6 +4659,7 @@ def main() -> int:
                                 "Services": "All Services",
                                 "sum_num_flows": 1,
                                 "sum_num_flows_true": 0,
+                                "East-West (Y/N)": "N",
                                 "Rule Section": "North South default rule",
                                 "Comment": "North South default rule",
                                 "Ruleset": f"{app0}-{env0}-RS",
@@ -4741,10 +4755,17 @@ def main() -> int:
                     _rr["sum_num_flows"] = _n_true
                     pr_rows1_norm.append(_rr)
 
+                pr1_header = list(PROPOSED_RULES1_HEADER)
+                if network_zone_nets:
+                    pr1_header.insert(pr1_header.index("Rule Section"), "East-West (Y/N)")
+                    for _rr in pr_rows1_norm:
+                        if not _rr.get("East-West (Y/N)"):
+                            _rr["East-West (Y/N)"] = "Y"
+
                 append_excel_simple_table(
                     excel_path,
                     PROPOSED_RULES1_SHEET,
-                    PROPOSED_RULES1_HEADER,
+                    pr1_header,
                     pr_rows1_norm,
                     wrap_cols={"Services"},
                     row_fill_fn=(_pr1_row_fill if getattr(args, "mark_potential_core_service", False) else None),
