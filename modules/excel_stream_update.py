@@ -1083,6 +1083,12 @@ def rewrite_workbook_with_streamed_flows(
 
             ws_inv.freeze_panes = "A2"
             ws_inv.auto_filter.ref = f"A1:F{n_appended + 1}" if n_appended > 0 else "A1:F1"
+            ws_inv.column_dimensions["A"].width = 14
+            ws_inv.column_dimensions["B"].width = 45
+            ws_inv.column_dimensions["C"].width = 45
+            ws_inv.column_dimensions["D"].width = 20
+            ws_inv.column_dimensions["E"].width = 18
+            ws_inv.column_dimensions["F"].width = 45
             _log("INFO", f"[To investigate] rows: {n_appended}")
         except Exception as e:
             _log("WARN", f"[To investigate] build failed: {e}")
