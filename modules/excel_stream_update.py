@@ -52,7 +52,7 @@ NUMERIC_HEADERS = {"Port", "Num Flows", "Bytes In", "Bytes Out"}
 
 
 # Column auto-width caps (to avoid very wide columns on large string fields)
-DEFAULT_WIDTH_CAP = 60
+DEFAULT_WIDTH_CAP = 250
 
 
 def _load_iplist_conf(conf_path: Path) -> Tuple[List[str], List[str]]:
@@ -141,12 +141,6 @@ def _norm_header(s: str) -> str:
 
 def _width_cap_for_header(h: str) -> int:
     """Return the width cap for a given header (case-insensitive)."""
-    nh = _norm_header(h)
-    # Requested caps
-    if nh.startswith("source") and "iplist" in nh:
-        return 45
-    if nh.startswith("destination") and "iplist" in nh:
-        return 45
     return DEFAULT_WIDTH_CAP
 
 
@@ -733,12 +727,6 @@ def _stream_flow_csv(
 
     # Prepare width tracking (deterministic)
     caps: Dict[int, int] = {i: _width_cap_for_header(h) for i, h in enumerate(headers, start=1)}
-
-    # Fallback: enforce caps on columns B and P if present (matches your Excel layout)
-    if len(headers) >= 2:
-        caps[2] = min(int(caps.get(2, DEFAULT_WIDTH_CAP)), 45)
-    if len(headers) >= 16:
-        caps[16] = min(int(caps.get(16, DEFAULT_WIDTH_CAP)), 45)
 
     widths: Dict[int, int] = {}
     for i, h in enumerate(headers, start=1):
