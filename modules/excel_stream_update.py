@@ -586,6 +586,18 @@ def _flow_header_fill_for_col(
     return default_fill
 
 
+def _flow_data_fill_for_col(
+    col_idx: int,
+    *,
+    segments: Sequence[Tuple[int, int, PatternFill, PatternFill]],
+    default_fill: Optional[PatternFill],
+) -> Optional[PatternFill]:
+    for a, b, _hf, df in segments:
+        if a <= col_idx <= b:
+            return df
+    return default_fill
+
+
 def _apply_flow_formatting(
     ws,
     *,
@@ -736,6 +748,7 @@ def _stream_flow_csv(
     palette = _make_flow_palette()
     segs = _flow_segments_for_direction(direction, max_col=len(headers), palette=palette)
     default_hdr = palette["blue_hdr"]
+    default_data = palette["blue_light"]
 
     out_header: List[WriteOnlyCell] = []
     for col_idx, h in enumerate(headers, start=1):
@@ -746,6 +759,12 @@ def _stream_flow_csv(
         c.fill = _flow_header_fill_for_col(col_idx, segments=segs, default_fill=default_hdr)
         out_header.append(c)
     ws.append(out_header)
+
+    data_fills: Dict[int, PatternFill] = {}
+    for col_idx in range(1, len(headers) + 1):
+        fill = _flow_data_fill_for_col(col_idx, segments=segs, default_fill=default_data)
+        if fill is not None:
+            data_fills[col_idx] = fill
 
     # ---- To investigate indexes (based on OUTPUT headers)
     inv_count = 0
@@ -866,6 +885,9 @@ def _stream_flow_csv(
                     vv = num
             c = WriteOnlyCell(ws, value=vv)
             c.border = BORDER
+            fill = data_fills.get(col_idx)
+            if fill is not None:
+                c.fill = fill
             out_row.append(c)
 
             # width sample
