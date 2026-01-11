@@ -2337,6 +2337,7 @@ def _load_default_finegrained_single_ports(conf_path: Optional[Path]) -> Tuple[D
         return {"tcp": [], "udp": []}, []
     kv = _read_conf_kv(conf_path)
     keys = [k for k in FINEGRAINED_PORT_LIST_KEYS if k in kv]
+    keys = [k for k in ("PORTS_ADMIN", "PORTS_TO_ERADICATE", "PORTS_TO_CONTROL") if k in kv]
     if not keys:
         return {"tcp": [], "udp": []}, []
     spec = ";".join(keys)
