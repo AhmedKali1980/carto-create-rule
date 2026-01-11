@@ -2324,15 +2324,68 @@ def _expand_blacklist_sources(conf_path: Optional[Path], spec: str) -> Tuple[Dic
     return intervals, used
 
 
+FINEGRAINED_PORT_LIST_KEYS = ("PORTS_ADMIN", "PORTS_TO_ERADICATE", "PORTS_TO_CONTROL")
+FINEGRAINED_PORT_LIST_COMMENTS = {
+    "PORTS_ADMIN": "Admin port",
+    "PORTS_TO_ERADICATE": "Dangerous port (to eradicate)",
+    "PORTS_TO_CONTROL": "Dangerous port (to control)",
+}
+
+
 def _load_default_finegrained_single_ports(conf_path: Optional[Path]) -> Tuple[Dict[str, List[Tuple[int, int]]], List[str]]:
     if not conf_path:
         return {"tcp": [], "udp": []}, []
     kv = _read_conf_kv(conf_path)
+    keys = [k for k in FINEGRAINED_PORT_LIST_KEYS if k in kv]
     keys = [k for k in ("PORTS_ADMIN", "PORTS_TO_ERADICATE", "PORTS_TO_CONTROL") if k in kv]
     if not keys:
         return {"tcp": [], "udp": []}, []
     spec = ";".join(keys)
     return _expand_finegrained_single_ports(conf_path, spec)
+
+
+def _load_port_list_intervals(conf_path: Optional[Path]) -> Dict[str, Dict[str, List[Tuple[int, int]]]]:
+    if not conf_path:
+        return {}
+    kv = _read_conf_kv(conf_path)
+    out: Dict[str, Dict[str, List[Tuple[int, int]]]] = {}
+    for key in FINEGRAINED_PORT_LIST_KEYS:
+        val = (kv.get(key) or "").strip()
+        if not val:
+            continue
+        intervals: Dict[str, List[Tuple[int, int]]] = {"tcp": [], "udp": []}
+        for item in [x.strip() for x in val.split(";") if x.strip()]:
+            for proto, a, b in _parse_proto_port_token(item):
+                intervals[proto].append((a, b))
+        intervals = {k: _merge_intervals(v) for k, v in intervals.items()}
+        out[key] = intervals
+    return out
+
+
+def _port_list_comment_for_services(
+    services: Any,
+    list_intervals: Dict[str, Dict[str, List[Tuple[int, int]]]],
+) -> str:
+    s = str(services or "").strip()
+    if not s or s.lower() == "all services":
+        return ""
+    comments: List[str] = []
+    for tok in re.split(r"[;\n]+", s):
+        tok = (tok or "").strip()
+        if not tok:
+            continue
+        m = re.match(r"(?i)^(tcp|udp)\/(\d+)$", tok)
+        if not m:
+            continue
+        proto = m.group(1).lower()
+        port = int(m.group(2))
+        for key in FINEGRAINED_PORT_LIST_KEYS:
+            intervals = list_intervals.get(key)
+            if _is_port_in_intervals(intervals, proto, port):
+                comment = FINEGRAINED_PORT_LIST_COMMENTS.get(key, "")
+                if comment and comment not in comments:
+                    comments.append(comment)
+    return "; ".join(comments)
 
 
 def _expand_finegrained_single_ports(conf_path: Optional[Path], spec: str) -> Tuple[Dict[str, List[Tuple[int, int]]], List[str]]:
@@ -4591,6 +4644,7 @@ def main() -> int:
     finegrained_single_ports, _fg_lists = _load_default_finegrained_single_ports(conf_path)
     if _fg_lists:
         dbg(args.debug, f"finegrained single-port lists: {_fg_lists}")
+    port_list_intervals = _load_port_list_intervals(conf_path)
 
     
     # Optional: --network-zone (East-West only inside one IPList)
@@ -4868,6 +4922,11 @@ def main() -> int:
             
             if pr_rows1:
                 pr_rows1 = _group_pr1_ingress_finegrained_by_src_dst(pr_rows1, finegrained_single_ports)
+                if port_list_intervals:
+                    for rr in pr_rows1:
+                        comment_add = _port_list_comment_for_services(rr.get("Services", ""), port_list_intervals)
+                        if comment_add:
+                            rr["Comment"] = _merge_comment(rr.get("Comment", ""), comment_add)
                 if getattr(args, "mark_potential_core_service", False):
                     rr_root = run_root_from(raw_dir)
                     enabled_rules_csv = rr_root / "raw" / "export_rules.enabled.csv"
