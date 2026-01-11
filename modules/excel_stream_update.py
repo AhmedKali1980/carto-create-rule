@@ -659,7 +659,7 @@ def _stream_flow_csv(
     direction: str,
     encoding: str = "utf-8-sig",
     csv_delimiter: Optional[str] = None,
-    sample_rows_for_width: int = 250,
+    sample_rows_for_width: Optional[int] = None,
     add_elected_iplist_column: bool = False,
     allowed_pats: Optional[List[str]] = None,
     prio_pats: Optional[List[str]] = None,
@@ -680,7 +680,7 @@ def _stream_flow_csv(
     # Header basic style
     THIN = Side(style="thin", color="666666")
     BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
-    hdr_align = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    hdr_align = Alignment(horizontal="center", vertical="center", wrap_text=False)
 
     # Delimiter detection
     delim = csv_delimiter or _detect_delimiter(csv_path)
@@ -891,15 +891,18 @@ def _stream_flow_csv(
             out_row.append(c)
 
             # width sample
-            if sample_left > 0:
+            if sample_left is None or sample_left > 0:
                 try:
                     s = "" if vv is None else str(vv)
-                    widths[col_idx] = max(widths[col_idx], min(int(caps.get(col_idx, DEFAULT_WIDTH_CAP)), len(s) + 2))
+                    widths[col_idx] = max(
+                        widths[col_idx],
+                        min(int(caps.get(col_idx, DEFAULT_WIDTH_CAP)), len(s) + 2),
+                    )
                 except Exception:
                     pass
 
         ws.append(out_row)
-        if sample_left > 0:
+        if sample_left is not None and sample_left > 0:
             sample_left -= 1
 
     widths_f: Dict[int, float] = {i: float(w) for i, w in widths.items()}
@@ -1069,16 +1072,27 @@ def rewrite_workbook_with_streamed_flows(
             BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
             hdr_fill = PatternFill("solid", fgColor="D9D9D9")
             hdr_font = Font(bold=True)
-            hdr_align = Alignment(horizontal="center", vertical="center", wrap_text=True)
+            hdr_align = Alignment(horizontal="center", vertical="center", wrap_text=False)
+            headers = [
+                "Direction",
+                "Source",
+                "Destination",
+                "Service",
+                "Unknown IP",
+                "DNS Resolution",
+            ]
+            widths_inv = {i: max(10, min(DEFAULT_WIDTH_CAP, len(h) + 2)) for i, h in enumerate(headers, start=1)}
 
-            ws_inv.append([
-                _make_cell(ws_inv, "Direction", font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
-                _make_cell(ws_inv, "Source", font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
-                _make_cell(ws_inv, "Destination", font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
-                _make_cell(ws_inv, "Service", font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
-                _make_cell(ws_inv, "Unknown IP", font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
-                _make_cell(ws_inv, "DNS Resolution", font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
-            ])
+            ws_inv.append(
+                [
+                    _make_cell(ws_inv, headers[0], font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
+                    _make_cell(ws_inv, headers[1], font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
+                    _make_cell(ws_inv, headers[2], font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
+                    _make_cell(ws_inv, headers[3], font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
+                    _make_cell(ws_inv, headers[4], font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
+                    _make_cell(ws_inv, headers[5], font=hdr_font, fill=hdr_fill, border=BORDER, alignment=hdr_align),
+                ]
+            )
 
             # Data rows
             n_appended = 0
@@ -1101,16 +1115,24 @@ def rewrite_workbook_with_streamed_flows(
                         _make_cell(ws_inv, vals[4], border=BORDER),
                         _make_cell(ws_inv, vals[5], border=BORDER),
                     ])
+                    for idx, value in enumerate(vals, start=1):
+                        try:
+                            s = "" if value is None else str(value)
+                            widths_inv[idx] = max(
+                                widths_inv[idx],
+                                min(DEFAULT_WIDTH_CAP, max(10, len(s) + 2)),
+                            )
+                        except Exception:
+                            pass
                     n_appended += 1
 
             ws_inv.freeze_panes = "A2"
             ws_inv.auto_filter.ref = f"A1:F{n_appended + 1}" if n_appended > 0 else "A1:F1"
-            ws_inv.column_dimensions["A"].width = 14
-            ws_inv.column_dimensions["B"].width = 45
-            ws_inv.column_dimensions["C"].width = 45
-            ws_inv.column_dimensions["D"].width = 20
-            ws_inv.column_dimensions["E"].width = 18
-            ws_inv.column_dimensions["F"].width = 45
+            for idx, width in widths_inv.items():
+                try:
+                    ws_inv.column_dimensions[get_column_letter(idx)].width = width
+                except Exception:
+                    pass
             _log("INFO", f"[To investigate] rows: {n_appended}")
         except Exception as e:
             _log("WARN", f"[To investigate] build failed: {e}")
