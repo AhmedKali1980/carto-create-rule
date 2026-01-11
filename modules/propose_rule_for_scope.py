@@ -4935,16 +4935,49 @@ def main() -> int:
                         if _row_matches_bouquets_refs(rr, bouquets_apps, bouquets_iplists):
                             rr["Comment"] = _merge_comment(rr.get("Comment", ""), "Remote (App label/iplist) used in Bouquets")
                 
-                pr_rows1 = sorted(pr_rows1, key=lambda r: (
-                    str(r.get("Direction","")),
-                    str(r.get("Strategy","")),
-                    str(r.get("Ruleset","")),
-                    str(r.get("Rule Section","")),
-                    str(r.get("Destination","")),
-                    str(r.get("Source","")),
-                    str(r.get("Services","")),
-                    str(r.get("Comment","")),
-                ))
+                def _pr1_sort_key(r: Dict[str, Any]) -> Tuple[Any, ...]:
+                    direction = str(r.get("Direction", "") or "").strip().lower()
+                    comment = str(r.get("Comment", "") or "")
+                    is_remote = "Remote (App label/iplist) used in Bouquets" in comment
+                    ruleset = str(r.get("Ruleset", "") or "")
+                    rule_section = str(r.get("Rule Section", "") or "")
+                    destination = str(r.get("Destination", "") or "")
+                    source = str(r.get("Source", "") or "")
+                    services = str(r.get("Services", "") or "")
+
+                    if is_remote:
+                        if direction == "egress":
+                            group = 0
+                            primary = destination
+                        elif direction == "ingress":
+                            group = 1
+                            primary = source
+                        else:
+                            group = 2
+                            primary = ""
+                    else:
+                        if direction == "egress":
+                            group = 3
+                            primary = destination
+                        elif direction == "ingress":
+                            group = 4
+                            primary = source
+                        else:
+                            group = 5
+                            primary = ""
+
+                    return (
+                        group,
+                        primary,
+                        ruleset,
+                        rule_section,
+                        destination,
+                        source,
+                        services,
+                        comment,
+                    )
+
+                pr_rows1 = sorted(pr_rows1, key=_pr1_sort_key)
                 
                 def _pr1_row_fill(r: Dict[str, Any]) -> Optional[str]:
                     return "FFFFC000" if "Remote (App label/iplist) used in Bouquets" in str(r.get("Comment","") or "") else None
