@@ -144,8 +144,9 @@ def _width_cap_for_header(h: str) -> int:
     return DEFAULT_WIDTH_CAP
 
 
-# ------------------------------ To investigate (NZ0_/NZ1_) ------------------------------
+# ------------------------------ To investigate (NZ0_/NZ1_ + egress KUB_/LBI_/LBO_) ------------------------------
 INV_DEFAULT_PREFIXES = ("NZ0_", "NZ1_")
+INV_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
 INV_SHEET_NAME = "To investigate"
 
 
@@ -810,7 +811,7 @@ def _stream_flow_csv(
         elif len(row) > len(headers):
             row = row[: len(headers)]
 
-        # To investigate hook (NZ0_/NZ1_)
+        # To investigate hook (NZ0_/NZ1_ + egress KUB_/LBI_/LBO_)
         if do_inv:
             elected_val = ""
             if idx_elected is not None and idx_elected < len(row):
@@ -818,7 +819,8 @@ def _stream_flow_csv(
             if not elected_val and elected_name:
                 elected_val = elected_name
 
-            if elected_val.startswith(INV_DEFAULT_PREFIXES):
+            prefixes = INV_DEFAULT_PREFIXES if direction != "out" else INV_DEFAULT_PREFIXES + INV_EGRESS_PREFIXES
+            if elected_val.startswith(prefixes):
                 unknown_ip = "" if idx_unknown_ip is None or idx_unknown_ip >= len(row) else str(row[idx_unknown_ip] or "")
                 dns = dns_resolver.resolve(unknown_ip)                # Mapping per spec:
                 # - Flow-out: Source=Source Role, Destination=Destination IPList Elected
@@ -1163,7 +1165,11 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--conf", type=Path, default=Path("carto.conf"), help="Path to carto.conf (used for IPList election priority)")
     p.add_argument("--add-elected-iplist-column", action="store_true", help="Add per-row elected IPList column next to Source/Destination IPList")
 
-    p.add_argument("--enable-to-investigate", action="store_true", help="Create a 'To investigate' sheet for NZ0_/NZ1_ elected IPLists")
+    p.add_argument(
+        "--enable-to-investigate",
+        action="store_true",
+        help="Create a 'To investigate' sheet for NZ0_/NZ1_ elected IPLists (plus egress KUB_/LBI_/LBO_)",
+    )
     p.add_argument("--dns-timeout", type=float, default=1.5, help="Reverse DNS timeout (seconds) for To investigate")
 
     p.add_argument(
