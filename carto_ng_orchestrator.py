@@ -1585,7 +1585,6 @@ def main() -> int:
                     help="carto.conf port-list names for egress blacklist strategy (future)")
     ap.add_argument("--ports-to-blacklist-ingress", default="",
                     help="carto.conf port-list names for ingress blacklist strategy (future)")
-
     # Optional: replace some peer app labels (configured in carto.conf AVOID_LABEL_PAIRS)
     # by KUB_* IPLISTS when building Proposed rules (ingress/egress label-based peers).
     # Non-regression: disabled by default unless this flag is set.
@@ -2038,7 +2037,6 @@ def main() -> int:
         ]:
             if str(val).strip():
                 pr_cmd += [flag, str(val).strip()]
-
         if getattr(args, "enable_avoid_label_pairs", False):
             pr_cmd.append("--enable-avoid-label-pairs")
         if not getattr(args, "mark_potential_core_service", True):
