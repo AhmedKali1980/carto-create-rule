@@ -1671,12 +1671,16 @@ def _parse_ports_list(s: str) -> Set[int]:
 # -----------------------------------------------------------------------------
 
 
-def _group_pr1_ingress_finegrained_by_src_dst(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+def _group_pr1_ingress_finegrained_by_src_dst(
+    rows: List[Dict[str, Any]],
+    finegrained_single_ports: Optional[Dict[str, List[Tuple[int, int]]]] = None,
+) -> List[Dict[str, Any]]:
     """
     Proposed rules1 readability improvement.
 
     For ingress + finegrained, group rows that share the same Source and Destination (and same Rule Section / Ruleset / Comment)
     by concatenating all observed service tokens into one cell (separated by ';') and summing sum_num_flows.
+    Ports listed in carto.conf PORTS_ADMIN/PORTS_TO_ERADICATE/PORTS_TO_CONTROL are never aggregated (one port per rule).
 
     This does NOT affect the stable "Proposed rules" sheet contract; it only changes Proposed rules1 output ordering/aggregation.
     """
@@ -1715,12 +1719,24 @@ def _group_pr1_ingress_finegrained_by_src_dst(rows: List[Dict[str, Any]]) -> Lis
             if tok:
                 yield tok
 
+    def _is_single_port_tok(tok: str) -> bool:
+        m = re.match(r"(?i)^(tcp|udp)\/(\d+)$", tok.strip())
+        if not m:
+            return False
+        proto = m.group(1).lower()
+        port = int(m.group(2))
+        return _is_port_in_intervals(finegrained_single_ports, proto, port)
+
     for r in rows:
         direction = str(r.get("Direction", "") or "")
         strategy = str(r.get("Strategy", "") or "").strip().lower()
         rule_section = str(r.get("Rule Section", "") or "")
         # We only group ingress finegrained proposals (both intra-scope and Extrascope) where services are proto/port tokens.
         if direction == "ingress" and strategy == "finegrained" and rule_section in {"intra-scope", "Extrascope"}:
+            service_tokens = list(_iter_service_tokens(r.get("Services")))
+            if any(_is_single_port_tok(tok) for tok in service_tokens):
+                out.append(r)
+                continue
             source = str(r.get("Source", "") or "")
             dest = str(r.get("Destination", "") or "")
             ruleset = str(r.get("Ruleset", "") or "")
@@ -1738,7 +1754,7 @@ def _group_pr1_ingress_finegrained_by_src_dst(rows: List[Dict[str, Any]]) -> Lis
             a = aggs[key]
             a["sum_num_flows"] = _to_int(a.get("sum_num_flows")) + _to_int(r.get("sum_num_flows"))
 
-            for tok in _iter_service_tokens(r.get("Services")):
+            for tok in service_tokens:
                 if tok == "All Services":
                     a["_svc_all"] = True
                 else:
@@ -2308,6 +2324,60 @@ def _expand_blacklist_sources(conf_path: Optional[Path], spec: str) -> Tuple[Dic
     return intervals, used
 
 
+def _load_default_finegrained_single_ports(conf_path: Optional[Path]) -> Tuple[Dict[str, List[Tuple[int, int]]], List[str]]:
+    if not conf_path:
+        return {"tcp": [], "udp": []}, []
+    kv = _read_conf_kv(conf_path)
+    keys = [k for k in ("PORTS_ADMIN", "PORTS_TO_ERADICATE", "PORTS_TO_CONTROL") if k in kv]
+    if not keys:
+        return {"tcp": [], "udp": []}, []
+    spec = ";".join(keys)
+    return _expand_finegrained_single_ports(conf_path, spec)
+
+
+def _expand_finegrained_single_ports(conf_path: Optional[Path], spec: str) -> Tuple[Dict[str, List[Tuple[int, int]]], List[str]]:
+    """
+    Expand finegrained single-port lists from carto.conf.
+    spec may contain multiple list names (e.g. PORTS_ADMIN) and/or inline tokens (TCP/22, 3389).
+    Returns:
+      - intervals_by_proto: {'tcp': [(a,b),...], 'udp': [(a,b),...]} merged
+      - used_list_names: list of config keys referenced (for traceability)
+    Behavior:
+      - If a token matches a KEY in carto.conf -> expands its value
+      - If a token looks like TCP/.. or UDP/.. or a bare number -> parsed inline
+      - Otherwise: raises ValueError (fail-fast)
+    """
+    spec = (spec or "").strip()
+    kv = _read_conf_kv(conf_path)
+    used: List[str] = []
+    intervals: Dict[str, List[Tuple[int, int]]] = {"tcp": [], "udp": []}
+
+    if not spec:
+        return {"tcp": [], "udp": []}, []
+
+    toks = [t.strip() for t in re.split(r"[;,\s]+", spec) if t.strip()]
+    for t in toks:
+        if t in kv:
+            used.append(t)
+            val = kv[t]
+            for item in [x.strip() for x in val.split(";") if x.strip()]:
+                for proto, a, b in _parse_proto_port_token(item):
+                    intervals[proto].append((a, b))
+        else:
+            parsed = _parse_proto_port_token(t)
+            if parsed:
+                for proto, a, b in parsed:
+                    intervals[proto].append((a, b))
+            else:
+                raise ValueError(
+                    f"Unknown finegrained port token '{t}'. Expected a carto.conf key (e.g. PORTS_ADMIN) "
+                    "or a port token like TCP/22."
+                )
+
+    intervals = {k: _merge_intervals(v) for k, v in intervals.items()}
+    return intervals, used
+
+
 
 def _resolve_blacklist_sources_for_direction(args) -> Dict[str, str]:
     """Resolve blacklist source spec per direction (intra-app/egress/ingress).
@@ -2356,6 +2426,19 @@ def _resolve_blacklist_sources_for_direction(args) -> Dict[str, str]:
     return resolved
 
 
+def _is_port_in_intervals(intervals_by_proto: Optional[Dict[str, List[Tuple[int, int]]]], proto: str, port: int) -> bool:
+    """Return True if (proto,port) is inside the provided intervals."""
+    if not intervals_by_proto:
+        return False
+    p = (proto or "").strip().lower()
+    if not p or int(port or 0) <= 0:
+        return False
+    for a, b in intervals_by_proto.get(p, []):
+        if a <= port <= b:
+            return True
+    return False
+
+
 def _is_blacklisted(intervals_by_proto: Optional[Dict[str, List[Tuple[int, int]]]], proto: str, port: int) -> bool:
     """Return True if (proto,port) is inside the blacklist intervals.
 
@@ -2366,10 +2449,7 @@ def _is_blacklisted(intervals_by_proto: Optional[Dict[str, List[Tuple[int, int]]
     proto = (proto or "").strip().lower()
     if proto not in ("tcp", "udp") or int(port or 0) <= 0:
         return False
-    for a, b in intervals_by_proto.get(proto, []):
-        if a <= port <= b:
-            return True
-    return False
+    return _is_port_in_intervals(intervals_by_proto, proto, port)
 
 def _pick_col(cols: List[str], *cands: str) -> str:
     low = {c.lower(): c for c in cols}
@@ -2482,7 +2562,8 @@ def build_intra_app_proposed_rules(
     raw_dir: Path,
     strategy: str,
     blacklist_intervals: Optional[Dict[str, List[Tuple[int, int]]]] = None,
-    blacklist_lists_used: Optional[List[str]] = None
+    blacklist_lists_used: Optional[List[str]] = None,
+    finegrained_single_ports: Optional[Dict[str, List[Tuple[int, int]]]] = None,
 ) -> List[Dict[str, str]]:
     """
     Build rows for the 'Proposed rules' sheet (intra-app).
@@ -2555,6 +2636,8 @@ def build_intra_app_proposed_rules(
         by_pair: Dict[Tuple[str, str], Set[str]] = {}
         by_pair_sum: Dict[Tuple[str, str], int] = {}
         by_pair_sum_true: Dict[Tuple[str, str], int] = {}
+        by_pair_single: Dict[Tuple[str, str, str], int] = {}
+        by_pair_single_true: Dict[Tuple[str, str, str], int] = {}
         for p in intra:
             fs = _flow_sides_from_proposal(p)
             if isinstance(fs, tuple) and len(fs) == 4:
@@ -2572,9 +2655,16 @@ def build_intra_app_proposed_rules(
             toks = _service_tokens_from_proposal(p)
             if not toks:
                 continue
-            by_pair.setdefault((src_role, dst_role), set()).update(toks)
-            by_pair_sum[(src_role, dst_role)] = by_pair_sum.get((src_role, dst_role), 0) + _to_int(p.get("num_flows"))
-            by_pair_sum_true[(src_role, dst_role)] = by_pair_sum_true.get((src_role, dst_role), 0) + _to_int(p.get("num_flows_true", p.get("num_flows")))
+            for tok in toks:
+                m = re.match(r"(?i)^(tcp|udp)\/(\d+)$", tok.strip())
+                if m and _is_port_in_intervals(finegrained_single_ports, m.group(1).lower(), int(m.group(2))):
+                    k_single = (src_role, dst_role, tok.lower())
+                    by_pair_single[k_single] = by_pair_single.get(k_single, 0) + _to_int(p.get("num_flows"))
+                    by_pair_single_true[k_single] = by_pair_single_true.get(k_single, 0) + _to_int(p.get("num_flows_true", p.get("num_flows")))
+                    continue
+                by_pair.setdefault((src_role, dst_role), set()).add(tok)
+                by_pair_sum[(src_role, dst_role)] = by_pair_sum.get((src_role, dst_role), 0) + _to_int(p.get("num_flows"))
+                by_pair_sum_true[(src_role, dst_role)] = by_pair_sum_true.get((src_role, dst_role), 0) + _to_int(p.get("num_flows_true", p.get("num_flows")))
 
         out_rows: List[Dict[str, str]] = []
         for (src_role, dst_role) in sorted(by_pair.keys()):
@@ -2587,6 +2677,18 @@ def build_intra_app_proposed_rules(
                 "Services": ";".join(toks),
                 "sum_num_flows": by_pair_sum.get((src_role, dst_role), 0),
                 "sum_num_flows_true": by_pair_sum_true.get((src_role, dst_role), 0),
+                "Rule Section": rule_section,
+                "Ruleset": ruleset_name,
+            })
+        for (src_role, dst_role, tok) in sorted(by_pair_single.keys()):
+            out_rows.append({
+                "Direction": "intra-app",
+                "Strategy": strategy,
+                "Source": src_role,
+                "Destination": dst_role,
+                "Services": tok,
+                "sum_num_flows": by_pair_single.get((src_role, dst_role, tok), 0),
+                "sum_num_flows_true": by_pair_single_true.get((src_role, dst_role, tok), 0),
                 "Rule Section": rule_section,
                 "Ruleset": ruleset_name,
             })
@@ -3919,6 +4021,7 @@ def build_egress_labels_proposed_rules_v1(
     proposals: List[Dict[str, Any]],
     strategy: str,
     blacklist_intervals: Optional[Dict[str, List[Tuple[int, int]]]] = None,
+    finegrained_single_ports: Optional[Dict[str, List[Tuple[int, int]]]] = None,
 ) -> List[Dict[str, Any]]:
     """Proposed rules V1 for egress flows where peer_type='labels' and matched_rule_category != Bouquets.
 
@@ -3937,6 +4040,7 @@ def build_egress_labels_proposed_rules_v1(
       - Aggregation is *destination-centric*:
           * finegrained: for the same (anchor_app, anchor_env, ruleset, section, destination),
             aggregate ALL anchor roles into Source (single app/env + multi-role) and aggregate all ports into Services (';' separated).
+            Ports listed in carto.conf PORTS_ADMIN/PORTS_TO_ERADICATE/PORTS_TO_CONTROL are kept one per rule.
           * blacklist: same for NON-blacklisted ports, but keep each blacklisted port as its own row (one port per row),
             with Comment='Blacklist Exception'. Roles are still aggregated per blacklisted port.
     """
@@ -3966,8 +4070,8 @@ def build_egress_labels_proposed_rules_v1(
     out_rows: List[Dict[str, Any]] = []
 
     # Non-blacklisted (and finegrained) aggregation:
-    # key = (ruleset_name, rule_section, anchor_app, anchor_env, destination)
-    allow_groups: Dict[Tuple[str, str, str, str, str], Dict[str, Any]] = {}
+    # key = (ruleset_name, rule_section, anchor_app, anchor_env, destination [, service_token])
+    allow_groups: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
 
     # Blacklisted exceptions aggregation:
     # key = (ruleset_name, rule_section, anchor_app, anchor_env, destination, proto, port)
@@ -4084,7 +4188,10 @@ def build_egress_labels_proposed_rules_v1(
                     continue
 
                 # finegrained OR non-blacklisted in blacklist mode -> group by destination (not per-role)
-                gk = (ruleset_name, rule_section, anchor_app, anchor_env, dst)
+                if strategy == "finegrained" and _is_port_in_intervals(finegrained_single_ports, proto, port_i):
+                    gk = (ruleset_name, rule_section, anchor_app, anchor_env, dst, tok)
+                else:
+                    gk = (ruleset_name, rule_section, anchor_app, anchor_env, dst)
                 gg = allow_groups.get(gk)
                 if gg is None:
                     allow_groups[gk] = {
@@ -4111,7 +4218,11 @@ def build_egress_labels_proposed_rules_v1(
                         gg["_east_west"] = "N"
 
     # Materialize grouped rows
-    for gk in sorted(allow_groups.keys(), key=lambda k: (k[0], k[1], k[4], k[2], k[3])):
+    def _allow_group_sort_key(k: Tuple[Any, ...]) -> Tuple[Any, ...]:
+        svc = k[5] if len(k) > 5 else ""
+        return (k[0], k[1], k[4], k[2], k[3], svc)
+
+    for gk in sorted(allow_groups.keys(), key=_allow_group_sort_key):
         r = allow_groups[gk]
         anchor_app = str(r.get("_anchor_app") or "")
         anchor_env = str(r.get("_anchor_env") or "")
@@ -4165,7 +4276,8 @@ def build_egress_proposed_rules_v1(
     proposals: List[Dict[str, Any]],
     strategy: str,
     blacklist_intervals: Optional[Dict[str, List[Tuple[int, int]]]] = None,
-    blacklist_lists_used: Optional[List[str]] = None
+    blacklist_lists_used: Optional[List[str]] = None,
+    finegrained_single_ports: Optional[Dict[str, List[Tuple[int, int]]]] = None,
 ) -> List[Dict[str, Any]]:
     """Build V1 Proposed rules rows for egress (adds Comment + label handling + readability grouping for Proposed rules1).
 
@@ -4178,6 +4290,7 @@ def build_egress_proposed_rules_v1(
         If peer_value contains multiple IPLIST names separated by '|' or newlines, we *explode* them (one IPList per row).
       - Finegrained: for the same (anchor_app, anchor_env, Ruleset, Rule Section, Destination-IPList),
         aggregate ALL anchor roles into Source and ALL observed service tokens into Services (';' separated).
+        Ports listed in carto.conf PORTS_ADMIN/PORTS_TO_ERADICATE/PORTS_TO_CONTROL are kept one per rule.
       - Blacklist: same aggregation for NON-blacklisted ports, but keep each blacklisted port as its own row
         (one port per row) with Comment='Blacklist Exception'. Roles are aggregated per (Destination-IPList, port).
 
@@ -4197,7 +4310,7 @@ def build_egress_proposed_rules_v1(
     if strategy_norm == "allow":
         out: List[Dict[str, Any]] = []
         out.extend(build_egress_proposed_rules(proposals, strategy_norm, blacklist_intervals, blacklist_lists_used))
-        out.extend(build_egress_labels_proposed_rules_v1(proposals, strategy, blacklist_intervals))
+        out.extend(build_egress_labels_proposed_rules_v1(proposals, strategy, blacklist_intervals, finegrained_single_ports))
         return out
 
     default_rows: List[Dict[str, Any]] = []
@@ -4269,7 +4382,7 @@ def build_egress_proposed_rules_v1(
 
     # ------------------------------ IPList-based egress (intra-scope) ------------------------------
     # Aggregation is destination-centric (one IPList per line).
-    allow_aggs: Dict[Tuple[str, str, str, str, str], Dict[str, Any]] = {}
+    allow_aggs: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
     exc_aggs: Dict[Tuple[str, str, str, str, str, str, int], Dict[str, Any]] = {}
 
     for p in proposals:
@@ -4341,7 +4454,10 @@ def build_egress_proposed_rules_v1(
                 continue
 
             # Finegrained: aggregate all observed proto/port tokens per IPList.
-            k = (app, env, ruleset_name, rule_section, ipn)
+            if _is_port_in_intervals(finegrained_single_ports, proto, port):
+                k = (app, env, ruleset_name, rule_section, ipn, svc_tok)
+            else:
+                k = (app, env, ruleset_name, rule_section, ipn)
             a = allow_aggs.get(k)
             if a is None:
                 a = {
@@ -4371,7 +4487,11 @@ def build_egress_proposed_rules_v1(
     out_rows.extend(default_rows)
 
     # Deterministic ordering
-    for k in sorted(allow_aggs.keys(), key=lambda x: (x[0], x[1], x[4])):  # app, env, dest
+    def _allow_aggs_sort_key(k: Tuple[Any, ...]) -> Tuple[Any, ...]:
+        svc = k[5] if len(k) > 5 else ""
+        return (k[0], k[1], k[4], svc)
+
+    for k in sorted(allow_aggs.keys(), key=_allow_aggs_sort_key):  # app, env, dest
         r = allow_aggs[k]
         roles = sorted(list(r.get("_roles") or []))
         r["Source"] = ";".join(roles)
@@ -4393,7 +4513,7 @@ def build_egress_proposed_rules_v1(
         out_rows.append(r)
 
     # ------------------------------ Add label-based egress rules (extrascope / outbound2*) ------------------------------
-    out_rows.extend(build_egress_labels_proposed_rules_v1(proposals, strategy, blacklist_intervals))
+    out_rows.extend(build_egress_labels_proposed_rules_v1(proposals, strategy, blacklist_intervals, finegrained_single_ports))
     return out_rows
 
 
@@ -4467,6 +4587,10 @@ def main() -> int:
             kub_resolver = None
         else:
             kub_resolver = make_kub_iplist_resolver(kub_index)
+
+    finegrained_single_ports, _fg_lists = _load_default_finegrained_single_ports(conf_path)
+    if _fg_lists:
+        dbg(args.debug, f"finegrained single-port lists: {_fg_lists}")
 
     
     # Optional: --network-zone (East-West only inside one IPList)
@@ -4548,9 +4672,23 @@ def main() -> int:
                     if not str(bl_spec_intra).strip():
                         raise ValueError("--strategy-intra-app=blacklist requires a blacklist source list. Use --ports-to-blacklist-intra-app=... (or legacy --ports-to-blacklist=... when only one blacklist direction is used).")
                     intra_bl_intervals, intra_bl_lists = _expand_blacklist_sources(conf_path, bl_spec_intra)
-                    pr_rows.extend(build_intra_app_proposed_rules(rows, raw_dir, args.strategy_intra_app, intra_bl_intervals, intra_bl_lists))
+                    pr_rows.extend(build_intra_app_proposed_rules(
+                        rows,
+                        raw_dir,
+                        args.strategy_intra_app,
+                        intra_bl_intervals,
+                        intra_bl_lists,
+                        finegrained_single_ports,
+                    ))
                 else:
-                    pr_rows.extend(build_intra_app_proposed_rules(rows, raw_dir, args.strategy_intra_app, None, None))
+                    pr_rows.extend(build_intra_app_proposed_rules(
+                        rows,
+                        raw_dir,
+                        args.strategy_intra_app,
+                        None,
+                        None,
+                        finegrained_single_ports,
+                    ))
 
             # Ingress
             ingress_bl_intervals = None
@@ -4687,6 +4825,7 @@ def main() -> int:
                     args.strategy_intra_app,
                     intra_bl_intervals,
                     intra_bl_lists,
+                    finegrained_single_ports,
                 )
                 for rr in intra_rows_pr1:
                     r2 = dict(rr)
@@ -4701,7 +4840,12 @@ def main() -> int:
                     r2["Comment"] = comment
                     pr_rows1.append(r2)
             if getattr(args, "strategy_ingress", "none") != "none":
-                pr_rows1.extend(build_ingress_proposed_rules_v1(rows, args.strategy_ingress, ingress_bl_intervals, ingress_bl_lists))
+                pr_rows1.extend(build_ingress_proposed_rules_v1(
+                    rows,
+                    args.strategy_ingress,
+                    ingress_bl_intervals,
+                    ingress_bl_lists,
+                ))
             # Egress
             if getattr(args, "strategy_egress", "none") != "none":
                 egress_bl_intervals = None
@@ -4714,10 +4858,16 @@ def main() -> int:
                     if not str(bl_spec_eg).strip():
                         raise ValueError("--strategy-egress=blacklist requires a blacklist source list. Use --ports-to-blacklist-egress=KEY1,KEY2 (or legacy --ports-to-blacklist=... only when exactly one direction uses blacklist).")
                     egress_bl_intervals, egress_bl_lists = _expand_blacklist_sources(conf_path, bl_spec_eg)
-                pr_rows1.extend(build_egress_proposed_rules_v1(rows, args.strategy_egress, egress_bl_intervals, egress_bl_lists))
+                pr_rows1.extend(build_egress_proposed_rules_v1(
+                    rows,
+                    args.strategy_egress,
+                    egress_bl_intervals,
+                    egress_bl_lists,
+                    finegrained_single_ports,
+                ))
             
             if pr_rows1:
-                pr_rows1 = _group_pr1_ingress_finegrained_by_src_dst(pr_rows1)
+                pr_rows1 = _group_pr1_ingress_finegrained_by_src_dst(pr_rows1, finegrained_single_ports)
                 if getattr(args, "mark_potential_core_service", False):
                     rr_root = run_root_from(raw_dir)
                     enabled_rules_csv = rr_root / "raw" / "export_rules.enabled.csv"
