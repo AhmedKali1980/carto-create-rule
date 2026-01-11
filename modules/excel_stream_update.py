@@ -1072,7 +1072,7 @@ def rewrite_workbook_with_streamed_flows(
             BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
             hdr_fill = PatternFill("solid", fgColor="D9D9D9")
             hdr_font = Font(bold=True)
-            hdr_align = Alignment(horizontal="center", vertical="center", wrap_text=False)
+            hdr_align = Alignment(horizontal="center", vertical="center", wrap_text=False)       
             headers = [
                 "Direction",
                 "Source",
