@@ -1554,6 +1554,8 @@ def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
         ip_val = str(row[idx_ip] or "").strip()
         if not ip_val:
             continue
+        if ip_val.startswith("169.254."):
+            continue
         if ip_val not in seen:
             seen.add(ip_val)
             ips.append(ip_val)
