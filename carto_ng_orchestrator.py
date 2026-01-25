@@ -1643,7 +1643,7 @@ def enrich_unknown_ips_with_pce_fqdn(
 
     tmp_prefix = f"_tmp_carto_egress.unknonw.ip_{tmp_stamp}"
     iplist_name = f"{tmp_prefix}-IPL"
-    iplist_csv = derived_dir / f"{tmp_prefix}.csv"
+    iplist_csv = (derived_dir / f"{tmp_prefix}.csv").resolve()
     iplist_csv.parent.mkdir(parents=True, exist_ok=True)
     with iplist_csv.open("w", encoding="utf-8", newline="") as f:
         f.write("name,description,include\n")
@@ -1651,9 +1651,9 @@ def enrich_unknown_ips_with_pce_fqdn(
         description = "Temporary IPList for identifying fqdn entries. Do not Use IT Will be automatically deleted !!"
         f.write(f"{iplist_name},{description},{include}\n")
 
-    single_out = derived_dir / f"{tmp_prefix}.single.csv"
-    href_file = derived_dir / f"href.iplist_{tmp_prefix}.csv"
-    flow_out = derived_dir / f"flow_out_{start}-{end}.csv"
+    single_out = (derived_dir / f"{tmp_prefix}.single.csv").resolve()
+    href_file = (derived_dir / f"href.iplist_{tmp_prefix}.csv").resolve()
+    flow_out = (derived_dir / f"flow_out_{start}-{end}.csv").resolve()
 
     href_file_created = False
     try:
