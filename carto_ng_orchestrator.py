@@ -1664,7 +1664,7 @@ def enrich_unknown_ips_with_pce_fqdn(
 
         ok = run_step(
             "ipl-export-single-unknown",
-            ["bash", str(bin_dir / "workloader_ipl_import_single.sh"), str(single_out), iplist_name],
+            ["bash", str(bin_dir / "workloader_ipl_export_single.sh"), str(single_out), iplist_name],
             env,
             Path("."),
         )
