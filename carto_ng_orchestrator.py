@@ -1523,6 +1523,188 @@ def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> 
     return len(rows)
 
 
+def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
+    from openpyxl import load_workbook
+
+    wb = load_workbook(xlsx_path, data_only=True)
+    if "To investigate" not in wb.sheetnames:
+        return []
+    ws = wb["To investigate"]
+
+    it = ws.iter_rows(values_only=True)
+    try:
+        header = next(it)
+    except StopIteration:
+        return []
+
+    headers = list(header)
+    idx_dir = _toinvest_find_col(headers, ["Direction"])
+    idx_ip = _toinvest_find_col(headers, ["Unknown IP"])
+    if idx_dir is None or idx_ip is None:
+        return []
+
+    ips: List[str] = []
+    seen: Set[str] = set()
+    for row in it:
+        if not row:
+            continue
+        direction = str(row[idx_dir] or "").strip().lower()
+        if direction != "flow-out":
+            continue
+        ip_val = str(row[idx_ip] or "").strip()
+        if not ip_val:
+            continue
+        if ip_val not in seen:
+            seen.add(ip_val)
+            ips.append(ip_val)
+    return ips
+
+
+def _extract_fqdn_by_destination_ip(flow_csv: Path) -> Dict[str, str]:
+    rows, cols = load_csv(flow_csv)
+    if not rows:
+        return {}
+
+    idx_ip = pick(cols, "Destination IP", "Dst IP", "Destination_IP")
+    idx_fqdn = pick(cols, "Destination FQDN", "Dst FQDN", "Destination_FQDN")
+    if not idx_ip or not idx_fqdn:
+        return {}
+
+    ip_to_fqdn: Dict[str, str] = {}
+    for row in rows:
+        ip = (row.get(idx_ip) or "").strip()
+        fqdn = (row.get(idx_fqdn) or "").strip()
+        if ip and fqdn and ip not in ip_to_fqdn:
+            ip_to_fqdn[ip] = fqdn
+    return ip_to_fqdn
+
+
+def _update_to_investigate_fqdn(xlsx_path: Path, fqdn_map: Dict[str, str]) -> int:
+    from openpyxl import load_workbook
+
+    wb = load_workbook(xlsx_path)
+    if "To investigate" not in wb.sheetnames:
+        return 0
+    ws = wb["To investigate"]
+
+    it = ws.iter_rows(values_only=True)
+    try:
+        header = next(it)
+    except StopIteration:
+        return 0
+
+    headers = list(header)
+    idx_dir = _toinvest_find_col(headers, ["Direction"])
+    idx_ip = _toinvest_find_col(headers, ["Unknown IP"])
+    if idx_dir is None or idx_ip is None:
+        return 0
+
+    fqdn_header = "FQDN found in PCE"
+    idx_fqdn_col = _toinvest_find_col(headers, [fqdn_header])
+    if idx_fqdn_col is None:
+        idx_fqdn_col = len(headers)
+        ws.cell(row=1, column=idx_fqdn_col + 1, value=fqdn_header)
+        ref_cell = ws.cell(row=1, column=idx_ip + 1)
+        new_cell = ws.cell(row=1, column=idx_fqdn_col + 1)
+        if ref_cell.has_style:
+            new_cell._style = ref_cell._style
+        ws.column_dimensions[new_cell.column_letter].width = 45
+
+    updated = 0
+    for row_idx in range(2, ws.max_row + 1):
+        dir_val = str(ws.cell(row=row_idx, column=idx_dir + 1).value or "").strip().lower()
+        if dir_val != "flow-out":
+            continue
+        ip_val = str(ws.cell(row=row_idx, column=idx_ip + 1).value or "").strip()
+        if not ip_val:
+            continue
+        fqdn = fqdn_map.get(ip_val, "NO_FQDN_FOUND")
+        ws.cell(row=row_idx, column=idx_fqdn_col + 1, value=fqdn)
+        updated += 1
+
+    wb.save(xlsx_path)
+    return updated
+
+
+def enrich_unknown_ips_with_pce_fqdn(
+    *,
+    xlsx_path: Path,
+    bin_dir: Path,
+    env: Dict[str, str],
+    derived_dir: Path,
+    start: str,
+    end: str,
+    tmp_stamp: str,
+) -> None:
+    ips = _load_to_investigate_ips(xlsx_path)
+    if not ips:
+        print("[INFO] [To investigate] No Flow-out unknown IPs found for PCE lookup.")
+        return
+
+    tmp_prefix = f"_tmp_carto_egress.unknonw.ip_{tmp_stamp}"
+    iplist_name = f"{tmp_prefix}-IPL"
+    iplist_csv = (derived_dir / f"{tmp_prefix}.csv").resolve()
+    iplist_csv.parent.mkdir(parents=True, exist_ok=True)
+    with iplist_csv.open("w", encoding="utf-8", newline="") as f:
+        f.write("name,description,include\n")
+        include = ";".join(ips)
+        description = "Temporary IPList for identifying fqdn entries. Do not Use IT Will be automatically deleted !!"
+        f.write(f"{iplist_name},{description},{include}\n")
+
+    single_out = (derived_dir / f"{tmp_prefix}.single.csv").resolve()
+    href_file = (derived_dir / f"href.iplist_{tmp_prefix}.csv").resolve()
+    flow_out = (derived_dir / f"flow_out_{start}-{end}.csv").resolve()
+
+    href_file_created = False
+    try:
+        ok = run_step("ipl-import-unknown", ["bash", str(bin_dir / "workloader_ipl_import.sh"), str(iplist_csv)], env, Path("."))
+        if not ok:
+            print("[WARN] [To investigate] IPL import failed; skipping PCE FQDN lookup.")
+            return
+
+        ok = run_step(
+            "ipl-export-single-unknown",
+            ["bash", str(bin_dir / "workloader_ipl_import_single.sh"), str(single_out), iplist_name],
+            env,
+            Path("."),
+        )
+        if not ok:
+            print("[WARN] [To investigate] IPL export (single) failed; skipping PCE FQDN lookup.")
+            return
+
+        rows, cols = load_csv(single_out)
+        href_col = pick(cols, "href", "Href", "HREF")
+        href_val = ""
+        if href_col and rows:
+            href_val = (rows[0].get(href_col) or "").strip()
+        if not href_val:
+            print("[WARN] [To investigate] Missing href in IPL export; skipping PCE FQDN lookup.")
+            return
+
+        write_list_semicolon(href_file, [href_val])
+        href_file_created = True
+
+        ok = run_step(
+            "traffic-out-unknown",
+            ["bash", str(bin_dir / "workloader_traffic_out.sh"), str(href_file), start, end, str(flow_out)],
+            env,
+            Path("."),
+        )
+        if not ok:
+            print("[WARN] [To investigate] traffic-out failed; skipping PCE FQDN lookup.")
+            return
+
+        fqdn_map = _extract_fqdn_by_destination_ip(flow_out)
+        updated = _update_to_investigate_fqdn(xlsx_path, fqdn_map)
+        print(f"[INFO] [To investigate] FQDN updated rows: {updated}")
+    finally:
+        if href_file_created and href_file.exists():
+            run_step(
+                "ipl-delete-unknown",
+                ["bash", str(bin_dir / "workloader_ipl_delete.sh"), str(href_file)],
+                env,
+                Path("."),
+            )
 
 def main() -> int:
     ap = argparse.ArgumentParser("carto_ng_orchestrator.fix22")
@@ -2199,6 +2381,20 @@ def main() -> int:
         if not ok:
             print("[ERROR] excel-stream-update failed; final Excel may be missing Flow-out/Flow-in sheets.")
             return 2
+
+    # Final step: enrich unknown Flow-out IPs with FQDN from PCE flows.
+    try:
+        enrich_unknown_ips_with_pce_fqdn(
+            xlsx_path=final_xlsx,
+            bin_dir=bin_dir,
+            env=env,
+            derived_dir=der,
+            start=start,
+            end=end,
+            tmp_stamp=base_ts,
+        )
+    except Exception as e:
+        print(f"[WARN] [To investigate] PCE FQDN enrichment skipped due to: {e}")
 
     print("==== EXECUTION SUMMARY (durations) ====")
     for k in sorted(DUR.keys()):
