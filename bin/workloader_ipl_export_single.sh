@@ -22,12 +22,22 @@ for candidate in \
   "${OUT_DIR}/.${OUT_BASE}single-ip_entries.csv" \
   "${OUT_DIR}/.${OUT_BASE}-ip_entries.csv" \
   "${OUT_DIR}/${OUT_BASE}single-ip_entries.csv" \
-  "${OUT_DIR}/${OUT_BASE}"*-ip_entries.csv; do
+  "${OUT_DIR}/${OUT_BASE}"*-ip_entries.csv \
+  "${OUT_DIR}/._${OUT_BASE}"*"single-ip_entries.csv" \
+  "${OUT_DIR}/._${OUT_BASE}"*"-ip_entries.csv" \
+  "${OUT_DIR}/._"*"single-ip_entries.csv"; do
   if [[ -f "${candidate}" ]]; then
     found_file="${candidate}"
     break
   fi
 done
+
+if [[ -z "${found_file}" ]]; then
+  find_out=$(find "${OUT_DIR}" -maxdepth 1 -type f -name "*_ip_entries*.csv" -o -name "*ip_entries*.csv" 2>/dev/null | head -n 1 || true)
+  if [[ -n "${find_out}" ]]; then
+    found_file="${find_out}"
+  fi
+fi
 
 if [[ -n "${found_file}" ]]; then
   mv -f "${found_file}" "${OUT_CSV}"
