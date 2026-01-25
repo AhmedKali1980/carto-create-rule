@@ -1651,7 +1651,7 @@ def enrich_unknown_ips_with_pce_fqdn(
         description = "Temporary IPList for identifying fqdn entries. Do not Use IT Will be automatically deleted !!"
         f.write(f"{iplist_name},{description},{include}\n")
 
-    single_out = (derived_dir / f"{tmp_prefix}.single.csv").resolve()
+    ipl_export_all = (derived_dir / f"{tmp_prefix}.iplists.csv").resolve()
     href_file = (derived_dir / f"href.iplist_{tmp_prefix}.csv").resolve()
     flow_out = (derived_dir / f"flow_out_{start}-{end}.csv").resolve()
 
@@ -1663,20 +1663,25 @@ def enrich_unknown_ips_with_pce_fqdn(
             return
 
         ok = run_step(
-            "ipl-export-single-unknown",
-            ["bash", str(bin_dir / "workloader_ipl_export_single.sh"), str(single_out), iplist_name],
+            "ipl-export-all-unknown",
+            ["bash", str(bin_dir / "workloader_ipl_export.sh"), str(ipl_export_all)],
             env,
             Path("."),
         )
         if not ok:
-            print("[WARN] [To investigate] IPL export (single) failed; skipping PCE FQDN lookup.")
+            print("[WARN] [To investigate] IPL export (all) failed; skipping PCE FQDN lookup.")
             return
 
-        rows, cols = load_csv(single_out)
+        rows, cols = load_csv(ipl_export_all)
+        name_col = pick(cols, "name", "Name", "NAME")
         href_col = pick(cols, "href", "Href", "HREF")
         href_val = ""
-        if href_col and rows:
-            href_val = (rows[0].get(href_col) or "").strip()
+        if name_col and href_col and rows:
+            for row in rows:
+                if (row.get(name_col) or "").strip() == iplist_name:
+                    href_val = (row.get(href_col) or "").strip()
+                    if href_val:
+                        break
         if not href_val:
             print("[WARN] [To investigate] Missing href in IPL export; skipping PCE FQDN lookup.")
             return
