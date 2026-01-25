@@ -108,6 +108,11 @@ retry_backoff() {
     set -e
 
     if [[ $rc -eq 0 ]]; then
+      if [[ -n "${WL_SKIP_OUTPUT_CHECK:-}" ]]; then
+        echo "$(date '+%F %T') END [${tag}] status=OK rc=$rc (output check skipped)"
+        pause_yellow "$tag" 60
+        return 0
+      fi
       if [[ -n "$out_file" ]]; then
         if [[ -s "$out_file" ]]; then
           echo "$(date '+%F %T') END [${tag}] status=OK rc=$rc out=$out_file"
