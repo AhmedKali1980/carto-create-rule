@@ -1715,9 +1715,9 @@ def enrich_unknown_ips_with_pce_fqdn(
 
 def main() -> int:
     if "--helpdev" in sys.argv:
-        ap = argparse.ArgumentParser("carto_ng_orchestrator.fix22")
+        ap = argparse.ArgumentParser("carto_ng_orchestrator.py")
     else:
-        ap = argparse.ArgumentParser("carto_ng_orchestrator.fix22", add_help=False)
+        ap = argparse.ArgumentParser("carto_ng_orchestrator.py", add_help=False)
         ap.add_argument("-h", "--help", action="help", help="show this help message and exit")
         ap.add_argument("--helpdev", action="help", help="show full help (including dev and frh options)")
 
@@ -1725,7 +1725,7 @@ def main() -> int:
     for k in ["role", "app", "env", "loc"]:
         ap.add_argument(f"--{k}")
     ap.add_argument("--OS", dest="OS")
-    ap.add_argument("--days", type=int, required=True, help="Number of days (start=today-days, end=today)")
+    ap.add_argument("--days", type=int, required=True, help="Number of days")
     ap.add_argument("--one-interface-match", action="store_true", default=True, help=argparse.SUPPRESS)
     ap.add_argument("--dev-flow-stub", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--dev-flow-stub-out", help=argparse.SUPPRESS)
@@ -1744,7 +1744,7 @@ def main() -> int:
     ap.add_argument("--dev-stub-dupecheck-final", help=argparse.SUPPRESS)
     ap.add_argument("--debug-echo-dupecheck", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--debug-no-scope-filter", action="store_true", help=argparse.SUPPRESS)
-    ap.add_argument("--network-zone", help="Nom exact d'une IPList définissant la zone East-West (intra-zone)")
+    ap.add_argument("--network-zone", help="IPList including subnet(s) of the zone")
     ap.add_argument("--CreateRules", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--RecertifyRules", action="store_true", help=argparse.SUPPRESS)
 
@@ -1754,14 +1754,47 @@ def main() -> int:
     ap.add_argument("--strategy-egress-bubble", choices=["blacklist", "whitelist", "none"], default=None, help=argparse.SUPPRESS)
     ap.add_argument("--strategy-ingress-bubble", choices=["whitelist", "blacklist", "none"], default=None, help=argparse.SUPPRESS)
 
-    # NEW: Intra-app rule proposal strategy (used by propose_rule_for_scope)
-    ap.add_argument("--strategy-intra-app", choices=["allow", "finegrained", "blacklist", "none"], default="none",
-                    help="Intra-app rule proposal strategy (generates sheet \"Proposed rules\" via propose_rule_for_scope)")
-    ap.add_argument("--strategy-egress", choices=["allow", "finegrained", "blacklist", "none"], default="none",
-                    help="Egress rule proposal strategy (generates Proposed rules rows). (Planned)")
-    ap.add_argument("--strategy-ingress", choices=["allow", "finegrained", "blacklist", "none"], default="none",
-                    help="Ingress rule proposal strategy (generates Proposed rules rows).")
-    ap.add_argument("--excel-stream-update", action="store_true", help=argparse.SUPPRESS)
+    strategy_intra_group = ap.add_argument_group("**Intra-app strategy options:**")
+    strategy_intra_group.add_argument(
+        "--strategy-intra-app",
+        choices=["allow", "finegrained", "blacklist"],
+        default=None,
+        help="Strategy for intra-app traffic (generates sheet \"Proposed rules\" via propose_rule_for_scope)",
+    )
+    strategy_intra_group.add_argument(
+        "--ports-to-blacklist-intra-app",
+        default="",
+        help="carto.conf port-list names for intra-app blacklist strategy (e.g. PORTS_TO_CONTROL,PORTS_ADMIN,PORTS_TO_ERADICATE)",
+    )
+    strategy_egress_group = ap.add_argument_group("**Egress strategy options:**")
+    strategy_egress_group.add_argument(
+        "--strategy-egress",
+        choices=["allow", "finegrained", "blacklist"],
+        default=None,
+        help="Strategy for outbound traffic (generates Proposed rules rows).",
+    )
+    strategy_egress_group.add_argument(
+        "--ports-to-blacklist-egress",
+        default="",
+        help="carto.conf port-list names for egress blacklist strategy",
+    )
+    strategy_ingress_group = ap.add_argument_group("**Ingress strategy options:**")
+    strategy_ingress_group.add_argument(
+        "--strategy-ingress",
+        choices=["allow", "finegrained", "blacklist"],
+        default=None,
+        help="Strategy for inbound traffic (generates Proposed rules rows).",
+    )
+    strategy_ingress_group.add_argument(
+        "--ports-to-blacklist-ingress",
+        default="",
+        help="carto.conf port-list names for ingress blacklist strategy",
+    )
+    ap.add_argument(
+        "--excel-stream-update",
+        action="store_true",
+        help="Low-mem Excel mode: use this mode in case of memory issues due to huge amount of flows",
+    )
     ap.add_argument("--add-elected-iplist-column", action="store_true", default=True, help=argparse.SUPPRESS)
     ap.add_argument("--enable-umgd-app-label-rules-sheet", action="store_true", default=True, help=argparse.SUPPRESS)
 
@@ -1775,12 +1808,6 @@ def main() -> int:
 
     # Legacy (backward compatible): when only one direction is in blacklist mode, this applies to that direction.
     ap.add_argument("--ports-to-blacklist", default="", help=argparse.SUPPRESS)
-    ap.add_argument("--ports-to-blacklist-intra-app", default="",
-                    help="carto.conf port-list names for intra-app blacklist strategy (e.g. PORTS_TO_CONTROL,PORTS_ADMIN)")
-    ap.add_argument("--ports-to-blacklist-egress", default="",
-                    help="carto.conf port-list names for egress blacklist strategy (future)")
-    ap.add_argument("--ports-to-blacklist-ingress", default="",
-                    help="carto.conf port-list names for ingress blacklist strategy (future)")
     # Optional: replace some peer app labels (configured in carto.conf AVOID_LABEL_PAIRS)
     # by KUB_* IPLISTS when building Proposed rules (ingress/egress label-based peers).
     # Non-regression: disabled by default unless this flag is set.
@@ -2214,11 +2241,11 @@ def main() -> int:
             pr_cmd += ["--debug"]
 
         # Proposed rules strategies
-        if getattr(args, "strategy_intra_app", None) and args.strategy_intra_app != "none":
+        if getattr(args, "strategy_intra_app", None):
             pr_cmd += ["--strategy-intra-app", args.strategy_intra_app]
-        if getattr(args, "strategy_ingress", None) and args.strategy_ingress != "none":
+        if getattr(args, "strategy_ingress", None):
             pr_cmd += ["--strategy-ingress", args.strategy_ingress]
-        if getattr(args, "strategy_egress", None) and args.strategy_egress != "none":
+        if getattr(args, "strategy_egress", None):
             pr_cmd += ["--strategy-egress", args.strategy_egress]
         if getattr(args, "network_zone", None):
             pr_cmd += ["--network-zone", args.network_zone]
