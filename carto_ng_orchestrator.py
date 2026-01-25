@@ -1523,44 +1523,236 @@ def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> 
     return len(rows)
 
 
+def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
+    from openpyxl import load_workbook
+
+    wb = load_workbook(xlsx_path, data_only=True)
+    if "To investigate" not in wb.sheetnames:
+        return []
+    ws = wb["To investigate"]
+
+    it = ws.iter_rows(values_only=True)
+    try:
+        header = next(it)
+    except StopIteration:
+        return []
+
+    headers = list(header)
+    idx_dir = _toinvest_find_col(headers, ["Direction"])
+    idx_ip = _toinvest_find_col(headers, ["Unknown IP"])
+    if idx_dir is None or idx_ip is None:
+        return []
+
+    ips: List[str] = []
+    seen: Set[str] = set()
+    for row in it:
+        if not row:
+            continue
+        direction = str(row[idx_dir] or "").strip().lower()
+        if direction != "flow-out":
+            continue
+        ip_val = str(row[idx_ip] or "").strip()
+        if not ip_val:
+            continue
+        if ip_val.startswith("169.254."):
+            continue
+        if ip_val not in seen:
+            seen.add(ip_val)
+            ips.append(ip_val)
+    return ips
+
+
+def _extract_fqdn_by_destination_ip(flow_csv: Path) -> Dict[str, str]:
+    rows, cols = load_csv(flow_csv)
+    if not rows:
+        return {}
+
+    idx_ip = pick(cols, "Destination IP", "Dst IP", "Destination_IP")
+    idx_fqdn = pick(cols, "Destination FQDN", "Dst FQDN", "Destination_FQDN")
+    if not idx_ip or not idx_fqdn:
+        return {}
+
+    ip_to_fqdn: Dict[str, str] = {}
+    for row in rows:
+        ip = (row.get(idx_ip) or "").strip()
+        fqdn = (row.get(idx_fqdn) or "").strip()
+        if ip and fqdn and ip not in ip_to_fqdn:
+            ip_to_fqdn[ip] = fqdn
+    return ip_to_fqdn
+
+
+def _update_to_investigate_fqdn(xlsx_path: Path, fqdn_map: Dict[str, str]) -> int:
+    from openpyxl import load_workbook
+
+    wb = load_workbook(xlsx_path)
+    if "To investigate" not in wb.sheetnames:
+        return 0
+    ws = wb["To investigate"]
+
+    it = ws.iter_rows(values_only=True)
+    try:
+        header = next(it)
+    except StopIteration:
+        return 0
+
+    headers = list(header)
+    idx_dir = _toinvest_find_col(headers, ["Direction"])
+    idx_ip = _toinvest_find_col(headers, ["Unknown IP"])
+    if idx_dir is None or idx_ip is None:
+        return 0
+
+    fqdn_header = "FQDN found in PCE"
+    idx_fqdn_col = _toinvest_find_col(headers, [fqdn_header])
+    if idx_fqdn_col is None:
+        idx_fqdn_col = len(headers)
+        ws.cell(row=1, column=idx_fqdn_col + 1, value=fqdn_header)
+        ref_cell = ws.cell(row=1, column=idx_ip + 1)
+        new_cell = ws.cell(row=1, column=idx_fqdn_col + 1)
+        if ref_cell.has_style:
+            new_cell._style = ref_cell._style
+        ws.column_dimensions[new_cell.column_letter].width = 45
+
+    updated = 0
+    for row_idx in range(2, ws.max_row + 1):
+        dir_val = str(ws.cell(row=row_idx, column=idx_dir + 1).value or "").strip().lower()
+        if dir_val != "flow-out":
+            continue
+        ip_val = str(ws.cell(row=row_idx, column=idx_ip + 1).value or "").strip()
+        if not ip_val:
+            continue
+        fqdn = fqdn_map.get(ip_val, "NO_FQDN_FOUND")
+        ws.cell(row=row_idx, column=idx_fqdn_col + 1, value=fqdn)
+        updated += 1
+
+    wb.save(xlsx_path)
+    return updated
+
+
+def enrich_unknown_ips_with_pce_fqdn(
+    *,
+    xlsx_path: Path,
+    bin_dir: Path,
+    env: Dict[str, str],
+    derived_dir: Path,
+    start: str,
+    end: str,
+    tmp_stamp: str,
+) -> None:
+    ips = _load_to_investigate_ips(xlsx_path)
+    if not ips:
+        print("[INFO] [To investigate] No Flow-out unknown IPs found for PCE lookup.")
+        return
+
+    tmp_prefix = f"_tmp_carto_egress.unknonw.ip_{tmp_stamp}"
+    iplist_name = f"{tmp_prefix}-IPL"
+    iplist_csv = (derived_dir / f"{tmp_prefix}.csv").resolve()
+    iplist_csv.parent.mkdir(parents=True, exist_ok=True)
+    with iplist_csv.open("w", encoding="utf-8", newline="") as f:
+        f.write("name,description,include\n")
+        include = ";".join(ips)
+        description = "Temporary IPList for identifying fqdn entries. Do not Use IT Will be automatically deleted !!"
+        f.write(f"{iplist_name},{description},{include}\n")
+
+    ipl_export_all = (derived_dir / f"{tmp_prefix}.iplists.csv").resolve()
+    href_file = (derived_dir / f"href.iplist_{tmp_prefix}.csv").resolve()
+    flow_out = (derived_dir / f"flow_out_{start}-{end}.csv").resolve()
+
+    href_file_created = False
+    try:
+        ok = run_step("ipl-import-unknown", ["bash", str(bin_dir / "workloader_ipl_import.sh"), str(iplist_csv)], env, Path("."))
+        if not ok:
+            print("[WARN] [To investigate] IPL import failed; skipping PCE FQDN lookup.")
+            return
+
+        ok = run_step(
+            "ipl-export-all-unknown",
+            ["bash", str(bin_dir / "workloader_ipl_export.sh"), str(ipl_export_all)],
+            env,
+            Path("."),
+        )
+        if not ok:
+            print("[WARN] [To investigate] IPL export (all) failed; skipping PCE FQDN lookup.")
+            return
+
+        rows, cols = load_csv(ipl_export_all)
+        name_col = pick(cols, "name", "Name", "NAME")
+        href_col = pick(cols, "href", "Href", "HREF")
+        href_val = ""
+        if name_col and href_col and rows:
+            for row in rows:
+                if (row.get(name_col) or "").strip() == iplist_name:
+                    href_val = (row.get(href_col) or "").strip()
+                    if href_val:
+                        break
+        if not href_val:
+            print("[WARN] [To investigate] Missing href in IPL export; skipping PCE FQDN lookup.")
+            return
+
+        write_list_semicolon(href_file, [href_val])
+        href_file_created = True
+
+        ok = run_step(
+            "traffic-out-unknown",
+            ["bash", str(bin_dir / "workloader_traffic_out.sh"), str(href_file), start, end, str(flow_out)],
+            env,
+            Path("."),
+        )
+        if not ok:
+            print("[WARN] [To investigate] traffic-out failed; skipping PCE FQDN lookup.")
+            return
+
+        fqdn_map = _extract_fqdn_by_destination_ip(flow_out)
+        updated = _update_to_investigate_fqdn(xlsx_path, fqdn_map)
+        print(f"[INFO] [To investigate] FQDN updated rows: {updated}")
+    finally:
+        if href_file_created and href_file.exists():
+            run_step(
+                "ipl-delete-unknown",
+                ["bash", str(bin_dir / "workloader_ipl_delete.sh"), str(href_file)],
+                env,
+                Path("."),
+            )
 
 def main() -> int:
-    ap = argparse.ArgumentParser("carto_ng_orchestrator.fix22")
+    if "--helpdev" in sys.argv:
+        ap = argparse.ArgumentParser("carto_ng_orchestrator.fix22")
+    else:
+        ap = argparse.ArgumentParser("carto_ng_orchestrator.fix22", add_help=False)
+        ap.add_argument("-h", "--help", action="help", help="show this help message and exit")
+        ap.add_argument("--helpdev", action="help", help="show full help (including dev and frh options)")
 
     # Scope labels
     for k in ["role", "app", "env", "loc"]:
         ap.add_argument(f"--{k}")
     ap.add_argument("--OS", dest="OS")
     ap.add_argument("--days", type=int, required=True, help="Number of days (start=today-days, end=today)")
-    ap.add_argument("--one-interface-match", action="store_true")
-    ap.add_argument("--dev-flow-stub", action="store_true")
-    ap.add_argument("--dev-flow-stub-out")
-    ap.add_argument("--dev-flow-stub-in")
-    ap.add_argument("--dev-stub-label")
-    ap.add_argument("--dev-stub-labelgroup")
-    ap.add_argument("--dev-stub-iplists")
-    ap.add_argument("--dev-stub-wkld-m")
-    ap.add_argument("--dev-stub-processes-bulk")
-    ap.add_argument("--dev-stub-processes")
-    ap.add_argument("--dev-stub-wkld-u")
-    ap.add_argument("--dev-stub-ruleset")
-    ap.add_argument("--dev-stub-rules-enabled")
-    ap.add_argument("--dev-stub-dupecheck")
-    ap.add_argument("--dev-stub-dupecheck-filtered")
-    ap.add_argument("--dev-stub-dupecheck-final")
-    ap.add_argument("--debug-echo-dupecheck", action="store_true")
-    ap.add_argument("--debug-no-scope-filter", action="store_true")
+    ap.add_argument("--one-interface-match", action="store_true", default=True, help=argparse.SUPPRESS)
+    ap.add_argument("--dev-flow-stub", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-flow-stub-out", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-flow-stub-in", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-label", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-labelgroup", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-iplists", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-wkld-m", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-processes-bulk", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-processes", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-wkld-u", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-ruleset", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-rules-enabled", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-dupecheck", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-dupecheck-filtered", help=argparse.SUPPRESS)
+    ap.add_argument("--dev-stub-dupecheck-final", help=argparse.SUPPRESS)
+    ap.add_argument("--debug-echo-dupecheck", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--debug-no-scope-filter", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--network-zone", help="Nom exact d'une IPList définissant la zone East-West (intra-zone)")
-    ap.add_argument("--CreateRules", action="store_true", help="Proposer des règles (ingress/egress/intra) pour l'app/scope")
-    ap.add_argument("--RecertifyRules", action="store_true", help="Recertifier les règles (hits, last seen, status)")
+    ap.add_argument("--CreateRules", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--RecertifyRules", action="store_true", help=argparse.SUPPRESS)
 
-    ap.add_argument("--FlowRuleReview", action="store_true",
-                    help="Branch 1: Start from observed flows and generate Service Catalogue, Scope Applicable Rules, Ruleset Effectiveness, Flow-Rule Match, Proposed Rules and Action Plan (flow↔rule review).")
-    ap.add_argument("--CreateNew", action="store_true",
-                    help="Branch 2: Same as FlowRuleReview until Flow-Rule Match (Service Catalogue, Scope Applicable Rules, Ruleset Effectiveness, Flow-Rule Match). Future 'create new rules' workflow will continue from there.")
+    ap.add_argument("--FlowRuleReview", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--CreateNew", action="store_true", default=True, help=argparse.SUPPRESS)
 
-    ap.add_argument("--strategy-egress-bubble", choices=["blacklist", "whitelist", "none"], default=None)
-    ap.add_argument("--strategy-ingress-bubble", choices=["whitelist", "blacklist", "none"], default=None)
+    ap.add_argument("--strategy-egress-bubble", choices=["blacklist", "whitelist", "none"], default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--strategy-ingress-bubble", choices=["whitelist", "blacklist", "none"], default=None, help=argparse.SUPPRESS)
 
     # NEW: Intra-app rule proposal strategy (used by propose_rule_for_scope)
     ap.add_argument("--strategy-intra-app", choices=["allow", "finegrained", "blacklist", "none"], default="none",
@@ -1569,27 +1761,20 @@ def main() -> int:
                     help="Egress rule proposal strategy (generates Proposed rules rows). (Planned)")
     ap.add_argument("--strategy-ingress", choices=["allow", "finegrained", "blacklist", "none"], default="none",
                     help="Ingress rule proposal strategy (generates Proposed rules rows).")
-    ap.add_argument("--excel-stream-update", action="store_true",
-                    help="Low-mem Excel mode: postpone embedding Flow-in/Flow-out sheets until the end and inject them via modules/excel_stream_update.py (avoids OOM when appending sheets).")
-    ap.add_argument("--add-elected-iplist-column", action="store_true",
-                    help="Add per-row elected IPList column in Flow-in/Flow-out sheets (after Source/Destination IPList), using carto.conf IPLIST_NAME_PRIORITY.")
-    ap.add_argument("--enable-umgd-app-label-rules-sheet", action="store_true",
-                    help="Build a new sheet \"Rules with umgd app labels\" by scanning raw/export_rules.enabled.csv for rules referencing app labels listed in Workloads[app_unmanaged].")
+    ap.add_argument("--excel-stream-update", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--add-elected-iplist-column", action="store_true", default=True, help=argparse.SUPPRESS)
+    ap.add_argument("--enable-umgd-app-label-rules-sheet", action="store_true", default=True, help=argparse.SUPPRESS)
 
     ap.add_argument(
         "--enable-to-investigate",
         action="store_true",
-        help=(
-            "Create a 'To investigate' sheet for NZ0_/NZ1_ elected IPLists "
-            "(plus egress KUB_/LBI_/LBO_) (reverse DNS best-effort)"
-        ),
+        default=True,
+        help=argparse.SUPPRESS,
     )
-    ap.add_argument("--dns-timeout", type=float, default=1.5,
-                    help="Reverse DNS timeout (seconds) for To investigate")
+    ap.add_argument("--dns-timeout", type=float, default=5.0, help=argparse.SUPPRESS)
 
     # Legacy (backward compatible): when only one direction is in blacklist mode, this applies to that direction.
-    ap.add_argument("--ports-to-blacklist", default="",
-                    help="Legacy: carto.conf port-list names (comma/semicolon/space separated). If multiple directions use blacklist, use the per-direction flags below.")
+    ap.add_argument("--ports-to-blacklist", default="", help=argparse.SUPPRESS)
     ap.add_argument("--ports-to-blacklist-intra-app", default="",
                     help="carto.conf port-list names for intra-app blacklist strategy (e.g. PORTS_TO_CONTROL,PORTS_ADMIN)")
     ap.add_argument("--ports-to-blacklist-egress", default="",
@@ -1599,28 +1784,27 @@ def main() -> int:
     # Optional: replace some peer app labels (configured in carto.conf AVOID_LABEL_PAIRS)
     # by KUB_* IPLISTS when building Proposed rules (ingress/egress label-based peers).
     # Non-regression: disabled by default unless this flag is set.
-    ap.add_argument("--enable-avoid-label-pairs", action="store_true", default=False,
-                    help="Enable AVOID_LABEL_PAIRS logic (replace peer labels with KUB_* IPLISTS when possible).")
+    ap.add_argument("--enable-avoid-label-pairs", action="store_true", default=True, help=argparse.SUPPRESS)
     # Default behavior: enabled in propose_rule_for_scope. Use this flag to disable.
     ap.add_argument("--no-mark-potential-core-service", dest="mark_potential_core_service", action="store_false", default=True,
-                    help="Disable Potential Core Service detection in Proposed rules1 (orange highlight + Comment).")
+                    help=argparse.SUPPRESS)
 
-    ap.add_argument("--strategy-intra-bubble", choices=["restrict-by-role", "open", "none"], default=None)
+    ap.add_argument("--strategy-intra-bubble", choices=["restrict-by-role", "open", "none"], default=None, help=argparse.SUPPRESS)
 
     # NEW v2.2: Flow→Rule Hits integration flags
-    ap.add_argument("--FlowRuleHits", action="store_true", help="Run flows_to_rules (Flow→Rule Hits) and append 'Flow Rule Hits' sheet to Excel")
-    ap.add_argument("--frh-filter-direction", choices=["ingress", "egress"], default=None, help="Filtrer la direction (flows_to_rules)")
-    ap.add_argument("--frh-filter-proto", choices=["TCP", "UDP", "ICMP"], default=None, help="Filtrer le protocole (flows_to_rules)")
-    ap.add_argument("--frh-filter-port", type=int, default=None, help="Filtrer le port exact (flows_to_rules)")
-    ap.add_argument("--frh-ruleset-name-contains", type=str, default="", help="Tokens séparés par ;, pour filtrer ruleset_name (case-insensitive)")
-    ap.add_argument("--frh-exclude-all-workloads-rules", action="store_true", help="Ignorer les règles avec src_all_workloads ou dst_all_workloads")
-    ap.add_argument("--frh-prefer-raw", action="store_true", help="Utiliser flows_* RAW même si .zone.csv rempli")
-    ap.add_argument("--frh-limit-flows", type=int, default=None, help="Stop après N lignes par fichier de flows (in/out)")
-    ap.add_argument("--frh-debug", action="store_true", help="Activer debug trials.csv dans flows_to_rules")
-    ap.add_argument("--frh-debug-matches-only", action="store_true", help="N'écrire que les hits (Y) dans trials.csv")
-    ap.add_argument("--frh-debug-max-rows", type=int, default=None, help="Limiter à N lignes écrites dans trials.csv (global)")
-    ap.add_argument("--frh-debug-sample-rate", type=float, default=None, help="Pour les non-matchs: pourcentage de lignes à écrire (0..100)")
-    ap.add_argument("--frh-log-level", type=str, default="INFO", help="Niveau de log flows_to_rules (INFO par défaut)")
+    ap.add_argument("--FlowRuleHits", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--frh-filter-direction", choices=["ingress", "egress"], default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--frh-filter-proto", choices=["TCP", "UDP", "ICMP"], default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--frh-filter-port", type=int, default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--frh-ruleset-name-contains", type=str, default="", help=argparse.SUPPRESS)
+    ap.add_argument("--frh-exclude-all-workloads-rules", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--frh-prefer-raw", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--frh-limit-flows", type=int, default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--frh-debug", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--frh-debug-matches-only", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--frh-debug-max-rows", type=int, default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--frh-debug-sample-rate", type=float, default=None, help=argparse.SUPPRESS)
+    ap.add_argument("--frh-log-level", type=str, default="INFO", help=argparse.SUPPRESS)
 
     args = ap.parse_args()
     exec_start_dt = datetime.now()
@@ -2199,6 +2383,20 @@ def main() -> int:
         if not ok:
             print("[ERROR] excel-stream-update failed; final Excel may be missing Flow-out/Flow-in sheets.")
             return 2
+
+    # Final step: enrich unknown Flow-out IPs with FQDN from PCE flows.
+    try:
+        enrich_unknown_ips_with_pce_fqdn(
+            xlsx_path=final_xlsx,
+            bin_dir=bin_dir,
+            env=env,
+            derived_dir=der,
+            start=start,
+            end=end,
+            tmp_stamp=base_ts,
+        )
+    except Exception as e:
+        print(f"[WARN] [To investigate] PCE FQDN enrichment skipped due to: {e}")
 
     print("==== EXECUTION SUMMARY (durations) ====")
     for k in sorted(DUR.keys()):
