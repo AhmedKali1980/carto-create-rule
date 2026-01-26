@@ -78,6 +78,23 @@ def ensure_dir(p: Path) -> None:
 def now_stamp(fmt: str) -> str:
     return datetime.now().strftime(fmt)
 
+def rename_final_excel(xlsx_path: Path, app: str, envl: str) -> Path:
+    ts = now_stamp('%Y%m%d-%H%M%S')
+    name_parts = [p for p in (app, envl) if p]
+    scope = "-".join(name_parts) if name_parts else "scope"
+    target_name = f"carto_{scope}_{ts}.xlsx"
+    target_path = xlsx_path.with_name(target_name)
+    if target_path.exists():
+        idx = 1
+        while True:
+            candidate = xlsx_path.with_name(f"carto_{scope}_{ts}_{idx}.xlsx")
+            if not candidate.exists():
+                target_path = candidate
+                break
+            idx += 1
+    xlsx_path.rename(target_path)
+    return target_path
+
 def sanitize_token(s: str) -> str:
     allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-"
     return "".join(ch if ch in allowed else "_" for ch in (s or ""))
@@ -2428,6 +2445,13 @@ def main() -> int:
     print("==== EXECUTION SUMMARY (durations) ====")
     for k in sorted(DUR.keys()):
         print(f" - {k:28s}: {DUR[k]:6.1f}s")
+
+    try:
+        final_xlsx = rename_final_excel(final_xlsx, app, envl)
+        rel_final_xlsx = os.path.relpath(final_xlsx, Path.cwd())
+        print(f"[SUCCESS] Exécution terminée. Excel résultat : {rel_final_xlsx}")
+    except Exception as e:
+        print(f"[WARN] Impossible de renommer l'Excel final: {e}")
     return 0
 
 if __name__ == "__main__":
