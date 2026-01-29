@@ -56,12 +56,19 @@ def iter_csv_rows(path: Path):
     except csv.Error:
         dialect = csv.excel
     reader = csv.DictReader(fh, dialect=dialect)
+    def _norm_val(v):
+        if v is None:
+            return ''
+        if isinstance(v, list):
+            return ';'.join(str(x) for x in v if x not in (None, ''))
+        return str(v)
+
     class _Wrap:
         fieldnames_list = reader.fieldnames or []
         def __iter__(self):
             try:
                 for row in reader:
-                    yield {k: (v or '').strip() for k, v in row.items()}
+                    yield {k: _norm_val(v).strip() for k, v in row.items()}
             finally:
                 try: fh.close()
                 except Exception: pass
