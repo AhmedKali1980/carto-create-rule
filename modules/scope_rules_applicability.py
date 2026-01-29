@@ -48,14 +48,27 @@ def iter_csv_rows(path: Path):
                 if False:
                     yield {}
         return _Empty()
-    fh = path.open(newline='', encoding='utf-8')
-    reader = csv.DictReader(fh)
+    fh = path.open(newline='', encoding='utf-8-sig')
+    sample = fh.read(4096)
+    fh.seek(0)
+    try:
+        dialect = csv.Sniffer().sniff(sample, delimiters=';,\t|')
+    except csv.Error:
+        dialect = csv.excel
+    reader = csv.DictReader(fh, dialect=dialect)
+    def _norm_val(v):
+        if v is None:
+            return ''
+        if isinstance(v, list):
+            return ';'.join(str(x) for x in v if x not in (None, ''))
+        return str(v)
+
     class _Wrap:
         fieldnames_list = reader.fieldnames or []
         def __iter__(self):
             try:
                 for row in reader:
-                    yield {k: (v or '').strip() for k, v in row.items()}
+                    yield {k: _norm_val(v).strip() for k, v in row.items()}
             finally:
                 try: fh.close()
                 except Exception: pass
@@ -179,18 +192,18 @@ def load_rules_enabled(raw_dir: Path) -> List[Dict[str, str]]:
         'ruleset_enabled': c('ruleset_enabled'),
         'rule_type': c('rule_type'),
         'services': c('services'),
-        'src_all_workloads': c('src_all_workloads'),
-        'dst_all_workloads': c('dst_all_workloads'),
-        'src_labels': c('src_labels'),
-        'dst_labels': c('dst_labels'),
-        'src_label_groups': c('src_label_groups'),
-        'dst_label_groups': c('dst_label_groups'),
-        'src_label_groups_exclusions': c('src_label_groups_exclusions'),
-        'dst_label_groups_exclusions': c('dst_label_groups_exclusions'),
-        'src_labels_exclusions': c('src_labels_exclusions'),
-        'dst_labels_exclusions': c('dst_labels_exclusions'),
-        'src_iplists': c('src_iplists'),
-        'dst_iplists': c('dst_iplists'),
+        'src_all_workloads': c('src_all_workloads', 'consumer_all_workloads'),
+        'dst_all_workloads': c('dst_all_workloads', 'provider_all_workloads'),
+        'src_labels': c('src_labels', 'consumer_labels'),
+        'dst_labels': c('dst_labels', 'provider_labels'),
+        'src_label_groups': c('src_label_groups', 'consumer_label_groups'),
+        'dst_label_groups': c('dst_label_groups', 'provider_label_groups'),
+        'src_label_groups_exclusions': c('src_label_groups_exclusions', 'consumer_label_groups_exclusions'),
+        'dst_label_groups_exclusions': c('dst_label_groups_exclusions', 'provider_label_groups_exclusions'),
+        'src_labels_exclusions': c('src_labels_exclusions', 'consumer_labels_exclusions'),
+        'dst_labels_exclusions': c('dst_labels_exclusions', 'provider_labels_exclusions'),
+        'src_iplists': c('src_iplists', 'consumer_iplists'),
+        'dst_iplists': c('dst_iplists', 'provider_iplists'),
     }
 
     out: List[Dict[str, str]] = []
@@ -494,4 +507,3 @@ def append_scope_rules_sheet(excel_path: Path,
         return True
     except Exception:
         return False
-
