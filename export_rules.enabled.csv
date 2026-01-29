@@ -1,0 +1,1659 @@
+﻿ruleset_name;ruleset_description;ruleset_scope;ruleset_enabled;rule_description;rule_enabled;unscoped_consumers;consumer_all_workloads;consumer_labels;consumer_label_groups;consumer_iplists;consumer_user_groups;consumer_workloads;consumer_virtual_services;consumer_use_workload_subnets;provider_all_workloads;provider_labels;provider_label_groups;provider_iplists;provider_workloads;provider_virtual_services;provider_virtual_servers;provider_use_workload_subnets;services;consumer_resolve_labels_as;provider_resolve_labels_as;machine_auth_enabled;secure_connect_enabled;stateless_enabled;network_type;ruleset_href;rule_href;update_type;Column1
+CSM_GTS_CG.FRA.WEBSPHERE-PRD-RS;;"app:SSM_GTS_CG.FRA.WEBSPHERE;env:PRD";TRUE;"Flow needs to be opened for Cash Payment generation , Treasury announcement, Settlement Accounting for MARK & GLBA perimeter and some GTPS scope.
+
+SR: 758297587";TRUE;TRUE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;role:BATCH;env:PRD";;;;;;FALSE;FALSE;role:CORE;;;;;;FALSE;1415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10679;/orgs/1/sec_policy/draft/rule_sets/10679/sec_rules/103694;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-UAT-RS;;;TRUE;;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:BATCH";;;;;;FALSE;FALSE;"app:APA_CLS_5351;env:NONPRD";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10063;/orgs/1/sec_policy/draft/rule_sets/10063/sec_rules/90539;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-UAT-RS;;;TRUE;;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"app:APM_GCR_SRG.BIR;env:UAT";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10063;/orgs/1/sec_policy/draft/rule_sets/10063/sec_rules/90537;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-UAT-RS;;;TRUE;;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"env:PRD;app:APA_IAS_SCE";;;;;;FALSE;1858 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10063;/orgs/1/sec_policy/draft/rule_sets/10063/sec_rules/90535;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-UAT-RS;;;TRUE;;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:BATCH;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"app:APA_GCR_GTSMO;env:PRD";;;;;;FALSE;9988 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10063;/orgs/1/sec_policy/draft/rule_sets/10063/sec_rules/90533;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-UAT-RS;;;TRUE;;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:BATCH";;;;;;FALSE;FALSE;"env:NONPRD;app:APA_IAS_ONE";;;;;;FALSE;1420 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10063;/orgs/1/sec_policy/draft/rule_sets/10063/sec_rules/90531;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;Cyberark Flow;TRUE;TRUE;FALSE;"app:APA_IAS_ACG;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/101855;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;TRUE;;;;;;;FALSE;TRUE;;;;;;;FALSE;All Services;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/92768;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;;;U_FR_SGADM_LAPTOP-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91967;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;FALSE;;;SS_AUTH_PASSWORD.VAULT-PRD-IPL;;;;FALSE;1858 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91831;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;FALSE;;;NZ4_CAZA_AES_DC2-IPL;;;;FALSE;1858 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91822;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;LBI_MUT_171.69.56.0-21-UAT-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91810;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;TRUE;;;;;;;FALSE;TRUE;;;;;;;FALSE;All Services;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91804;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;NZ2_LAN.EUR.PRD_SGCIB.ACE.DR-IPL;;;;FALSE;4903 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90525;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;MUT_KUBE9.PROD.GTS.SSA-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90523;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_cvspartigdmp102.fr.world.socgen;;;;FALSE;2049 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90517;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_cvspartigdbs911-1521-data10.fr.world.socgen;;;;FALSE;"111 TCP;2049 TCP;4045 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90515;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_cvsparpa4dbs911-1521-data14.fr.world.socgen;;;;FALSE;2049 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90513;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_cvsparpa4dbs911-1521-data12.fr.world.socgen-IPL;;;;FALSE;"111 TCP;2049 TCP;4045 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90511;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_adbdevoem13c.fr.world.socgen-IPL;;;;FALSE;4903 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90509;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;SSD_PROXY.SOCKS_UAT-IPL;;;;FALSE;11000 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90505;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;SSD_FTR_TRANSFERT-DEV-IPL;;;;FALSE;10022 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90503;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;DNS_cvspartigdmp102.fr.world.socgen;;;;FALSE;2049 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90495;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;DNS_crsprdfs01.fr.world.socgen;;;;FALSE;"111 TCP;111 UDP;2049 TCP;2049 UDP;635 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90491;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;;;U_FR_SGADM_LAPTOP-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1424 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90483;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;FALSE;FALSE;;;U_FR_SGADM_LAPTOP-IPL;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90479;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;temporary : CyberArk standard access;TRUE;TRUE;FALSE;"app:CSM_RBD_CYBERARK.STANDARD.FRA.BUSU;role:PSM;role:PSMP;env:PRD";;;;;;FALSE;TRUE;;;;;;;FALSE;"ALL-BUT-ERADICATE-SVC (IGMP;6064-65535 TCP;5907-5999 TCP;1724-5899 TCP;515-1722 TCP;140-511 TCP;38-138 TCP;24-36 TCP;20 TCP;14-18 TCP;1-12 TCP;1-68 UDP;69-160 UDP;161-176 UDP;178-1700 UDP;1702-65535 UDP;ICMP;22 TCP);21 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/92192;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"env:NONPRD;app:APA_IAS_A7650-WBS";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1424 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91843;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APM_L1.GBTO_X.ONE.L1;env:HOM2;role:INHOUSE_SOFT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;"1414 TCP;11415 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91786;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;"Validated
+ Accès via cyberark";TRUE;TRUE;FALSE;"app:CSM_RBD_CYBERARK.STANDARD.FRA.BUSU;env:PRD;role:MANAGEMENT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91782;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APM_L1.GBTO_X.ONE.L1;role:INHOUSE_SOFT;env:HOM2;env:UAT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1424 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/91778;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_ATS_125356;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90487;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_DCK_160862;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;9002 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90485;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_ONE;env:NONPRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1424 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90481;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_AK711-Z19;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;"1522 TCP;22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90477;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_CLS_5351;env:NONPRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90475;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_JBO_A7192;env:NONPRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90471;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"env:PRD;app:APA_BUK_A7480";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90469;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;"UNITY REQ: 648878720
+These flow are required so that CLS-CB's mq agent can communicate with the new SAG servers.";TRUE;TRUE;FALSE;"app:APM_L3.SWIFT.EUR_CG.SWIFT.SAG;role:VENDOR_SOFT;env:UAT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;11415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90467;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;;;U_FR_VPN_RA2.0-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;"8081 TCP;9002 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90465;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;;;U_FR_SGADM_LAPTOP-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;8081 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90463;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;;;U_FR_PARIS_DUNES_ALL-IPL;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90461;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APM_L3.GBTO.EUR_CG.X.ONE.EUR;env:UAT;role:INHOUSE_SOFT;role:FRONTEND";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;"1424 TCP;11415 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90455;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_CTXAS;env:NONPRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90451;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_WMQ;env:NONPRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1424 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90449;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_A6123-YMO;env:NONPRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1947 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90443;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APA_DWS_A7340-ADS;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP)";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/90441;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-UAT-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";TRUE;;TRUE;TRUE;FALSE;"role:WMQ;app:APM_GCR_SRG.BIR;env:UAT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1424 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9431;/orgs/1/sec_policy/draft/rule_sets/9431/sec_rules/86833;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"CAT=System
+Service=AD
+
+AppName: IPLIST AD/DNS
+
+OS: WINDOWS";TRUE;FALSE;FALSE;;;CS_EUS_DNS_RCR-ALL-IPL;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;445 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/89443;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"AppName: IPLIST AD
+
+OS: WINDOWS";FALSE;FALSE;FALSE;;;CS_AUTH_AD.FR_GCR-PROD-IPL;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;"123 UDP;445 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/89441;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"CAT=Authentication
+Service=AD
+
+AppName: Ecosystem AD
+OS: WINDOWS";TRUE;TRUE;FALSE;"app:CSU_AUT_ADS.ECOSYSTEM_ASIA_PRD;env:PRD";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;445 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/89437;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"CAT=Authentication
+Service=AD
+
+AppName: WW-MSD-ADS, 
+WW-HERMES-ADS,  FRA-AGENCES-ADS, WW-PSDI-ADS, FRA-EXT-ADS,  ASIA-AD MSD-ASIA
+
+OS: WINDOWS";TRUE;TRUE;FALSE;"env:PRD;app:APA_IAS_AK022-IMY;app:APA_DWS_A7831-AZG;app:APA_DWS_A7843-AZS;app:APA_DWS_A7830-AZE;app:APA_DWS_A7829-AZC;app:APA_DWS_A7833-AZI;app:APA_DWS_A7829";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);445 TCP;123 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/89429;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"CAT=System
+Service=NTP
+
+AppName: NTP
+OS: LINUX";TRUE;TRUE;FALSE;"app:APA_IAS_NTP;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;123 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/88589;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"CAT=System
+Service=NTP
+
+AppName: NTP IP Defined
+OS: LINUX/AIX";TRUE;FALSE;FALSE;;;CSD_SYS_NTP_ALL-ALL-IPL;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;123 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/88585;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-IN-RS;"Global Rules for INBOUND flows coming from VITAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.VITAL-LGA";;TRUE;"CAT=System
+Service=NTP
+AppName: NTP IP Defined
+OS: LINUX/AIX";TRUE;FALSE;FALSE;;;CS_SYS_NTP_RCR-ALL-IPL;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;123 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9336;/orgs/1/sec_policy/draft/rule_sets/9336/sec_rules/88583;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"App Name : Middleware as service
+OS : Linux AIX
+Service unity = 745866555";TRUE;FALSE;FALSE;"env:PRD;app:APA_RAA_A7136";;;;;;FALSE;FALSE;"OS:LINUX;role:RABBITMQ";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;15671 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/100716;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"App Name : DATABASE AS A SERVICE on 22 TCP
+OS : Linux AIX";TRUE;FALSE;FALSE;"env:PRD;app:CSM_RBD_PAS.ADB_ALL;role:REBOUND";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;role:DB.OCP;role:DB.ORA.GEN1;role:DB.MANAGED.OCP;role:DB.ORACLE.RAC;role:DB.PCP;role:DB.POSTGRE.GEN1;role:DB.ORA.EXADATA.CC";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/100036;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"App Name : DATABASE AS A SERVICE for  ORACLE
+OS : Linux AIX";TRUE;FALSE;FALSE;"env:PRD;app:CSM_RBD_PAS.ADB_ALL;role:REBOUND";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;role:DB.OCP;role:DB.ORA.GEN1;role:DB.MANAGED.OCP;role:DB.ORACLE.RAC";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);1521-1569 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/100034;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"App Name : DATABASE AS A SERVICE for PCP
+OS : Linux AIX";TRUE;FALSE;FALSE;"env:PRD;app:CSM_RBD_PAS.ADB_ALL;role:REBOUND";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;role:DB.POSTGRE.GEN1;role:DB.PCP";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);12400 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/100032;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT= Security
+Service= CyberArk
+
+App Name : CYBERARK PREMIUM MANAGEMENT SERVICES BUSU
+OS : Linux AIX WINDOWS
+
+Service unity = 734775855";TRUE;FALSE;FALSE;"env:PRD;app:CSM_RBD_CYBERARK.PREMIUM.SABA.BUSU;role:PSM;role:PSMP";;;;;;FALSE;FALSE;"OS:WINDOWS;OS:AIX;OS:LINUX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ALL-BUT-ERADICATE-SVC (IGMP;6064-65535 TCP;5907-5999 TCP;1724-5899 TCP;515-1722 TCP;140-511 TCP;38-138 TCP;24-36 TCP;20 TCP;14-18 TCP;1-12 TCP;1-68 UDP;69-160 UDP;161-176 UDP;178-1700 UDP;1702-65535 UDP;ICMP;22 TCP);21 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/98876;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT= Security
+Service= CyberArk
+
+App Name : CYBERARK PREMIUM MANAGEMENT SERVICES BUSU for ORACLE
+OS : Linux AIX WINDOWS
+
+Service unity = 734775855";TRUE;FALSE;FALSE;"env:PRD;role:CPM;app:CSM_RBD_CYBERARK.PREMIUM.SABA.BUSU";;;;;;FALSE;FALSE;"role:DB.ORA.GEN1;role:DB.ORACLE.RAC;OS:AIX;OS:LINUX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;1521-1569 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/98874;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT= Security
+Service= CyberArk
+
+App Name : CYBERARK PREMIUM MANAGEMENT SERVICES BUSU for PostgreSQL
+OS : AIX WINDOWS
+
+Service unity = 734775855";TRUE;FALSE;FALSE;"env:PRD;role:CPM;app:CSM_RBD_CYBERARK.PREMIUM.SABA.BUSU";;;;;;FALSE;FALSE;"OS:WINDOWS;OS:AIX;role:DB.POSTGRE.GEN1";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"5432 TCP;5433 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/98872;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Security
+Service=CyberArk
+
+CYBERARK PASSWORD ROTATION
+OS : WINDOWS";TRUE;FALSE;FALSE;"env:PRD;role:CPM;app:CSM_RBD_CYBERARK.PREMIUM.SABA.BUSU";;;;;;FALSE;FALSE;OS:WINDOWS;"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"3389 TCP;33089 TCP;445 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/95748;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Security
+Service=CyberArk
+
+CYBERARK PASSWORD ROTATION
+OS : Linux,AIX";TRUE;FALSE;FALSE;"env:PRD;role:CPM;app:CSM_RBD_CYBERARK.PREMIUM.SABA.BUSU";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/95744;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Monitoring
+Service=Nastel
+
+App Name : Nastel Autopilot
+OS : Linux";TRUE;FALSE;FALSE;"env:PRD;app:CSU_MON_NASTEL.MKT_ALL";;;;;;FALSE;FALSE;OS:LINUX;"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;5010 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90439;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Monitoring
+Service=Nastel
+
+App Name : Nastel Autopilot for Rabbit MQ
+OS : Linux";TRUE;FALSE;FALSE;"env:PRD;app:APA_MNA_A7139";;;;;;FALSE;FALSE;"OS:LINUX;role:RABBITMQ";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"10150 TCP;22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90437;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Database
+Service=Postgres DB
+
+App Name : WW-POSTGRE CLOUD PLATFORM-RP (SAP Sybase IQ)
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_DAP_A7460;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;role:DB.SYBASE";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;11020-11190 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90435;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Database
+Service=Postgres DB - Ansible Deployment
+
+App Name : WW-POSTGRE CLOUD PLATFORM-RP (ansible deployment)
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_DAP_A7460;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;role:DB.PCP;role:DB.POSTGRESQL;role:DB.POSTGRE.GEN1";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90433;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=CITRIX
+Service=CTX Published Desktop 
+
+App Name : FRA-CTX Published Desktop and Applicatio
+OS : Linux AIX";TRUE;FALSE;FALSE;"env:PRD;app:APA_IAS_CTXAS";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90858;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+
+App Name : ORACLE Administration Tools managed worldwide
+
+OS : Linux";TRUE;FALSE;FALSE;"env:PRD;app:APA_IAS_ADB;app:APA_ADB_196919;app:APA_DBB_196860";;;;;;FALSE;FALSE;OS:LINUX;"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"3896 TCP;3872-3890 TCP;1522 TCP;1830-1849 TCP;22 TCP;7 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89908;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"App Name : DATABASE AS A SERVICE
+OS : Linux AIX";FALSE;FALSE;FALSE;"env:PRD;app:CSM_RBD_PAS.ADB_ALL;role:REBOUND";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP;1521-1569 TCP;12400 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89894;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Monitoring
+Service=Nastel
+
+App Name : Nastel Autopilot
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_MNA_A7139;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;5010 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89808;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+
+App Name : Websphere
+OS : Linux";TRUE;FALSE;FALSE;"env:PRD;app:APA_IAS_WMQ;app:APA_IAS_A7650-WBS";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);1415-1423 TCP;11425-11427 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89810;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Rebound
+Service=Admin BDD
+
+App Name : Admin-Bdd DEV
+OS : Linux";TRUE;FALSE;FALSE;"env:DEV;app:CSM_RBD_PAS.DRE_ALL;role:REBOUND";;;;;;FALSE;FALSE;"env:PRD;OS:LINUX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90106;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Rebound
+Service=IAS Rebound
+
+App Name : REBOND Infrastructure IAS/SYS
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_IAS_A7733-RBD;env:PRD";;;;;;FALSE;FALSE;"env:PRD;OS:LINUX";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90108;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Security
+Service=CyberArk
+
+App Name : CYBERARK DB MANAGEMENT services / BU SU / CSM_RBD_CYBERARK.FRA.GTS for DEV
+OS : Linux + AIX + WINDOWS";TRUE;FALSE;FALSE;"env:PRD;role:PSMP;role:PSM;app:CSM_RBD_CYBERARK.STANDARD.FRA.BUSU;app:CSM_RBD_CYBERARK.STANDARD.FRA.GTS";;;;;;FALSE;FALSE;"env:PRD;OS:LINUX;OS:AIX;OS:WINDOWS";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ALL-BUT-ERADICATE-SVC (IGMP;6064-65535 TCP;5907-5999 TCP;1724-5899 TCP;515-1722 TCP;140-511 TCP;38-138 TCP;24-36 TCP;20 TCP;14-18 TCP;1-12 TCP;1-68 UDP;69-160 UDP;161-176 UDP;178-1700 UDP;1702-65535 UDP;ICMP;22 TCP);21 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90098;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+
+App Name : DATABASE AS A SERVICE
+OS : Linux AIX";TRUE;FALSE;FALSE;"env:PRD;app:APA_IAS_AK711-Z19;app:APA_IAS_ADB";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;env:PRD";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;"22 TCP;1522 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89891;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Security
+Service=CyberArk
+
+App Name : CYBERARK BU SU SERVICES FOR LINUX
+OS : Linux AIX";TRUE;FALSE;FALSE;"app:APA_IAS_A7099-ACG;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;env:PRD";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/90641;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Monitoring
+Service=Nastel
+
+App Name : Nastel Autopilot DEV
+OS : Linux";TRUE;FALSE;FALSE;"env:NONPRD;app:APA_MNA_A7139";;;;;;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;5010 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89806;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+
+App Name : Websphere
+OS : Linux";TRUE;FALSE;FALSE;"env:NONPRD;app:APA_IAS_WMQ;app:APA_IAS_A7650-WBS";;;;;;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);1415-1423 TCP;11425-11427 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89804;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-IN-v4.0-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+
+App Name : DATABASE AS A SERVICE
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_IAS_DBB;env:NONPRD";;;;;;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"7 TCP;3872 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9351;/orgs/1/sec_policy/draft/rule_sets/9351/sec_rules/89802;;KEEP
+APM_GBTO_CHR.IDL.COCKPIT-PROD-RS;;"app:APM_GBTO_CHR.IDL.COCKPIT;env:PRD";TRUE;;TRUE;TRUE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;"7 TCP;1830 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9897;/orgs/1/sec_policy/draft/rule_sets/9897/sec_rules/95032;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Database
+Service=Compliance DB PCP - telegraf metrics
+OS : Linux
+Service unity = ";TRUE;FALSE;FALSE;"OS:LINUX;role:DB.PCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:CORE;app:CSM_DBA_GTS.PCP.RP;env:PRD";;;;;;FALSE;12400 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/108810;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Batch
+Service=Autosys
+App Name : AUTOSYS (AUTOSYS AGENT services)
+OS : Linux Windows
+Service Unity=778545219";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_ATS_71330";;;;;;FALSE;7507 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/106619;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT= SYSTEM
+Service=BACKUP and RESTORE SOLUTION
+App Name : ASIA-NETWORKER
+OS : Linux | WINDOWS | AIX
+Service Unity : 777405171";TRUE;FALSE;FALSE;"OS:WINDOWS;OS:LINUX;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_AK838";;;;;;FALSE;"7937-9936 TCP;111 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/106616;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Database
+Service=OEM database to monitor all MSP databases
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=766424758";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL;DB.ORACLE_LGR";;;;;FALSE;FALSE;"role:CORE;app:CSM_DBA_GTS.ADB.ORACLE.FRA;env:PRD";;;;;;FALSE;8081 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/104636;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=
+Service=
+
+App Name : Earth-DCA
+OS : Linux";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_EAO_A7010";;;;;;FALSE;6304 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/104573;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=NDG Master Server, required flows from KMS 
+App Name : 
+OS : WINDOWS
+";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_A7692-NMA";;;;;;FALSE;1688 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/104568;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT= System
+Service= NTS, required flows from KMS server
+App Name : MS WINDOWS CORE INFRASTRUCTURE
+OS : WINDOWS
+";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_NTS";;;;;;FALSE;"1688 TCP;16088 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/104566;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Messaging
+Service=Websphere MQ
+App Name : FRA-WEBSPHERE
+OS : Linux Windows Aix";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:SSM_GTS_CG.FRA.WEBSPHERE;env:PRD;role:CORE";;;;;;FALSE;"1414-1427 TCP;1430 TCP;6001-6002 TCP;9009 TCP;9100 TCP;11120 TCP;11140 TCP;11413-11420 TCP;11422-11423 TCP;11425-11432 TCP;11820 TCP;11840 TCP;12416 TCP;12420 TCP;14017 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/103725;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=SG Connect
+App Name : SGCONNECT HML fqdn defined
+OS : Linux | Windows";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_SEC_SGCONNECT_ALL-HOM-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/103251;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Batch
+Service=Autosys
+App Name : AUTOSYS (DEV AUTOSYS AGENT services)
+OS :  Linux Windows
+Service Unity=752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:APP1;app:APM_GTS_CG.FRA.AUTOSYS;env:DEV";;;;;;FALSE;"7163 TCP;7500 TCP;7507 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/102251;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Batch
+Service=Autosys
+App Name : AUTOSYS (AUTOSYS AGENT services)
+OS : Linux Windows
+Service Unity=752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:APP1;app:APM_GTS_CG.FRA.AUTOSYS;env:PRD";;;;;;FALSE;"7163 TCP;7500 TCP;7507 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/102249;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Database
+Service=Oracle Database Administration - CCP OCP private API
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;role:DB.OCP;role:DB.MANAGED.OCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_DBA_OCP.API-PROD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/102233;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Database
+Service=Oracle Database Administration - File API calls
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;role:DB.OCP;role:DB.MANAGED.OCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_DBA_FILE.API-PROD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/102231;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Database
+Service=Oracle Database Administration
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL;DB.ORACLE_LGR";;;;;FALSE;FALSE;;;CSD_DBA_MONITORING.OEM-IPL;;;;FALSE;"4903 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/102224;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=MasterUnix
+App Name : MasterUnix
+OS : Linux
+Service unity=749235469";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_D0466";;;;;;FALSE;80 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101647;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Logging
+Service=GTS Datalake - Metrology
+App Name : GTS Datalake / DLK
+OS : Linux Windows Aix
+Service unity=749235469";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_A7163-DLK";;;;;;FALSE;9093 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101645;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Logging
+Service=DLK - Metrology
+App Name : platform_metrology
+OS : Linux Windows Aix
+Service unity=749235469";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_DLK_155689";;;;;;FALSE;"8112 TCP;8223 TCP;8111 TCP;8222 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101643;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Storage
+Service=Object Storage
+App Name : FRA-EU-FR-PARIS-OBJECT-STORAGE-RP-STANDARD, FRA-EU-FR-PARIS-OBJECT-STORAGE-RP-LOW
+OS : Linux
+Service unity=749235469,752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_A7791;app:APA_IAS_A7791-STT;app:APA_IAS_A7794;app:APA_IAS_A7792;app:APA_IAS_A7792-STQ;app:APA_IAS_A7240-OBJ;app:APA_IAS_A7795;app:APA_IAS_A7794-STO";;;;;;FALSE;"443 TCP;4443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101641;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=Unix Master Server
+App Name : WW UNIX MASTER SERVERS
+OS : Linux
+Service unity=749235469";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_WUM";;;;;;FALSE;"443 TCP;80 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101639;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=Cloud Platform
+App Name : CDPLATFORM
+OS : Linux
+Service unity=749235469";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_CDL";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101637;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;CAT=Deployment Service=Virtual Patch App Name : Virtual Patch OS : Linux WINDOWS;TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSU_DEP_VIRTUALPATCH;env:PRD";;;;;;FALSE;4120 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101303;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=MANAGEMENT
+Service=PCP Swagger and Admin URLs
+OS : Linux Windows Aix
+Service unity = 745866555";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;role:DB.PCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_DBA_PCP.DBMANAGEMENT-PRD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100726;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=AUTHENTIFICATION
+Service=OSC PKI
+OS : Linux Windows Aix
+Service unity = 745866555";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_DEP_OSC.PKI.FRA-PRD-IPL;;;;FALSE;8140 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100724;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=SYSTEM
+Service=OSC Compile
+OS : Linux Windows Aix
+Service unity = 745866555";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_osc-compile-prd.FRA-PRD-IPL;;;;FALSE;8140 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100722;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=AUTHENTIFICATION
+Service=IAM Directory for GTS private Cloud
+OS : Linux Windows Aix
+Service unity = 745866555";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;role:RABBITMQ";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_ldo.eu-fr-paris.cloud.socgen-IPL;;;;FALSE;636 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100720;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=AUTHENTIFICATION
+Service=IAM Directory for NON Oracle Databases
+OS : Linux Windows Aix
+Service unity = 745866555";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;role:DB.MSSQL;role:DB.SYBASE";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL;DB.POSTGRE-LGR";;;;;FALSE;FALSE;;;CSD_ldo.eu-fr-paris.cloud.socgen-IPL;;;;FALSE;"636 TCP;1389 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100718;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=SYSTEM
+Service=CAPSULE batch ip defined
+App Name : PLT CAPSULE
+OS : Linux Windows Aix
+Service unity = 745866555";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_PATCH_PLT.CAPSULE_EUR-PRD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100714;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=Starmon
+App Name : WW-STARMon
+OS : Linux Windows Aix";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;role:CORE;app:CSM_MON_IAS.SYS.STARMON";;;;;;FALSE;"21 TCP;22 TCP;3306 TCP;80 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/100516;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"
+
+App Name : FRA OUD
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DATABASE;role:DB.ORA.GEN1;role:DB.ORACLE.RAC;role:DB.OCP;role:DB.MANAGED.OCP;role:DB.ORA.EXADATA.CC";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APM_GTS.ACS_FRA.OUD.PLT.MKT;role:LOAD_BALANCER";;;;;;FALSE;2636 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/99279;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Batch
+SERVICE NAME=CONTROL M 
+Unity Request : 730042023";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;"app:CSM_BATCH_FRA.CONTROLM.BDDF;env:DEV;env:UAT;role:COMPUTE;role:DB.ORA.GEN1";;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);10006 TCP;7005-7060 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/97959;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT= Batch
+SERVICE NAME=CONTROL M 
+Unity Request : 730042023";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSM_BATCH_FRA.CONTROLM.BDDF;env:PRD;role:COMPUTE;role:DB.ORA.GEN1";;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);10006 TCP;7005-7060 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/97957;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=Buckfast
+
+BUCKFAST DB PATCH MANAGEMENT";TRUE;FALSE;FALSE;"OS:WINDOWS;role:DB.ORA.EXADATA.CC;role:DB.ORA.GEN1;role:DB.OCP;role:DB.ORACLE.RAC;role:DATABASE;role:DB.PCP;role:DB.MONGOD;role:DB.POSTGRE.GEN1;role:DB.SYBASE;role:DB.MSSQL;role:DB.POSTGRESQL;role:CASSANDRA";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_API_BUCKFAST-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/96049;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Logging
+Service=Log shipping
+
+App Name : LGC - LOGCOLLECTION / LOGSHIPPING
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.PCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_LGC";;;;;;FALSE;514 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/93686;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"App Name : enee.fr.world.socgen
+OS : LINUX WINDOWS";TRUE;FALSE;FALSE;"OS:WINDOWS;OS:LINUX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;DNS_enee.fr.world.socgen-IPL;;;;FALSE;80 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/90584;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=SCCM
+
+App Name : IPLIST FRA-SCCM CORP
+OS : WINDOWS";FALSE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;UBY_BASTION_PAACTDWS_GCR-ALL-IPL;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);135 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/94036;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=Unipass
+
+App Name : IPLIST UNIPASS
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_EUS_UNIPASS_RCR-ALL-IPL;;;;FALSE;"80 TCP;389 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89581;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=Master Service
+
+App Name : IPLIST MASTER
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_SRV_MASTER_PAR_RCR-ALL-IPL;;;;FALSE;"9800 TCP;1434 TCP;1433 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89575;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=SCOM
+
+App Name : IPLIST MONITOR
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_MONITOR_SCOM_ALL-ALL-IPL;;;;FALSE;5723 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89571;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Security
+Service=SEPM Anti Virus
+
+App Name : WW-SEPM
+OS : WINDOWS, Linux";TRUE;FALSE;FALSE;"OS:WINDOWS;OS:LINUX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:CORE;app:CSM_SEC_SEPM.WW;env:PRD";;;;;;FALSE;"8014 TCP;80 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89564;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=SCCM
+
+App Name : FRA-SCCM CORP
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_SNR;env:PRD";;;;;;FALSE;"80 TCP;443 TCP;5480 TCP;49666 TCP;49667 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89559;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=SCCM
+
+App Name : FRA-SCCM CORP
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_A7237-SCC;app:APA_SCC_A7237";;;;;;FALSE;"10123 TCP;443 TCP;80 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89550;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=SCCM
+
+App Name : FRA-SCCM CORP
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSM_DEP_FRA.SCCM.CORP;env:PRD";;;;;;FALSE;"10123 TCP;443 TCP;80 TCP;445 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89548;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=SCCM
+
+App Name : IPLIST FRA-SCCM CORP
+
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;"CS_DEP_SCCM.MP_RCR-ALL-IPL;CS_DEP_SCCM.SUP_RCR-ALL-IPL;CS_EUS_SCCM_DP_RCR-ALL-IPL";;;;FALSE;"10123 TCP;443 TCP;80 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89579;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=SHARP
+
+App Name : FRA-SHARP (BMC TRUE SIGHT)
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7096-SPV;env:PRD";;;;;;FALSE;10052 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89552;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=SHARP
+
+App Name : FRA-SHARP (BMC TRUE SIGHT)
+OS : AIX";TRUE;FALSE;FALSE;OS:AIX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7096-SPV;env:PRD";;;;;;FALSE;14430 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89406;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=MYSAM
+
+App Name : mysampcbeacon
+OS : Linux AIX WINDOWS
+Service Unity=752890932";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_ADM_FLEXERA.MYSAM.SVC-PRD-IPL;;;;FALSE;"9988 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89507;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=MYSAM
+
+App Name : mysampcbeacon
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_ADM_FLEXERA.MYSAM.UI-PRD-IPL;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88841;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=Portrec DataVault - Datavault API Server
+
+App Name : api.group
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_api.group.socgen-PRD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88839;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Storage
+Service=NFS-DCOM
+
+App Name : unx decom
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;DNS_unxprdfsa-dcom.fr.world.socgen;;;;FALSE;"111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88837;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"App Name : opmezalerting
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;DNS_opmezalerting-PRD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88835;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Security
+Service=EDR
+
+App Name : EDR
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_SEC_EDR.MDFE_ALL-ALL-IPL;;;;FALSE;11000 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88833;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Storage
+Service=NAS
+
+App Name : NAS Storage
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_STOR_SBS_NAS_GCR-CORE-IPL;;;;FALSE;445 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89583;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Storage
+Service=NAS
+App Name : NAS Storage
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_STOR_SBS_NAS_GCR-CORE-IPL;;;;FALSE;"111 TCP;111 UDP;635 UDP;2049 TCP;2049 UDP;4045 TCP;4045 UDP;4046 TCP;4046 UDP;635 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88829;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=ILMT
+
+App Name : ILMT
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_SRV_ILMT_RCR-ALL-IPL;;;;FALSE;9988 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88827;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=Virtual Patch
+
+App Name : Virtual Patch
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_SEC_VIRTUALPATCH_ALL-PROD-IPL;;;;FALSE;4120 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88823;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Security
+Service=Qualys
+
+App Name : Qualys Service
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_QUALYS.SCAN_PRD-IPL;;;;FALSE;1080 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88831;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Security
+Service=Qualys
+App Name : Qualys Service IP Defined
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_SEC_QUALYS_ALL-ALL-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88821;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Messaging
+Service=SMTP
+
+App Name : SMTP Services
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_MSG_SMTP_RCR-UAT-IPL;;;;FALSE;25 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89902;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Messaging
+Service=SMTP
+App Name : SMTP Services
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_MSG_SMTP_GCR-ALL-IPL;;;;FALSE;25 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88819;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=Networker Backup
+App Name : IPLIST BCK NWK
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;"CS_BCK_NWK.BKP_GCR-ALL-IPL;CS_BCK_NWK.DD_GCR-ALL-IPL";;;;FALSE;"2049 TCP;2049 UDP;111 TCP;111 UDP;635 TCP;635 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89569;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=Networker Backup
+App Name : Networker DATA Domain
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;"CS_BCK_NWK.DD_GCR-ALL-IPL;CS_BCK_NWK.BKP_GCR-ALL-IPL";;;;FALSE;"2049 TCP;2049 UDP;111 TCP;111 UDP;635 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88817;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=Networker Backup
+App Name : Networker DATA Domain
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_STO_BCK.DDP-PROD-IPL;;;;FALSE;"2049 TCP;2049 UDP;111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88815;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Inventory
+Service=Flexera
+App Name : Flexera IP defined
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_ADM_FLEXERA_ALL-ALL-IPL;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);9988 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88813;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=Access Control
+
+App Name : ACS-DMS
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:LOAD_BALANCER;app:CSM_RBD_SEC.ACS.DSI.DMZ;env:PRD";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88843;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=Puppet
+App Name : WW-PuppetAsAService
+OS : Linux Aix Windows
+Service Unity=753195484";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:CORE;app:CSM_SYS_WW.PUPPET.AAS;env:PRD";;;;;;FALSE;"8140 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88807;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=Puppet
+App Name : WW-PuppetAsAService
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_PIG;env:PRD";;;;;;FALSE;8140 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88809;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=Starmon
+App Name : WW-STARMon
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_STM;env:PRD";;;;;;FALSE;"21 TCP;22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88811;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=SSHKIT
+App Name : SSK (without illumio agent)
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7777-SSK;env:PRD";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/90676;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=WW Unix Master
+
+App Name : UNIX SERVER / WW UNIX MASTER SERVERS
+OS : Linux";FALSE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_WUM;env:PRD";;;;;;FALSE;"80 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88803;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Deployment
+Service=Satellite Capsule
+
+App Name : UNIX SERVER / WW UNIX MASTER SERVERS
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:CORE;app:CSM_DEP_MASTER.UNIX.SATELLITE.CAPSULES;env:PRD";;;;;;FALSE;"80 TCP;443 TCP;8443 TCP;9090 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88801;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Storage
+Service=NFS
+
+App Name : UNIX SERVER / NFS For System User Home Directory
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_A7317-UNX;app:CSU_STO_NFS.SYS.USER_ALL";;;;;;FALSE;"111 TCP;111 UDP;2049 TCP;2049 UDP;20048 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88799;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=SSHKIT
+
+App Name : SSK
+OS : Linux
+Service unity = 758916397";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;role:CORE;app:CSM_SYS_SSK.IDM";;;;;;FALSE;"443 TCP;389 TCP;88 TCP;88 UDP;636 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/103738;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=SSHKIT
+
+App Name : SSK
+OS : Linux
+
+service unity = 748603791, 755994477";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSM_SYS_SSHKIT.SSK;env:PRD;role:CORE;role:FRONTEND";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/101562;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=SSHKIT
+
+App Name : SSK
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:MANAGEMENT;app:CSM_SYS_SSHKIT.SSK;env:DEV";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89718;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=SSHKIT
+
+App Name : SSK
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;role:MANAGEMENT;app:CSM_SYS_SSHKIT.SSK";;;;;;FALSE;"443 TCP;389 TCP;88 TCP;88 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88797;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Security
+Service=Qualys
+App Name : Qualys Agent
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_QUAL;app:APA_SEC_QUAL";;;;;;FALSE;1080 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88791;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Inventory
+Service=MYSAM
+App Name : MYSAM/FLEXERA
+OS : Linux AIX WINDOWS
+Service unity=754483548";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7094-FLX;env:PRD";;;;;;FALSE;80 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/102359;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Inventory
+Service=MYSAM
+App Name : MYSAM/FLEXERA
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_FLX_A7094;env:PRD;app:APA_IAS_A7094-FLX;app:APA_GCR_A7094-FLX";;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);443 TCP;9988 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88787;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Logging
+Service=Log shipping
+
+App Name : LGC - LOGCOLLECTION / LOGSHIPPING
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_LGC_320968;app:APA_IAS_LGC;app:APA_ICR_LGC;app:APA_OPM_LGC";;;;;;FALSE;"5044-5049 TCP;1514 TCP;4514 TCP;6514 TCP;1514 UDP;1545 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88785;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=TSM
+
+App Name : FRA-TSM (RBDF)
+OS : Linux AIX";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:CORE;app:CSM_BCK_FRA.TSM.RBDF;env:PRD";;;;;;FALSE;"2010-2600 TCP;3000-3500 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88781;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=TSM
+App Name : FRA-TSM (RBDF)
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7367-TSM;env:PRD";;;;;;FALSE;"2010-2600 TCP;3000-3500 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88779;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=Networker Backup
+
+App Name : FRA-NETWORKER
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_NWK;env:PRD";;;;;;FALSE;"7937-9936 TCP;111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89904;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Backup
+Service=Networker Backup
+App Name : FRA-NETWORKER
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:CORE;app:CSM_BCK_FRA.NETWORKER;env:PRD";;;;;;FALSE;"7937-9936 TCP;111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88777;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=Zabbix
+
+App Name : FRA-ZABBIX GBIS
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_SEL";;;;;;FALSE;8080 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/89880;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Monitoring
+Service=Zabbix
+App Name : FRA-ZABBIX GBIS
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_SEL;app:APA_SEL_125475;app:APA_ICR_SEL;app:APA_IAS_AK468-IVK;app:APA_SPV_A7096;app:APA_IAS_AK458-IJW;app:CSU_MON_ZABBIX_ALL;app:CSU_MON_EMEA.ZABBIX_IJW-AK458-PRD.AK458;app:APA_IAS_AK458;app:APA_IAS_AK468";;;;;;FALSE;"10051 TCP;10052 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88805;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-OUT-v10.2-RS;"Global Rules for OUTBOUND flows in destination of ESSENTIAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.ESSENTIAL-LGA + ANY) or APPGROUP_EUR.INFRA.ESSENTIAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Messaging
+Service=SMTP
+
+App Name : AII - AIX INfra server IAS/SYS
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7776-AII;env:PRD";;;;;;FALSE;25 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9344;/orgs/1/sec_policy/draft/rule_sets/9344/sec_rules/88765;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;"Flux DATABASE AS A SERVICE
+";TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DB.MANAGED.OCP";;;;;;FALSE;FALSE;"app:APA_B05_AF524;env:PRD";;;;;;FALSE;"7 TCP;3872 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/92469;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;NASTEL Monitoring for MQ;TRUE;FALSE;FALSE;"role:BATCH;app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";;;;;;FALSE;FALSE;"app:APA_IAS_RBIIN;env:PRD";;;;;;FALSE;"5010 TCP;4010 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/92434;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;Request 678769971;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"app:APA_ADB_196919;env:PRD";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90529;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;"Flux DATABASE AS A SERVICE
+";TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DB.MANAGED.OCP";;;;;;FALSE;FALSE;"env:PRD;app:APA_AGR_3534";;;;;;FALSE;"7 TCP;3872 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90393;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;"Flux STAR-SBS
+";TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"env:PRD;app:APA_SNA_216334";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90385;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;"Flux SERVEURS TECHNIQUES MONACO
+";TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"env:PRD;app:APA_GCR_GTSMO";;;;;;FALSE;9988 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90383;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;IDL cockpit flow;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"env:PRD;app:APA_IAS_ILC";;;;;;FALSE;"7 TCP;1830 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90369;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;"Flux OTHER DATABASE ADMINISTRATION TOOLS
+";TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"env:PRD;app:APA_IAS_ADB";;;;;;FALSE;1830 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90367;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-OUTBOUND2APA-PRD-RS;;;TRUE;To investigate ;TRUE;FALSE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"env:PRD;app:APA_IAS_SCE";;;;;;FALSE;1858 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/10035;/orgs/1/sec_policy/draft/rule_sets/10035/sec_rules/90365;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;In order to be able to backup the databases using RMAN catalog.;TRUE;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;FALSE;;;"DNS_dbmprd9vr2-scan.dns20-3.socgen-IPL;DNS_dbmprd9vr22-vip.dns20-3.socgen-IPL;DNS_dbmprd9vr21-vip.dns20-3.socgen-IPL;DNS_dbmdrp8vr2-scan.dns20-2.socgen-IPL;DNS_dbmdrp8vr21-vip.dns20-2.socgen-IPL;DNS_dbmdrp8vr22-vip.dns20-2.socgen-IPL";;;;FALSE;1521 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/105619;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Temparary Allowing it for Dev env. its allready allowed for PRD for Bouquets.;FALSE;TRUE;FALSE;"app:CSM_RBD_PAS.DRE_ALL;role:REBOUND;env:DEV";;;;;;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/103893;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;justification: Flow needs to be opened for Cash Payment generation , Treasury announcement, Settlement Accounting for MARK & GLBA perimeter and some GTPS scope.;TRUE;TRUE;FALSE;"app:SSM_GTS_CG.FRA.WEBSPHERE;role:CORE;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/103698;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Flux Vault;TRUE;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;FALSE;;;SS_AUTH_PASSWORD.VAULT-PRD-IPL;;;;FALSE;1858 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92467;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;FLux pthorey.fr.world.socgen-IPL;TRUE;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;FALSE;;;DNS_pthorey.fr.world.socgen-IPL;;;;FALSE;"111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92465;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"QUALYS Flow implemented on Bouquet Illumio, shall be disabled
+";TRUE;FALSE;FALSE;;;DNS_gtfri-paris1-vcs2.eu-fr-paris.cloud.socgen-IPL;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;"22 TCP;8100 TCP;1522 TCP;111 UDP;53 UDP;2000 TCP;7938 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92458;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux data104b_dmp_v718.eu-fr-north.cloud.socgen-IPL
+";TRUE;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;FALSE;;;"DNS_data205b_dbaas_v718.eu-fr-north.cloud.socgen-IPL;DNS_data104b_dmp_v718.eu-fr-north.cloud.socgen-IPL";;;;FALSE;2049 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91768;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Flux Docker;TRUE;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;FALSE;;;MUT_KUBE9.PROD.GTS.SSA-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91760;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Validated by ME
+Flow in destination of AUTOSYS API";TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;SSD_AUTOSYS.API-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91600;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"27/06/2024 added by AFH
+Following 570284207";TRUE;FALSE;FALSE;;;MUT_KUBE9.PROD.GBIS.ITEC-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91598;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Shared service : File transfert flow;TRUE;FALSE;FALSE;;;SSD_FTR_TRANSFERT-PRD-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;SS_TRANSFER_FTR_GCR-PROD-OUT-SVC (22 TCP);workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91592;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;user flow. disabled?;TRUE;FALSE;FALSE;;;U_IN_BENGALORE_VDI-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;8081 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91085;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;To investigate;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;DNS_ddp08b.fr.world.socgen-IPL;;;;FALSE;"2049 TCP;111 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90418;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;flux ftr sortant;TRUE;FALSE;FALSE;role:BATCH;;;;;;FALSE;FALSE;;;SSD_FTR_TRANSFERT-PRD-IPL;;;;FALSE;"SS_TRANSFER_FTR_GCR-PROD-IN-SVC (1364 TCP;2905 TCP;2903 TCP;21 TCP;10022 TCP);ICMP (ICMP;IPv6-ICMP)";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90416;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;To investigate;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_crsprdfs01.fr.world.socgen;;;;FALSE;"635 UDP;111 TCP;111 UDP;2049 TCP;2049 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90414;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;To investigate;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;NZ4_CAZA_AES_DC2-IPL;;;;FALSE;"1858 TCP;111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90410;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;To investigate;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;NZ2_LAN.EUR.PRD_SGCIB.ACE.DR-IPL;;;;FALSE;4903 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90408;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;;TRUE;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;;;DNS_cvsparpa4elt102-nfs1.fr.world.socgen-IPL;;;;FALSE;"111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90404;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;No docker flow to be disabled;TRUE;FALSE;FALSE;;;MUT_KUBE9.PROD.GTS.SSA-IPL;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90281;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux DOCKERPAAS
+";TRUE;FALSE;FALSE;;;MUT_KUBE9.PROD.GTS.SSA-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90279;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;;TRUE;FALSE;FALSE;;;MUT_KUBE3.PROD.GTS.SSA-IPL;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;24612 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90267;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"user access to database could be disabled
+
+Rule disabled : Change 765250258";FALSE;FALSE;FALSE;;;"U_FR_SGADM_LAPTOP-IPL;U_FR_SGADM_VDI-IPL";;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90265;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;To investigate;TRUE;FALSE;FALSE;;;DNS_room-par-def-tours-sg-g25613.data.socgen-IPL;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;"8888 TCP;80 TCP;7001 TCP;8443 TCP;5000 TCP;9000 TCP;8008 TCP;8000 TCP;10000 TCP;21 TCP;27017 TCP;443 TCP;5601 TCP;3000 TCP;8080 TCP;11211 TCP;3306 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90263;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"user  direct access. disabled?
+
+Rule disabled : Change 765250258";FALSE;FALSE;FALSE;;;"U_IN_BENGALORE_VDI-IPL;U_IN_BENGALORE_VOYAGER_ALL-IPL";;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90261;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Allow Intra app Flow;TRUE;FALSE;TRUE;;;;;;;FALSE;TRUE;;;;;;;FALSE;All Services;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90255;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"temporary : CyberArk standard access.
+Cutoff on 18/09/2025 through CHANGE 729769612";FALSE;TRUE;FALSE;"role:PSM;role:PSMP;app:CSM_RBD_CYBERARK.STANDARD.FRA.BUSU;env:PRD";;;;;;FALSE;TRUE;;;;;;;FALSE;"ALL-BUT-ERADICATE-SVC (IGMP;6064-65535 TCP;5907-5999 TCP;1724-5899 TCP;515-1722 TCP;140-511 TCP;38-138 TCP;24-36 TCP;20 TCP;14-18 TCP;1-12 TCP;1-68 UDP;69-160 UDP;161-176 UDP;178-1700 UDP;1702-65535 UDP;ICMP;22 TCP);21 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92179;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;flux cockpit(to investigate);TRUE;TRUE;FALSE;"env:PRD;app:APM_GBTO_CHR.IDL.COCKPIT;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;"7 TCP;1830 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92878;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Flux de Synchro DB;TRUE;TRUE;FALSE;"role:DB.MANAGED.OCP;app:APM_GCR_SRG.BIR;env:PRD";;;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;"7 TCP;3872 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92710;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux DATABASE AS A SERVICE
+";TRUE;TRUE;FALSE;"app:APA_B05_AF524;env:PRD";;;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;3872 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92598;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Application: DATABASE AS A SERVICE
+";TRUE;TRUE;FALSE;"app:APA_DBB_196860;env:PRD";;;;;;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP)";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/92461;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Flux EOLE ALISE GATE;TRUE;TRUE;FALSE;"app:APM_L1.GBTO_EOLE.ALISE.GATE.L1;role:DB.ORA.GEN1;env:PRD";;;;;;FALSE;FALSE;"role:DB.ORA.GEN1;role:BATCH";;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP)";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91731;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Allow rule according to 577546549;TRUE;TRUE;FALSE;"app:APM_L1.GBTO_X.ONE.L1;env:PRD;role:INHOUSE_SOFT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91723;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Allow rule according to 577546549;TRUE;TRUE;FALSE;"app:APM_L3.GBTO.EUR_CG.X.ONE.CL.EUR;role:FRONTEND;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/91719;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Rule disabled : Change 765250258;FALSE;TRUE;FALSE;"app:APA_FLO_A7048;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90954;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux REBOND Infrastructure IAS/SYS
+";TRUE;TRUE;FALSE;"app:APA_IAS_A7733-RBD;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.MANAGED.OCP;role:BATCH;role:DB.ORA.GEN1";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90952;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux DATABASE AS A SERVICE
+";TRUE;TRUE;FALSE;"env:PRD;app:APA_AGR_3534";;;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;3872 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90947;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux X-ONE
+";TRUE;TRUE;FALSE;"app:APM_L3.GBTO.EUR_CG.X.ONE.EUR;env:PRD;role:INHOUSE_SOFT";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;1415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90327;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux UNIX SERVER
+";TRUE;TRUE;FALSE;"app:APA_UNX_A7317;env:PRD";;;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90325;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Flux SDS;TRUE;TRUE;FALSE;"app:APA_IAS_SDS;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;1522 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90323;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;Flux SAG;TRUE;TRUE;FALSE;"app:APM_L3.SWIFT.EUR_CG.SWIFT.SAG;role:VENDOR_SOFT;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;11415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90321;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Flux SAG
+";TRUE;TRUE;FALSE;"app:APA_IAS_A1602-GWS;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;11415 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90319;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;database tool flow;TRUE;TRUE;FALSE;"app:APA_ADB_206984;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90317;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_A4303-F0J;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;7938 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90311;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;;TRUE;TRUE;FALSE;"app:APA_IAS_A4303-F0J;env:PRD";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;7938 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90309;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;FRA_TOOLING_SERVER_Message Oriented Middleware (MOM) SABA rebound;TRUE;TRUE;FALSE;"app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.MDW.MOM.AK687;env:PRD;role:REBOUND";;;;;;FALSE;FALSE;role:BATCH;;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90293;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;DATABASE AS A SERVICE;TRUE;TRUE;FALSE;"app:APA_QXS_277800;env:PRD";;;;;;FALSE;FALSE;role:DB.MANAGED.OCP;;;;;;FALSE;3872 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90277;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Buckfast - patch managment database
+flows - Implemented on Bouquet";TRUE;TRUE;FALSE;"app:APA_BUK_A7480;env:PRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1;role:DB.MANAGED.OCP";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90273;;KEEP
+APM_GCR_CLS.CONTROL.BRANCH-PRD-RS;;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD";TRUE;"Buckfast - patch managment database
+flows";TRUE;TRUE;FALSE;"app:APA_BUK_A7480;env:NONPRD";;;;;;FALSE;FALSE;"role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9520;/orgs/1/sec_policy/draft/rule_sets/9520/sec_rules/90271;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Database
+Service= ansible-admin PCP
+App Name : WW-POSTGRE CLOUD PLATFORM-RP
+OS : Linux AIX WINDOWS
+Service Unity=781678102";TRUE;FALSE;FALSE;"env:PRD;role:CORE;app:CSM_DBA_GTS.PCP.RP";;;;;;FALSE;FALSE;"OS:LINUX;role:DB.PCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/106782;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= SYSTEM
+Service=BACKUP SOLUTION
+App Name : ASIA-NETWORKER
+OS : Linux | WINDOWS | AIX
+Service Unity : 777405171";TRUE;FALSE;FALSE;"env:PRD;app:APA_IAS_AK838";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"7937-9936 TCP;111 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/106613;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Database
+Service=DBA Xymon server
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=768937237";TRUE;FALSE;FALSE;"role:CORE;app:CSM_DBA_GTS.ADB.ORACLE.FRA;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.OCP;role:DB.MANAGED.OCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"1530 TCP;12200-12220 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/105391;Modification Pending;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Database
+Service=DBA OEM server
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=781678102";TRUE;FALSE;FALSE;"role:CORE;app:CSM_DBA_GTS.ADB.ORACLE.FRA;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.ORACLE.RAC";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;1522-1525 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/106777;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Deployment 
+App Name : PCP Deployment 
+OS : LINUX 
+Service Unity : 763711744";TRUE;FALSE;FALSE;;;"KUB_GTS_NET.SSA.DOCKER-PRD-IPL;KUB_GTS_NET.SSA.DOCKER-DEVPRD-IPL";;;;FALSE;FALSE;"OS:LINUX;role:DB.PCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/104243;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Security
+Service= CyberArk
+
+CYBERARK PASSWORD ROTATION
+OS : WINDOWS";TRUE;FALSE;FALSE;"app:CSM_RBD_CYBERARK.PREMIUM.SABA.GTS;env:PRD;role:CPM";;;;;;FALSE;FALSE;"OS:WINDOWS;role:DB.MSSQL";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;1435 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/103399;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Batch
+Service=Autosys
+App Name : AUTOSYS DEV (AUTOSYS MANAGER services)
+OS :  Linux Windows
+Service Unity=752890932";TRUE;FALSE;FALSE;"role:APP1;app:APM_GTS_CG.FRA.AUTOSYS;env:DEV";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"7163 TCP;10951 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/102255;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Batch
+Service=Autosys
+App Name : AUTOSYS PRD (AUTOSYS MANAGER services)
+OS :  Linux Windows
+Service Unity=752890932";TRUE;FALSE;FALSE;"role:APP1;app:APM_GTS_CG.FRA.AUTOSYS;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"7163 TCP;10851 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/102253;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=BATCH
+Service=Earth-DCA
+App Name : Earth-DCA
+OS : Linux
+Service Unity : 752890932";TRUE;FALSE;FALSE;"app:APA_EAO_A7010;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;1002 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/102222;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound 
+
+App Name : PAS DRE rebound SABA
+OS : WINDOWS
+
+#Unity: 747325980";TRUE;FALSE;FALSE;"env:PRD;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;role:REBOUND";;;;;;FALSE;FALSE;"OS:WINDOWS;role:DB.MSSQL";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;3389 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/101307;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=System
+Service=STARMON
+App Name : Starmon
+OS : AIX, Linux, WINDOWS";TRUE;FALSE;FALSE;"env:PRD;app:CSM_MON_IAS.SYS.STARMON;role:CORE";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP)";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/100872;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Rebound
+Service=Admin BDD on 22 TCP
+
+App Name : Admin-Bdd
+OS : Linux";TRUE;FALSE;FALSE;"app:CSM_RBD_PAS.DRE_ALL;env:PRD;role:APPLICATION";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;role:DB.ORA.GEN1;role:DB.POSTGRE.GEN1;role:DB.PCP;role:DB.ORACLE.RAC";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/99954;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Rebound
+Service=Admin BDD on 22 TCP
+
+App Name : Admin-Bdd
+OS : Linux";TRUE;FALSE;FALSE;"app:CSM_RBD_PAS.DRE_ALL;env:PRD;role:REBOUND";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;role:DB.ORA.GEN1;role:DB.POSTGRE.GEN1";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/99952;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= IAS rebound
+
+App Name : IAS SYS rebound SABA
+OS : LINUX AIX WINDOWS";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.IAS_SABA.IAS.SYS.A7733;app:CSM_L3.SABA.IAS_SABA.IAS.CTS.VPS.A7323;app:CSM_L3.SABA.IAS_SABA.IAS.CTS.VCS.D0762";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);135 TCP;15671 TCP;33089 TCP;3389 TCP;443 TCP;445 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/99845;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= IAS rebound
+
+App Name : IAS SYS rebound SABA
+OS : LINUX AIX";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.IAS_SABA.IAS.SYS.A7733;app:CSM_L3.SABA.IAS_SABA.IAS.CTS.VPS.A7323;app:CSM_L3.SABA.IAS_SABA.IAS.CTS.VCS.D0762";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);15671 TCP;22 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/99843;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Deployment
+Service= Maintenance OS patching/OCP OpenSVC task 
+App Name : CP OCP - OS patching during Maintenance Window / API 
+OS : LINUX AIX WINDOWS
+Service Unity : 740669692, 752890932";TRUE;FALSE;FALSE;;;"KUB_GTS_NET.SSA.DOCKER-PRD-IPL;KUB_GTS_NET.SSA.DOCKER-DEVPRD-IPL";;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.OCP;role:DB.MANAGED.OCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;"22 TCP;1215 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/99558;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound 
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.OCP;role:DB.ORA.EXADATA.CC;role:DB.MANAGED.OCP;role:DB.ORA.GEN1;role:DB.PCP;role:DB.POSTGRE.GEN1;role:DB.ORACLE.RAC";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98906;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound for ORACLE controller
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.ORACLE.RAC;role:DB.ORA.GEN1";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;1753 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98903;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound for ORACLE
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.OCP;role:DB.ORA.EXADATA.CC;role:DB.ORA.GEN1";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;12200-12220 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98901;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound for ORACLE
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.ORACLE.RAC;role:DB.OCP;role:DB.ORA.EXADATA.CC;role:DB.MANAGED.OCP;role:DB.ORA.GEN1";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;1521-1569 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98899;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound 
+
+App Name : PAS DRE rebound SABA
+OS :LINUX
+
+";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701";;;;;;FALSE;FALSE;"OS:LINUX;role:DB.OCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;1215 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/105543;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound for SYBASE
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.SYBASE";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;11020 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98897;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound for MSSQL
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855, 752890932";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703;app:CSM_L3.SABA.GTS.ADMIN.TOOLS_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.MSSQL";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);1434 TCP;1434 UDP;1435 TCP;14001 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98895;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS DRE Rebound for Postgre
+
+App Name : PAS DRE rebound SABA
+OS : LINUX AIX WINDOWS
+
+Service Unity : 734775855";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.RED.AK701;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK711;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.DST.AK707;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK704;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK705;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.DRE.GREEN.AK703";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.PCP;role:DB.POSTGRE.GEN1";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;12400 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98892;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=
+SERVICE NAME= Buckfast DB Patch Management
+Unity Reference : 734775855";TRUE;FALSE;FALSE;"app:APA_BUK_A7480;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;role:DB.OCP;role:DB.PCP;role:DB.ORA.GEN1;role:DB.POSTGRE.GEN1;role:DB.ORACLE.RAC;role:DB.MANAGED.OCP";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/98870;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=
+SERVICE NAME=CONTROL M
+Unity Reference : 730042023";TRUE;FALSE;FALSE;"app:CSM_BATCH_FRA.CONTROLM.BDDF;env:DEV;env:UAT;role:COMPUTE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX;env:PRD";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);10006 TCP;7000-7999 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/97953;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=
+SERVICE NAME=CONTROL M
+Unity Reference : 730042023";TRUE;FALSE;FALSE;"app:CSM_BATCH_FRA.CONTROLM.BDDF;env:PRD;role:COMPUTE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);10006 TCP;7000-7999 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/97945;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=QUALYS SCAN
+SERVICE NAME=Qualys Cloud
+Unity Reference : 730021559";TRUE;FALSE;FALSE;;;CSD_SEC_GTFRI.QUALYSCAN-IPL;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";APPGROUP_L1.GTE-LGA;;;;;FALSE;All Services;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/97936;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+SERVICE= OS Configuration
+
+OS-CONFIGURATION FOR WINDOWS";TRUE;FALSE;FALSE;"app:APA_OSC_296077;env:PRD";;;;;;FALSE;FALSE;OS:WINDOWS;"REGION.EUR-LGL;APPGROUP_L1.GTE-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;5986 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/96053;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+SERVICE= OS Configuration
+
+OS-CONFIGURATION FOR LINUX";TRUE;FALSE;FALSE;"app:APA_OSC_296077;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"REGION.EUR-LGL;APPGROUP_L1.GTE-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/96051;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Security
+Service= CyberArk
+
+CYBERARK PASSWORD ROTATION
+OS : WINDOWS";TRUE;FALSE;FALSE;"app:CSM_RBD_CYBERARK.PREMIUM.SABA.GTS;env:PRD;role:CPM";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"3389 TCP;33089 TCP;445 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/95742;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Security
+Service= CyberArk
+
+CYBERARK PASSWORD ROTATION
+OS : LINUX,AIX";TRUE;FALSE;FALSE;"app:CSM_RBD_CYBERARK.PREMIUM.SABA.GTS;env:PRD;role:CPM";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/95740;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Security
+Service= DLP
+
+App Name : DATA LOSS PREVENTION CORE TO AGENT FLOW";TRUE;FALSE;FALSE;"env:PRD;role:CORE;app:CSM_GTS_DLP.MAIN.DLP";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;8100 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/95738;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS MDW rebound
+
+App Name : PAS MDW rebound SABA
+OS : LINUX AIX";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.MDW.MOM.AK687";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;role:WMQ;role:RABBITMQ";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/95520;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Rebound
+Service= PAS MDW rebound
+
+App Name : PAS MDW rebound SABA
+OS : WINDOWS";TRUE;FALSE;FALSE;"env:PRD;role:REBOUND;app:CSM_L3.SABA.GTS.REBOUND_SABA.PAS.MDW.MOM.AK687";;;;;;FALSE;FALSE;"OS:WINDOWS;role:RABBITMQ";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);15671 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/95518;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Security
+Service= CyberArk
+
+App Name : CYBERARK PREMIUM MANAGEMENT SERVICES GTS
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"role:PSMP;role:PSM;app:CSM_RBD_CYBERARK.PREMIUM.SABA.GTS;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ALL-BUT-ERADICATE-SVC (IGMP;6064-65535 TCP;5907-5999 TCP;1724-5899 TCP;515-1722 TCP;140-511 TCP;38-138 TCP;24-36 TCP;20 TCP;14-18 TCP;1-12 TCP;1-68 UDP;69-160 UDP;161-176 UDP;178-1700 UDP;1702-65535 UDP;ICMP;22 TCP);21 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89360;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+Service= IDM
+
+App Name : WW-Ecosystem Identity Datamanagement
+
+OS : WINDOWS";TRUE;FALSE;FALSE;"app:APA_IAS_A7314-EID;env:PRD";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;135 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89470;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Security
+Service= Qualys
+
+App Name : QUALYS TOOLS
+OS : WINDOWS / LINUX / AIX
+
+service unity = 749235469";TRUE;FALSE;FALSE;"env:PRD;app:APA_SEC_QUAL;app:CSU_SYS_QUALYS.SCAN_ALL_PRD;app:APA_IAS_QUAL";;;;;;FALSE;FALSE;"OS:WINDOWS;OS:LINUX;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;All Services;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89465;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+Service= NTS
+
+App Name : MS WINDOWS CORE INFRASTRUCTURE
+OS : WINDOWS";TRUE;FALSE;FALSE;"app:APA_IAS_NTS;env:PRD";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;5986 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89463;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+Service= HMC
+
+App Name : AIX INFRA HMC";TRUE;FALSE;FALSE;"app:CSU_SYS_AIX.INFRA.HMC_EUR_PRD;env:PRD";;;;;;FALSE;FALSE;OS:AIX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;657 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89327;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+Service= Whats
+
+App Name : WHATS
+OS : AIX
+
+Service unity : 734775855";FALSE;FALSE;FALSE;"app:APA_IAS_A8654-IIQ;env:PRD";;;;;;FALSE;FALSE;OS:AIX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89323;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Deployment
+Service= Puppet
+App Name : WW-PuppetAsAService
+OS : WINDOWS";TRUE;FALSE;FALSE;"role:CORE;app:CSM_SYS_WW.PUPPET.AAS;env:PRD";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);5986 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89467;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Deployment
+Service= Puppet
+
+App Name : WW-PuppetAsAService
+OS : Linux AIX ";TRUE;FALSE;FALSE;"role:CORE;app:CSM_SYS_WW.PUPPET.AAS;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88735;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Deployment
+Service= Satellite Capsule
+App Name : UNIX SERVER / WW UNIX MASTER SERVERS
+OS : Linux";TRUE;FALSE;FALSE;"role:CORE;app:CSM_DEP_MASTER.UNIX.SATELLITE.CAPSULES;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88729;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= Deployment
+Service= Serum
+
+App Name : WW UNIX MASTER SERVERS / SERUM PATCHING
+OS : Linux";FALSE;FALSE;FALSE;"app:APA_IAS_WUM;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88731;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT= System
+Service= SSHKIT
+App Name : SSK
+OS : Linux AIX 
+Service unity=754483548";TRUE;FALSE;FALSE;"app:CSM_SYS_SSHKIT.SSK;env:PRD;role:CORE";;;;;;FALSE;FALSE;"OS:AIX;OS:LINUX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88727;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=System
+Service=MARACIAAS
+
+App Name : MARACIAAS
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_MCS_AK113;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89483;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=System
+Service=MARACIAAS
+
+App Name : MARACIAAS
+OS : WINDOWS";TRUE;FALSE;FALSE;"role:PROXY;app:CSM_MON_MS.WIN.CORE.INFRA.MARACIAAS;env:PRD";;;;;;FALSE;FALSE;OS:WINDOWS;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;5986 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/89461;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=System
+Service=MARACIAAS
+
+App Name : MARACIAAS
+OS : Linux";TRUE;FALSE;FALSE;"role:PROXY;app:CSM_MON_MS.WIN.CORE.INFRA.MARACIAAS;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;22 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88725;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Inventory
+Service=Marley
+
+App Name : Marley
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"app:APA_MRL_1169;env:PRD";;;;;;FALSE;FALSE;"OS:AIX;OS:WINDOWS;OS:LINUX";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP)";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88721;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Backup
+Service=TSM
+
+App Name : FRA-TSM (RBDF)
+OS : Linux AIX";TRUE;FALSE;FALSE;"role:CORE;app:CSM_BCK_FRA.TSM.RBDF;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);2010-2600 TCP;3000-3500 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88717;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Backup
+Service=TSM
+
+App Name : FRA-TSM (RBDF)
+OS : Linux";TRUE;FALSE;FALSE;"app:APA_IAS_A7367-TSM;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);2010-2600 TCP;3000-3500 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88715;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Backup
+Service=Networker Backup
+
+App Name : FRA-NETWORKER
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"role:CORE;app:CSM_BCK_FRA.NETWORKER;env:PRD";;;;;;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"111 TCP;111 UDP;7937-9936 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88713;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Monitoring
+Service=Nagios
+
+App Name : MON-NAG-SBS
+OS : Linux";FALSE;FALSE;FALSE;"app:APA_NGS_341767;env:PRD";;;;;;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);22 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88723;;KEEP
+BOUQUETS_EUR.INFRA.ESSENTIAL-IN-v9.2-RS;"Global Rules for INBOUND flows coming from ESSENTIAL Core Infra Services in destination of MANAGED elements.
+Scope = ALL
+Consumer = CS, CSM, CSD, APA
+Provider = APPGROUP_EUR.INFRA.ESSENTIAL-LGA";;TRUE;"CAT=Monitoring
+Service=Zabbix
+
+App Name : EMEA-ZABBIX
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"env:PRD;app:APA_IAS_SEL;app:APA_SEL_125475;app:APA_ICR_SEL;app:APA_IAS_AK468-IVK;app:APA_SPV_A7096;app:APA_IAS_AK458-IJW;app:CSU_MON_ZABBIX_ALL;app:CSU_MON_EMEA.ZABBIX_IJW-AK458-PRD.AK458;app:APA_IAS_AK458";;;;;;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.GTE-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;"ICMP (ICMP;IPv6-ICMP);10050 TCP;7011 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9342;/orgs/1/sec_policy/draft/rule_sets/9342/sec_rules/88711;;KEEP
+APM_GCR_SRG.BIR-UAT-RS;;"app:APM_GCR_SRG.BIR;env:UAT";TRUE;;TRUE;TRUE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:DB.ORA.GEN1;role:DATABASE";;;;;;FALSE;FALSE;role:DB.ORA.GEN1;;;;;;FALSE;"22 TCP;3872 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9409;/orgs/1/sec_policy/draft/rule_sets/9409/sec_rules/88410;;KEEP
+APM_GCR_SRG.BIR-UAT-RS;;"app:APM_GCR_SRG.BIR;env:UAT";TRUE;;TRUE;TRUE;FALSE;"role:BATCH;app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT";;;;;;FALSE;FALSE;role:WMQ;;;;;;FALSE;1416 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9409;/orgs/1/sec_policy/draft/rule_sets/9409/sec_rules/86615;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=IDM
+App Name : FRA-IDM-PLT
+OS : Linux
+service unity = 749235469
+Unity Request: 779774293";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:DIRECTORY;app:CSM_AUTH_FRA.IDM.PLT;env:PRD";;;;;;FALSE;"88 TCP;88 UDP;389 TCP;389 UDP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/101649;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=API Account
+OS : WINDOWS, LINUX, AIX
+
+service unity = 749235469";TRUE;FALSE;FALSE;"OS:WINDOWS;OS:LINUX;OS:AIX";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_AUTH_API.ACCOUNT-PRD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/101635;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=GWIM
+App Name : FRA-GWIM
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_GWM;env:PRD";;;;;;FALSE;"445 TCP;139 TCP;443 TCP;80 TCP;135 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/101259;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=CITRIX
+App Name : MASTER. CITRIX
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSU_AUTH_MASTER.CITRIX;env:PRD";;;;;;FALSE;"445 TCP;139 TCP;443 TCP;80 TCP;135 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/101257;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=MASTER.PAR
+App Name : MASTER. SERVER
+OS : WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSU_AUTH_MASTER.PAR;env:PRD";;;;;;FALSE;"445 TCP;139 TCP;443 TCP;80 TCP;135 TCP;9800 TCP;1433 TCP;1434 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/101255;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=AD
+App Name : AD Authentication
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_AUTH_AD_GCR-ALL-IPL;;;;FALSE;"3269 TCP;3268 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/90678;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=AD
+App Name : AD ASIA (manually created)
+OS :  WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSU_AUT_ADS.ECOSYSTEM_ASIA_PRD;env:PRD";;;;;;FALSE;"139 UDP;389 UDP;53 TCP;88 TCP;389 TCP;445 TCP;464 TCP;123 UDP;135 TCP;9389 TCP;3269 TCP;139 TCP;3268 TCP;50500 TCP;54500-55500 TCP;5722 TCP;636 TCP;53 UDP;88 UDP;123 TCP;137 UDP;138 UDP;50002-50102 TCP;50000 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89526;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=AD
+App Name : AD/DNS (manual iplist)
+OS :  WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;"CS_EUS_DNS_RCR-ALL-IPL;CS_SYS_DNS_GCR-ALL-IPL";;;;FALSE;"53 UDP;88 UDP;123 TCP;137 UDP;138 UDP;139 UDP;389 UDP;53 TCP;88 TCP;389 TCP;445 TCP;464 TCP;123 UDP;135 TCP;9389 TCP;3269 TCP;139 TCP;3268 TCP;50500 TCP;54500-55500 TCP;5722 TCP;636 TCP;50002-50102 TCP;50000 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89524;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=AD
+App Name : AD (manual iplist)
+OS :  WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;"CS_AUTH_AD.FR_GCR-PROD-IPL;CS_AUTH_AD.FR_RCR-PROD-IPL;CS_AUTH_AD_GCR-ALL-IPL;CSD_DC400X_USA-PRD-IPL;CSD_ADS_DWS.A7833.AZI-PRD-IPL";;;;FALSE;"53 UDP;88 UDP;123 TCP;137 UDP;138 UDP;139 UDP;389 UDP;53 TCP;88 TCP;389 TCP;445 TCP;464 TCP;123 UDP;135 TCP;9389 TCP;3269 TCP;139 TCP;3268 TCP;50500 TCP;54500-55500 TCP;5722 TCP;636 TCP;50002-50102 TCP;50000 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89522;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=AD
+App Name : FRA-AGENCES-ADS,  FRA-ECOSYSTEM-ADS, FRA-EXT-ADS, WW-DSDI-ADS, WW-HERMES-ADS, WW-HFN-ADS, WW-HSDI-ADS, WW-MSD-ADS, WW-PSDI-ADS
+OS :  WINDOWS";TRUE;FALSE;FALSE;OS:WINDOWS;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_DWS_A7831-AZG;app:APA_IAS_A7340-ADS;app:APA_None_A7340-ADS;app:APA_DWS_A7340-ADS;app:APA_DWS_A7843-AZS;app:APA_DWS_A7836-AZL;app:APA_IAS_A7836-AZL;app:APA_DWS_A7830-AZE;app:APA_DWS_A7838-AZN;app:APA_DWS_A7835-AZK;app:APA_DWS_A7829-AZC;app:APA_DWS_A7833-AZI;app:APA_DWS_A7314;app:APA_DWS_A7837-AZM;app:APA_DWS_a7830;app:APA_DWS_A7314-EID;app:APA_IAS_A7829-AZC;app:APA_DWS_A7833;app:APA_DWS_A7829;app:APA_IAS_AK022-IMY";;;;;;FALSE;"53 UDP;88 UDP;123 TCP;137 UDP;138 UDP;139 UDP;389 UDP;53 TCP;88 TCP;389 TCP;445 TCP;464 TCP;123 UDP;135 TCP;9389 TCP;3269 TCP;139 TCP;3268 TCP;50500 TCP;54500-55500 TCP;5722 TCP;636 TCP;50002-50102 TCP;50000 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89518;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=NTP
+App Name : NTP Services FQDN defined (not in CMDB)
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_SYS_NTP_ALL-ALL-IPL;;;;FALSE;123 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/88704;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=NTP
+App Name : NTP
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_NTP;env:PRD";;;;;;FALSE;123 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/88698;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=DNS
+App Name : DNS
+OS : AIX";TRUE;FALSE;FALSE;OS:AIX;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_DNS;env:PRD";;;;;;FALSE;53 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89404;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=DNS
+App Name : DNS (Manually defined not in CMDB)
+OS : Linux WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSU_NET_DNS.EMEA;env:PRD";;;;;;FALSE;"53 UDP;53 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/88700;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=DNS
+App Name : DNS (Manually defined not in CMDB)
+OS : AIX";TRUE;FALSE;FALSE;OS:AIX;"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSU_NET_DNS.EMEA;env:PRD";;;;;;FALSE;53 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89402;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=DNS
+App Name : DNS
+OS : Linux  WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_DNS;env:PRD";;;;;;FALSE;"53 UDP;53 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/88696;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=System
+Service=DNS
+App Name : NTP / DNS
+OS : Linux AIX";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_SYS_DNS_GCR-ALL-IPL;;;;FALSE;53 UDP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/90579;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=SG Connect
+App Name : Authentication through SGConnect VIP
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_SEC_SGCONNECT.VIP-PROD-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/88702;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=Access Control
+App Name : ACS-DMS
+OS : Linux AIX";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX";"REGION.EUR-LGL;APPGROUP_VITAL-LGA";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"role:DIRECTOR;app:CSM_RBD_PAS.MDW.MTS.MOM.MFT_ALL;env:PRD";;;;;;FALSE;"88 TCP;88 UDP;389 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/88688;;KEEP
+BOUQUETS_EUR.INFRA.VITAL-OUT-v2.3-RS;"Global Rules for OUTBOUND flows in destination of VITAL Core Infra Services.
+Scope = ALL
+Consumer = (APPGROUP_EUR.INFRA.VITAL-LGA + ANY) or APPGROUP_EUR.INFRA.VITAL-LGA
+Provider = CS, CSM, CSD, APA, CSU";;TRUE;"CAT=Authentication
+Service=Access Control
+App Name : ACS-DMS
+OS :  AIX";TRUE;FALSE;FALSE;"OS:AIX;OS:LINUX";"APPGROUP_VITAL-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:CSM_RBD_SEC.ACS.IRU_ALL;env:PRD;role:DIRECTOR;role:LOAD_BALANCER";;;;;;FALSE;"636 TCP;88 UDP;88 TCP;389 TCP;1636 TCP;1389 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9338;/orgs/1/sec_policy/draft/rule_sets/9338/sec_rules/89332;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+App Name : Websphere
+OS : Linux
+
+Disabling this rule as its a duplicate rule. Please refer to rule inside BOUQUETS_EUR.INFRA.ESSENTIAL-OUT.";FALSE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS;OS:AIX";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:SSM_GTS_CG.FRA.WEBSPHERE;role:CORE;role:WMQ";;;;;;FALSE;"11417 TCP;11415 TCP;11423 TCP;11419 TCP;11414 TCP;1415-1418 TCP;1420 TCP;1423 TCP;1426 TCP;1427 TCP;1430 TCP;11428 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/103723;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Security
+Service=CyberArk
+
+App Name : CYBERARK BUSU
+OS : WINDOWS, LINUX, AIX
+
+Service unity = 734775855";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"REGION.EUR-LGL;APPGROUP_L1.BUSINESS-LGA";;;;;FALSE;FALSE;;;CS_SEC_CYBERARK_ALL-PROD-VAULT.BUSU-IPL;;;;FALSE;1858 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/98889;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+
+App Name : Websphere DEV
+OS : Linux ";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_A7650-WBS;env:NONPRD";;;;;;FALSE;"11417 TCP;11415 TCP;11423 TCP;11419 TCP;11414 TCP;1415-1418 TCP;1420 TCP;1423 TCP;1426 TCP;1427 TCP;1430 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/92161;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Monitoring
+Service=Nastel
+
+App Name : Nastel Autopliot
+
+OS : Linux, AIX";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_MNA_A7139";;;;;;FALSE;10051 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/91200;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Batch
+Service=Autosys
+
+App Name : AUTOSYS (AUTOSYS AGENT services)
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_ATS_71330;env:PRD";;;;;;FALSE;"7163 TCP;7500 TCP;7507 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/90891;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+App Name : FRA-WebSphere MQ
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_WMQ;env:PRD";;;;;;FALSE;"1415 TCP;1416 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/90883;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+App Name : Websphere
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_A7650-WBS";;;;;;FALSE;"11417 TCP;11415 TCP;11423 TCP;11419 TCP;11414 TCP;1415-1418 TCP;1420 TCP;1423 TCP;1426 TCP;1427 TCP;1430 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/90877;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+App Name : ORACLE Administration Tools managed worldwide
+
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:PRD;app:APA_IAS_ADB";;;;;;FALSE;"8081 TCP;1522 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/90875;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Inventory	
+Service=Core Services Database	 DREAPI
+App Name : GDAT API
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_dreapi.fr.world.socgen-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/90777;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Inventory
+Service=GDAT
+App Name : GDAT API
+OS : Linux AIX WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS;role:DB.OCP;role:DB.PCP;role:DB.ORA.GEN1;role:DB.POSTGRE.GEN1;role:DB.ORACLE.RAC;role:DB.MANAGED.OCP;role:DB.ORA.EXADATA.CC;role:DB.MSSQL";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CSD_DBA_GDAT.API-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/90582;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+App Name : ORACLE Administration Tools managed worldwide
+OS : Linux AIX WINDOWS
+Service Unity=752890932";FALSE;FALSE;FALSE;"OS:LINUX;OS:AIX;OS:WINDOWS";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;CS_DBA_ORACLE_GCR-ALL-IPL;;;;FALSE;4903 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89887;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Inventory
+Service=Sparx
+App Name : SPARX
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_SPX_14636;env:PRD";;;;;;FALSE;"ICMP (ICMP;IPv6-ICMP);111 TCP;111 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89854;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Middleware
+Service=Websphere
+App Name : Webspehere for DEV only
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"env:NONPRD;app:APA_IAS_WMQ";;;;;;FALSE;"1415 TCP;1416 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89852;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+App Name : Oracle Database As A Service for DEV only
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_DBB;env:NONPRD";;;;;;FALSE;"7 TCP;3872 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89850;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Database
+Service=Oracle Database Administration
+App Name : Oracle Database As A Service for DEV only
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_DBB_196860;env:PRD";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89845;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=System
+Service=Unix Master Server
+App Name : WW UNIX MASTER SERVERS
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;env:PRD";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_UNX_A7317;env:NONPRD";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89829;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=System
+Service=Unix Master Server
+App Name : FRA-CTX Published Desktop and Applicatio
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_UNX_A7317;env:PRD";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89826;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"App Name : FRA-FRF-Infra-HOSTING-Generic
+OS : Linux | WINDOWS";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_RCR_A7697-FFH;env:PRD";;;;;;FALSE;"9988 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89628;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"App Name : GTS Flow in destination of KUBE5.PROD.GTS
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;MUT_KUBE5.PROD.GTS.SSA-IPL;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89511;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"App Name : GTS Flow in destination of KUBE3.PROD.GTS
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";;;;;FALSE;FALSE;;;MUT_KUBE3.PROD.GTS.SSA-IPL;;;;FALSE;"8140 TCP;443 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89509;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=System
+Service=Github
+
+App Name : GitHub DSP
+OS : Linux";TRUE;FALSE;FALSE;"OS:LINUX;OS:WINDOWS";"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_GIK_A8684;env:PRD";;;;;;FALSE;443 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89498;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=Authentication
+Service=IDM
+App Name : FRA-IDM-PLT
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_ID0_497049;env:PRD";;;;;;FALSE;"88 TCP;88 UDP;389 TCP;389 UDP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89496;;KEEP
+BOUQUETS_EUR.INFRA.USEFUL-OUT-v.4.5-RS;;;TRUE;"CAT=CITRIX
+Service=CTX Published Desktop 
+App Name : WW UNIX MASTER SERVERS
+OS : Linux";TRUE;FALSE;FALSE;OS:LINUX;"APPGROUP_L1.BUSINESS-LGA;REGION.EUR-LGL";Any (0.0.0.0/0 and ::/0);;;;FALSE;FALSE;"app:APA_IAS_CTXAS;env:PRD";;;;;;FALSE;80 TCP;workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/9349;/orgs/1/sec_policy/draft/rule_sets/9349/sec_rules/89490;;KEEP
+APM_GTS.ACS_AMER.OUD.PLT.MKT-PRD-RS;;"env:PRD;app:APM_GTS.ACS_AMER.OUD.PLT.MKT";TRUE;;TRUE;TRUE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:UAT;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;role:LOAD_BALANCER;;;;;;FALSE;"2636 TCP;2389 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/11889;/orgs/1/sec_policy/draft/rule_sets/11889/sec_rules/99396;;KEEP
+APM_GTS.ACS_AMER.OUD.PLT.MKT-PRD-RS;;"env:PRD;app:APM_GTS.ACS_AMER.OUD.PLT.MKT";TRUE;;TRUE;TRUE;FALSE;"app:APM_GCR_CLS.CONTROL.BRANCH;env:PRD;role:DATABASE;role:DB.ORA.GEN1";;;;;;FALSE;FALSE;role:LOAD_BALANCER;;;;;;FALSE;"2636 TCP;2389 TCP";workloads;workloads;FALSE;FALSE;FALSE;brn;/orgs/1/sec_policy/draft/rule_sets/11889;/orgs/1/sec_policy/draft/rule_sets/11889/sec_rules/99398;;KEEP
