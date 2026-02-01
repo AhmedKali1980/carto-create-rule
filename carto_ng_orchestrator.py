@@ -39,10 +39,16 @@ import re
 import socket
 import ipaddress
 import logging
+import atexit
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional, List, Dict, Tuple, Set
 import pandas as pd
+from modules.email_utils import (
+    build_execution_summary_table,
+    parse_recipients,
+    send_carto_notification,
+)
 
 # ------------------------------ config/env ------------------------------
 def load_conf(path: str) -> Dict[str, str]:
@@ -77,6 +83,79 @@ def ensure_dir(p: Path) -> None:
 
 def now_stamp(fmt: str) -> str:
     return datetime.now().strftime(fmt)
+
+def start_stdout_tee(log_path: Path) -> Tuple[int, int, subprocess.Popen]:
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    tee_proc = subprocess.Popen(["tee", "-a", str(log_path)], stdin=subprocess.PIPE)
+    if tee_proc.stdin is None:
+        raise RuntimeError("Failed to initialize stdout tee process")
+    orig_stdout_fd = os.dup(sys.stdout.fileno())
+    orig_stderr_fd = os.dup(sys.stderr.fileno())
+    os.dup2(tee_proc.stdin.fileno(), sys.stdout.fileno())
+    os.dup2(tee_proc.stdin.fileno(), sys.stderr.fileno())
+    return orig_stdout_fd, orig_stderr_fd, tee_proc
+
+def stop_stdout_tee(orig_stdout_fd: int, orig_stderr_fd: int, tee_proc: subprocess.Popen) -> None:
+    try:
+        sys.stdout.flush()
+        sys.stderr.flush()
+    except Exception:
+        pass
+    os.dup2(orig_stdout_fd, sys.stdout.fileno())
+    os.dup2(orig_stderr_fd, sys.stderr.fileno())
+    os.close(orig_stdout_fd)
+    os.close(orig_stderr_fd)
+    if tee_proc.stdin:
+        tee_proc.stdin.close()
+    tee_proc.wait()
+
+def finalize_email_notification() -> None:
+    tee_state = MAIL_CONTEXT.get("tee_state")
+    if tee_state:
+        try:
+            stop_stdout_tee(*tee_state)
+        except Exception as exc:
+            print(f"[WARN] Failed to stop stdout tee: {exc}")
+        MAIL_CONTEXT["tee_state"] = None
+
+    if not MAIL_CONTEXT.get("enabled"):
+        return
+
+    recipients = MAIL_CONTEXT.get("recipients") or []
+    conf = MAIL_CONTEXT.get("conf") or {}
+    log_path = MAIL_CONTEXT.get("log_path")
+    if not log_path:
+        return
+
+    summary_text, summary_html = build_execution_summary_table(DUR)
+    status = MAIL_CONTEXT.get("status") or "FAIL"
+    app_name = MAIL_CONTEXT.get("app") or "N/A"
+    env_name = MAIL_CONTEXT.get("env") or "N/A"
+    excel_path = MAIL_CONTEXT.get("excel_path") or "N/A"
+
+    subject = f"[CARTO][{status}] app={app_name} env={env_name}"
+    body_text = (
+        f"Result Excel: {excel_path}\n\n"
+        "Execution summary:\n"
+        f"{summary_text}\n"
+    )
+    body_html = (
+        f"<p><strong>Result Excel:</strong> {excel_path}</p>"
+        "<h3>Execution summary</h3>"
+        f"{summary_html}"
+    )
+    try:
+        send_carto_notification(
+            conf=conf,
+            recipients=recipients,
+            subject=subject,
+            body_text=body_text,
+            body_html=body_html,
+            attachment_path=Path(log_path),
+            logger=logger,
+        )
+    except Exception as exc:
+        print(f"[WARN] Notification email failed: {exc}")
 
 def rename_final_excel(xlsx_path: Path, app: str, envl: str) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
@@ -130,6 +209,7 @@ def write_list_newline(path: Path, items: List[str]) -> None:
 # ------------------------------ durations ------------------------------
 DUR: Dict[str, float] = {}
 logger = logging.getLogger('carto_ng_orchestrator')
+MAIL_CONTEXT: Dict[str, object] = {"enabled": False}
 
 def run_step(name: str, cmd: List[str], env: Dict[str, str], cwd: Path) -> bool:
     t0 = time.perf_counter()
@@ -1752,6 +1832,11 @@ def main() -> int:
         ap.add_argument(f"--{k}")
     ap.add_argument("--OS", dest="OS")
     ap.add_argument("--days", type=int, required=True, help="Number of days")
+    ap.add_argument(
+        "--mail-to",
+        default="",
+        help="Send a notification email to the provided address(es) (comma/semicolon-separated).",
+    )
     ap.add_argument("--one-interface-match", action="store_true", default=True, help=argparse.SUPPRESS)
     ap.add_argument("--dev-flow-stub", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--dev-flow-stub-out", help=argparse.SUPPRESS)
@@ -1861,6 +1946,16 @@ def main() -> int:
 
     args = ap.parse_args()
     exec_start_dt = datetime.now()
+    mail_recipients = parse_recipients(args.mail_to)
+    MAIL_CONTEXT.update(
+        {
+            "enabled": bool(mail_recipients),
+            "recipients": mail_recipients,
+            "status": "FAIL",
+            "app": getattr(args, "app", "") or "",
+            "env": getattr(args, "env", "") or "",
+        }
+    )
 
     # Guard: mutually exclusive high-level branches
     if args.FlowRuleReview and args.CreateNew:
@@ -1868,6 +1963,7 @@ def main() -> int:
 
 
     conf = load_conf("carto.conf")
+    MAIL_CONTEXT["conf"] = conf
     exe = conf.get("EXECUTABLE", "").strip(); cfg = conf.get("EXECUTABLE_CONFIG_FILE", "").strip()
     root = Path(conf.get("EXPORT_ROOT", "./RUNS")); date_fmt = conf.get("DATE_FMT", "%Y%m%d-%H%M%S")
     if not exe or not os.path.isfile(exe):
@@ -1893,6 +1989,15 @@ def main() -> int:
     log = run_dir/'log'
     log.mkdir(parents=True, exist_ok=True)
     log_file = log / f"orchestrator_{run_ts}.log"
+    stdout_log_file = log / f"orchestrator_{run_ts}.stdout.log"
+    MAIL_CONTEXT["log_path"] = str(stdout_log_file)
+    if MAIL_CONTEXT.get("enabled"):
+        try:
+            MAIL_CONTEXT["tee_state"] = start_stdout_tee(stdout_log_file)
+        except Exception as exc:
+            MAIL_CONTEXT["enabled"] = False
+            print(f"[WARN] Email log capture disabled: {exc}")
+    atexit.register(finalize_email_notification)
     logger.setLevel(logging.INFO)
     fmt = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
     fh = logging.FileHandler(str(log_file), encoding='utf-8'); fh.setFormatter(fmt)
@@ -2459,8 +2564,11 @@ def main() -> int:
         final_xlsx = rename_final_excel(final_xlsx, app, envl)
         rel_final_xlsx = os.path.relpath(final_xlsx, Path.cwd())
         print(f"[SUCCESS] Execution completed. Output Excel: {rel_final_xlsx}")
+        MAIL_CONTEXT["excel_path"] = rel_final_xlsx
     except Exception as e:
         print(f"[WARN] Unable to rename the final Excel file: {e}")
+        MAIL_CONTEXT["excel_path"] = str(final_xlsx)
+    MAIL_CONTEXT["status"] = "SUCCESS"
     return 0
 
 if __name__ == "__main__":
