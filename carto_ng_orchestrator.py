@@ -181,10 +181,11 @@ def find_label_hrefs(rows: List[Dict[str, str]], filters: Dict[str, str]) -> Lis
     return sorted(out)
 
 def pick(cols: List[str], *cands: str) -> str:
-    low = {c.lower(): c for c in cols}
+    low = {c.strip().lower(): c for c in cols if c is not None}
     for c in cands:
-        if c.lower() in low:
-            return low[c.lower()]
+        key = c.strip().lower()
+        if key in low:
+            return low[key]
     return ""
 
 def is_truthy(v: str) -> bool:
@@ -1584,16 +1585,24 @@ def _extract_fqdn_by_destination_ip(flow_csv: Path) -> Dict[str, str]:
     if not rows:
         return {}
 
-    idx_ip = pick(cols, "Destination IP", "Dst IP", "Destination_IP")
+    idx_ip = pick(cols, "Destination IP", "Destination IPs", "Dst IP", "Destination_IP")
+    if not idx_ip:
+        return {}
+
     idx_fqdn = pick(cols, "Destination FQDN", "Dst FQDN", "Destination_FQDN")
-    if not idx_ip or not idx_fqdn:
+    if not idx_fqdn:
         return {}
 
     ip_to_fqdn: Dict[str, str] = {}
     for row in rows:
         ip = (row.get(idx_ip) or "").strip()
+        if not ip:
+            continue
         fqdn = (row.get(idx_fqdn) or "").strip()
-        if ip and fqdn and ip not in ip_to_fqdn:
+        if not fqdn:
+            continue
+        existing = ip_to_fqdn.get(ip, "")
+        if not existing or existing.upper() == "NO_FQDN_FOUND":
             ip_to_fqdn[ip] = fqdn
     return ip_to_fqdn
 
@@ -2449,9 +2458,9 @@ def main() -> int:
     try:
         final_xlsx = rename_final_excel(final_xlsx, app, envl)
         rel_final_xlsx = os.path.relpath(final_xlsx, Path.cwd())
-        print(f"[SUCCESS] Exécution terminée. Excel résultat : {rel_final_xlsx}")
+        print(f"[SUCCESS] Execution completed. Output Excel: {rel_final_xlsx}")
     except Exception as e:
-        print(f"[WARN] Impossible de renommer l'Excel final: {e}")
+        print(f"[WARN] Unable to rename the final Excel file: {e}")
     return 0
 
 if __name__ == "__main__":
