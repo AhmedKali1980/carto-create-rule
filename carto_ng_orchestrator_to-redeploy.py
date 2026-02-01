@@ -1541,6 +1541,8 @@ def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> 
 
 
 def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
+    import ipaddress
+    import re
     from openpyxl import load_workbook
 
     wb = load_workbook(xlsx_path, data_only=True)
@@ -1562,6 +1564,7 @@ def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
 
     ips: List[str] = []
     seen: Set[str] = set()
+    ip_pattern = re.compile(r"\b\d{1,3}(?:\.\d{1,3}){3}\b")
     for row in it:
         if not row:
             continue
@@ -1571,11 +1574,18 @@ def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
         ip_val = str(row[idx_ip] or "").strip()
         if not ip_val:
             continue
-        if ip_val.startswith("169.254."):
-            continue
-        if ip_val not in seen:
-            seen.add(ip_val)
-            ips.append(ip_val)
+        for candidate in ip_pattern.findall(ip_val):
+            try:
+                parsed_ip = ipaddress.ip_address(candidate)
+            except ValueError:
+                continue
+            if parsed_ip.version != 4:
+                continue
+            if candidate.startswith("169.254."):
+                continue
+            if candidate not in seen:
+                seen.add(candidate)
+                ips.append(candidate)
     return ips
 
 
@@ -1710,7 +1720,7 @@ def enrich_unknown_ips_with_pce_fqdn(
 
         ok = run_step(
             "traffic-out-unknown",
-            ["bash", str(bin_dir / "workloader_traffic_out.sh"), str(href_file), start, end, str(flow_out)],
+            ["bash", str(bin_dir / "workloader_traffic_out_dst.sh"), str(href_file), start, end, str(flow_out)],
             env,
             Path("."),
         )
