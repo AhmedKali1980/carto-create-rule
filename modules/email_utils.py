@@ -54,9 +54,14 @@ def build_execution_summary_table(durations: Dict[str, float]) -> Tuple[str, str
 
 def _smtp_connection(conf: Dict[str, str]) -> smtplib.SMTP:
     server = conf.get("SMTP_SERVER", "").strip()
+    raw_port = conf.get("SMTP_PORT", "").strip()
     if not server:
-        raise ValueError("Missing SMTP_SERVER in carto.conf")
-    port = int(conf.get("SMTP_PORT", "25") or 25)
+        if raw_port and not raw_port.isdigit():
+            server = raw_port
+            raw_port = ""
+        else:
+            raise ValueError("Missing SMTP_SERVER in carto.conf")
+    port = int(raw_port or 25)
     timeout = float(conf.get("SMTP_TIMEOUT", "10") or 10)
     use_ssl = is_truthy(conf.get("SMTP_USE_SSL", ""))
     if use_ssl:
