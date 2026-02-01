@@ -144,15 +144,18 @@ def finalize_email_notification() -> None:
         "<h3>Execution summary</h3>"
         f"{summary_html}"
     )
-    send_carto_notification(
-        conf=conf,
-        recipients=recipients,
-        subject=subject,
-        body_text=body_text,
-        body_html=body_html,
-        attachment_path=Path(log_path),
-        logger=logger,
-    )
+    try:
+        send_carto_notification(
+            conf=conf,
+            recipients=recipients,
+            subject=subject,
+            body_text=body_text,
+            body_html=body_html,
+            attachment_path=Path(log_path),
+            logger=logger,
+        )
+    except Exception as exc:
+        print(f"[WARN] Notification email failed: {exc}")
 
 def rename_final_excel(xlsx_path: Path, app: str, envl: str) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
