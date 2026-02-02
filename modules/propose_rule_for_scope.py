@@ -1515,6 +1515,8 @@ WRAP_COLUMNS = {
 
 TO_INVESTIGATE_PREFIXES = ("NZ0_", "NZ1_")
 TO_INVESTIGATE_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
+TO_INVESTIGATE_YELLOW = "FFF2CC"
+TO_INVESTIGATE_ORANGE = "FFFFC000"
 
 def _split_iplist_values(value: str) -> List[str]:
     if not value:
@@ -1550,6 +1552,23 @@ def _row_matches_to_investigate(row: Dict[str, Any]) -> bool:
         candidates += _split_iplist_values(str(row.get("redundant_src_iplists") or ""))
 
     return any(val.startswith(prefixes) for val in candidates)
+
+def _pr1_matches_to_investigate(row: Dict[str, Any]) -> bool:
+    direction = str(row.get("Direction") or "").strip().lower()
+    if direction not in ("egress", "ingress"):
+        return False
+
+    prefixes = TO_INVESTIGATE_PREFIXES
+    if direction == "egress":
+        prefixes = TO_INVESTIGATE_PREFIXES + TO_INVESTIGATE_EGRESS_PREFIXES
+
+    candidate = ""
+    if direction == "egress":
+        candidate = str(row.get("Destination") or "").strip()
+    else:
+        candidate = str(row.get("Source") or "").strip()
+
+    return candidate.startswith(prefixes)
 
 def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -5020,7 +5039,12 @@ def main() -> int:
                 pr_rows1 = sorted(pr_rows1, key=_pr1_sort_key)
                 
                 def _pr1_row_fill(r: Dict[str, Any]) -> Optional[str]:
-                    return "FFFFC000" if "Remote (App label/iplist) used in Bouquets" in str(r.get("Comment","") or "") else None
+                    if _pr1_matches_to_investigate(r):
+                        return TO_INVESTIGATE_YELLOW
+                    if getattr(args, "mark_potential_core_service", False):
+                        if "Remote (App label/iplist) used in Bouquets" in str(r.get("Comment", "") or ""):
+                            return TO_INVESTIGATE_ORANGE
+                    return None
                 
                 def _pr1_row_bold(r: Dict[str, Any]) -> bool:
                     return "Blacklist default rule" in str(r.get("Comment","") or "")
@@ -5050,7 +5074,7 @@ def main() -> int:
                     pr1_header,
                     pr_rows1_norm,
                     wrap_cols={"Services"},
-                    row_fill_fn=(_pr1_row_fill if getattr(args, "mark_potential_core_service", False) else None),
+                    row_fill_fn=_pr1_row_fill,
                     row_bold_fn=_pr1_row_bold,
                 )
                 logger.info("Wrote %d Proposed rules1 rows", len(pr_rows1_norm))
