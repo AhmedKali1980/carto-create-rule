@@ -1513,6 +1513,44 @@ WRAP_COLUMNS = {
     "rule_description",
 }
 
+TO_INVESTIGATE_PREFIXES = ("NZ0_", "NZ1_")
+TO_INVESTIGATE_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
+
+def _split_iplist_values(value: str) -> List[str]:
+    if not value:
+        return []
+    tokens = re.split(r"[,\n;|]+", value)
+    out: List[str] = []
+    for token in tokens:
+        cleaned = token.strip()
+        if cleaned:
+            out.append(cleaned)
+    return out
+
+def _row_matches_to_investigate(row: Dict[str, Any]) -> bool:
+    direction = str(row.get("direction") or "").strip().lower()
+    if direction not in ("egress", "ingress"):
+        return False
+
+    prefixes = TO_INVESTIGATE_PREFIXES
+    if direction == "egress":
+        prefixes = TO_INVESTIGATE_PREFIXES + TO_INVESTIGATE_EGRESS_PREFIXES
+
+    candidates: List[str] = []
+    peer_type = str(row.get("peer_type") or "").strip().lower()
+    peer_value = str(row.get("peer_value") or "").strip()
+    if peer_type == "iplist" and peer_value:
+        candidates.append(peer_value)
+
+    if direction == "egress":
+        candidates += _split_iplist_values(str(row.get("primary_dst_iplists") or ""))
+        candidates += _split_iplist_values(str(row.get("redundant_dst_iplists") or ""))
+    else:
+        candidates += _split_iplist_values(str(row.get("primary_src_iplists") or ""))
+        candidates += _split_iplist_values(str(row.get("redundant_src_iplists") or ""))
+
+    return any(val.startswith(prefixes) for val in candidates)
+
 def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
@@ -1574,7 +1612,9 @@ def append_excel(excel_path: Path, sheet_name: str, rows: List[Dict[str, Any]]) 
         action_val = (ws.cell(row=r_i, column=OUTPUT_HEADER.index("Action") + 1).value or "").strip()
 
         fill = None
-        if info_val == INFO_DELETED:
+        if _row_matches_to_investigate({h: ws.cell(row=r_i, column=OUTPUT_HEADER.index(h) + 1).value for h in OUTPUT_HEADER}):
+            fill = YELLOW
+        elif info_val == INFO_DELETED:
             fill = GREY
         elif action_val == ACTION_OPTIM:
             fill = ORANGE
