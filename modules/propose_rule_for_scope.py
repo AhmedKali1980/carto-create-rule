@@ -1603,6 +1603,7 @@ def append_excel(excel_path: Path, sheet_name: str, rows: List[Dict[str, Any]]) 
     GREEN  = PatternFill("solid", fgColor="E2EFDA")  # light green
     PINK   = PatternFill("solid", fgColor="FCE4D6")  # light pink
     YELLOW = PatternFill("solid", fgColor="FFF2CC")  # light yellow
+    RED    = PatternFill("solid", fgColor=TO_INVESTIGATE_RED)  # light red for To investigate
     ORANGE = PatternFill("solid", fgColor="F8CBAD")  # light orange
 
     header_font = Font(bold=True)
