@@ -1621,6 +1621,154 @@ def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> 
     return len(rows)
 
 
+def build_to_investigate_ip_sheets(xlsx_path: Path) -> Tuple[int, int]:
+    """Create/replace IP summary sheets derived from 'To investigate'."""
+    import ipaddress
+    import re
+    from openpyxl import load_workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+
+    if not xlsx_path.exists():
+        raise FileNotFoundError(str(xlsx_path))
+
+    wb = load_workbook(xlsx_path)
+    if "To investigate" not in wb.sheetnames:
+        return 0, 0
+
+    ws_src = wb["To investigate"]
+    it = ws_src.iter_rows(values_only=True)
+    try:
+        header = next(it)
+    except StopIteration:
+        return 0, 0
+
+    headers = list(header)
+    idx_dir = _toinvest_find_col(headers, ["Direction"])
+    idx_src = _toinvest_find_col(headers, ["Source"])
+    idx_dst = _toinvest_find_col(headers, ["Destination"])
+    idx_ip = _toinvest_find_col(headers, ["Unknown IP"])
+    idx_dns = _toinvest_find_col(headers, ["DNS Resolution"])
+    idx_fqdn = _toinvest_find_col(headers, ["FQDN found in PCE"])
+
+    if idx_dir is None or idx_ip is None:
+        return 0, 0
+
+    ip_pattern = re.compile(r"\b\d{1,3}(?:\.\d{1,3}){3}\b")
+    egress_rows: Dict[str, Dict[str, str]] = {}
+    ingress_rows: Dict[str, Dict[str, str]] = {}
+
+    for row in it:
+        if not row:
+            continue
+        direction = str(row[idx_dir] or "").strip().lower()
+        ip_cell = str(row[idx_ip] or "").strip()
+        if not ip_cell:
+            continue
+        candidates = ip_pattern.findall(ip_cell)
+        if not candidates:
+            continue
+        ip_val = candidates[0]
+
+        if direction == "flow-out":
+            if ip_val in egress_rows:
+                continue
+            egress_rows[ip_val] = {
+                "Direction": "Flow-out",
+                "Destination": str(row[idx_dst] or "") if idx_dst is not None else "",
+                "Unknown IP": ip_val,
+                "DNS Resolution": str(row[idx_dns] or "") if idx_dns is not None else "",
+                "FQDN found in PCE": str(row[idx_fqdn] or "") if idx_fqdn is not None else "",
+            }
+        elif direction == "flow-in":
+            if ip_val in ingress_rows:
+                continue
+            subnet = ""
+            try:
+                subnet = str(ipaddress.ip_network(f"{ip_val}/21", strict=False))
+            except Exception:
+                subnet = ""
+            ingress_rows[ip_val] = {
+                "Direction": "Flow-in",
+                "Source": str(row[idx_src] or "") if idx_src is not None else "",
+                "Unknown IP": ip_val,
+                "Subnet /21": subnet,
+            }
+
+    # Remove existing sheets
+    for name in ("Egress IP to investigate", "Ingress IP to investigate"):
+        if name in wb.sheetnames:
+            del wb[name]
+
+    # Shared styling
+    THIN = Side(style='thin', color='666666')
+    BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
+    hdr_fill = PatternFill('solid', fgColor='D9D9D9')
+    hdr_font = Font(bold=True)
+    hdr_align = Alignment(horizontal='center', vertical='center', wrap_text=True)
+    normal_align = Alignment(horizontal='left', vertical='top', wrap_text=False)
+
+    # Egress sheet
+    ws_out = wb.create_sheet("Egress IP to investigate")
+    egress_headers = ["Direction", "Destination", "Unknown IP", "DNS Resolution", "FQDN found in PCE", "Action"]
+    ws_out.append(egress_headers)
+    for col in range(1, len(egress_headers) + 1):
+        cell = ws_out.cell(row=1, column=col)
+        cell.font = hdr_font
+        cell.fill = hdr_fill
+        cell.border = BORDER
+        cell.alignment = hdr_align
+
+    for row in egress_rows.values():
+        ws_out.append([row.get(h, "") for h in egress_headers])
+
+    for rr in range(2, ws_out.max_row + 1):
+        for cc in range(1, len(egress_headers) + 1):
+            cell = ws_out.cell(row=rr, column=cc)
+            cell.border = BORDER
+            cell.alignment = normal_align
+
+    ws_out.column_dimensions["A"].width = 14
+    ws_out.column_dimensions["B"].width = 45
+    ws_out.column_dimensions["C"].width = 18
+    ws_out.column_dimensions["D"].width = 45
+    ws_out.column_dimensions["E"].width = 45
+    ws_out.column_dimensions["F"].width = 14  # ~100px
+
+    ws_out.freeze_panes = 'A2'
+    ws_out.auto_filter.ref = f"A1:F{ws_out.max_row}" if ws_out.max_row > 1 else "A1:F1"
+
+    # Ingress sheet
+    ws_in = wb.create_sheet("Ingress IP to investigate")
+    ingress_headers = ["Direction", "Source", "Unknown IP", "Subnet /21"]
+    ws_in.append(ingress_headers)
+    for col in range(1, len(ingress_headers) + 1):
+        cell = ws_in.cell(row=1, column=col)
+        cell.font = hdr_font
+        cell.fill = hdr_fill
+        cell.border = BORDER
+        cell.alignment = hdr_align
+
+    for row in ingress_rows.values():
+        ws_in.append([row.get(h, "") for h in ingress_headers])
+
+    for rr in range(2, ws_in.max_row + 1):
+        for cc in range(1, len(ingress_headers) + 1):
+            cell = ws_in.cell(row=rr, column=cc)
+            cell.border = BORDER
+            cell.alignment = normal_align
+
+    ws_in.column_dimensions["A"].width = 14
+    ws_in.column_dimensions["B"].width = 45
+    ws_in.column_dimensions["C"].width = 18
+    ws_in.column_dimensions["D"].width = 20
+
+    ws_in.freeze_panes = 'A2'
+    ws_in.auto_filter.ref = f"A1:D{ws_in.max_row}" if ws_in.max_row > 1 else "A1:D1"
+
+    wb.save(xlsx_path)
+    return len(egress_rows), len(ingress_rows)
+
+
 def _load_to_investigate_ips(xlsx_path: Path) -> List[str]:
     import ipaddress
     import re
@@ -2565,6 +2713,13 @@ def main() -> int:
         )
     except Exception as e:
         print(f"[WARN] [To investigate] PCE FQDN enrichment skipped due to: {e}")
+
+    try:
+        n_egress, n_ingress = build_to_investigate_ip_sheets(final_xlsx)
+        if n_egress or n_ingress:
+            print(f"[INFO] [To investigate] Egress/IP sheets rows: egress={n_egress} ingress={n_ingress}")
+    except Exception as e:
+        print(f"[WARN] [To investigate] IP sheets skipped due to: {e}")
 
     print("==== EXECUTION SUMMARY (durations) ====")
     for k in sorted(DUR.keys()):
