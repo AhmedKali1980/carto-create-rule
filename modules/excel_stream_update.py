@@ -144,9 +144,9 @@ def _width_cap_for_header(h: str) -> int:
     return DEFAULT_WIDTH_CAP
 
 
-# ------------------------------ To investigate (NZ0_/NZ1_ + egress KUB_/LBI_/LBO_) ------------------------------
-INV_DEFAULT_PREFIXES = ("NZ0_", "NZ1_")
-INV_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
+# ------------------------------ To investigate (NZ0_/NZ1_/DNA_ + egress KUB_/LBI_/LBO_/U_) ------------------------------
+INV_DEFAULT_PREFIXES = ("NZ0_", "NZ1_", "DNA_")
+INV_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_", "U_")
 INV_SHEET_NAME = "To investigate"
 
 
@@ -811,7 +811,7 @@ def _stream_flow_csv(
         elif len(row) > len(headers):
             row = row[: len(headers)]
 
-        # To investigate hook (NZ0_/NZ1_ + egress KUB_/LBI_/LBO_)
+        # To investigate hook (NZ0_/NZ1_/DNA_ + egress KUB_/LBI_/LBO_/U_)
         if do_inv:
             elected_val = ""
             if idx_elected is not None and idx_elected < len(row):
@@ -1168,7 +1168,7 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "--enable-to-investigate",
         action="store_true",
-        help="Create a 'To investigate' sheet for NZ0_/NZ1_ elected IPLists (plus egress KUB_/LBI_/LBO_)",
+        help="Create a 'To investigate' sheet for NZ0_/NZ1_/DNA_ elected IPLists (plus egress KUB_/LBI_/LBO_/U_)",
     )
     p.add_argument("--dns-timeout", type=float, default=1.5, help="Reverse DNS timeout (seconds) for To investigate")
 

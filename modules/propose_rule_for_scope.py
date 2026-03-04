@@ -1513,9 +1513,9 @@ WRAP_COLUMNS = {
     "rule_description",
 }
 
-TO_INVESTIGATE_PREFIXES = ("NZ0_", "NZ1_")
-TO_INVESTIGATE_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
-TO_INVESTIGATE_YELLOW = "FFF2CC"
+TO_INVESTIGATE_PREFIXES = ("NZ0_", "NZ1_", "DNA_")
+TO_INVESTIGATE_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_", "U_")
+TO_INVESTIGATE_RED = "F8CBAD"
 TO_INVESTIGATE_ORANGE = "FFFFC000"
 
 def _split_iplist_values(value: str) -> List[str]:
@@ -1633,7 +1633,7 @@ def append_excel(excel_path: Path, sheet_name: str, rows: List[Dict[str, Any]]) 
 
         fill = None
         if _row_matches_to_investigate({h: ws.cell(row=r_i, column=OUTPUT_HEADER.index(h) + 1).value for h in OUTPUT_HEADER}):
-            fill = YELLOW
+            fill = RED
         elif info_val == INFO_DELETED:
             fill = GREY
         elif action_val == ACTION_OPTIM:
@@ -5058,7 +5058,7 @@ def main() -> int:
                 
                 def _pr1_row_fill(r: Dict[str, Any]) -> Optional[str]:
                     if _pr1_matches_to_investigate(r):
-                        return TO_INVESTIGATE_YELLOW
+                        return TO_INVESTIGATE_RED
                     if getattr(args, "mark_potential_core_service", False):
                         if "Remote (App label/iplist) used in Bouquets" in str(r.get("Comment", "") or ""):
                             return TO_INVESTIGATE_ORANGE
