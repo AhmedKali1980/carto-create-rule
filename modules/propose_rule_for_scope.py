@@ -4986,7 +4986,24 @@ def main() -> int:
                     egress_bl_lists,
                     finegrained_single_ports,
                 ))
-            
+
+            # Fallback: keep Proposed rules1 available even when no V1 strategy emitted rows.
+            # This happens for runs using only legacy generation; we still expose a readable PR1 tab.
+            if (not pr_rows1) and pr_rows:
+                for rr in pr_rows:
+                    pr_rows1.append({
+                        "Direction": rr.get("Direction", ""),
+                        "Strategy": rr.get("Strategy", ""),
+                        "Source": rr.get("Source", ""),
+                        "Destination": rr.get("Destination", ""),
+                        "Services": rr.get("Services", ""),
+                        "sum_num_flows": rr.get("sum_num_flows", 0),
+                        "sum_num_flows_true": rr.get("sum_num_flows", 0),
+                        "Rule Section": rr.get("Rule Section", ""),
+                        "Comment": rr.get("Comment", ""),
+                        "Ruleset": rr.get("Ruleset", ""),
+                    })
+
             if pr_rows1:
                 pr_rows1 = _group_pr1_ingress_finegrained_by_src_dst(pr_rows1, finegrained_single_ports)
                 if port_list_intervals:
