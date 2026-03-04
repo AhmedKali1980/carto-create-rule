@@ -1515,8 +1515,7 @@ WRAP_COLUMNS = {
 
 TO_INVESTIGATE_PREFIXES = ("NZ0_", "NZ1_")
 TO_INVESTIGATE_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
-TO_INVESTIGATE_SOURCE_PREFIXES = ("DNA_",)
-TO_INVESTIGATE_RED = "F8CBAD"
+TO_INVESTIGATE_YELLOW = "FFF2CC"
 TO_INVESTIGATE_ORANGE = "FFFFC000"
 
 def _split_iplist_values(value: str) -> List[str]:
@@ -1552,12 +1551,7 @@ def _row_matches_to_investigate(row: Dict[str, Any]) -> bool:
         candidates += _split_iplist_values(str(row.get("primary_src_iplists") or ""))
         candidates += _split_iplist_values(str(row.get("redundant_src_iplists") or ""))
 
-    source_candidates = _split_iplist_values(str(row.get("primary_src_iplists") or ""))
-    source_candidates += _split_iplist_values(str(row.get("redundant_src_iplists") or ""))
-
-    if any(val.startswith(prefixes) for val in candidates):
-        return True
-    return any(val.startswith(TO_INVESTIGATE_SOURCE_PREFIXES) for val in source_candidates)
+    return any(val.startswith(prefixes) for val in candidates)
 
 def _pr1_matches_to_investigate(row: Dict[str, Any]) -> bool:
     direction = str(row.get("Direction") or "").strip().lower()
@@ -1574,8 +1568,7 @@ def _pr1_matches_to_investigate(row: Dict[str, Any]) -> bool:
     else:
         candidate = str(row.get("Source") or "").strip()
 
-    source_candidate = str(row.get("Source") or "").strip()
-    return candidate.startswith(prefixes) or source_candidate.startswith(TO_INVESTIGATE_SOURCE_PREFIXES)
+    return candidate.startswith(prefixes)
 
 def write_csv(path: Path, rows: List[Dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -1640,7 +1633,7 @@ def append_excel(excel_path: Path, sheet_name: str, rows: List[Dict[str, Any]]) 
 
         fill = None
         if _row_matches_to_investigate({h: ws.cell(row=r_i, column=OUTPUT_HEADER.index(h) + 1).value for h in OUTPUT_HEADER}):
-            fill = RED
+            fill = YELLOW
         elif info_val == INFO_DELETED:
             fill = GREY
         elif action_val == ACTION_OPTIM:
@@ -5065,7 +5058,7 @@ def main() -> int:
                 
                 def _pr1_row_fill(r: Dict[str, Any]) -> Optional[str]:
                     if _pr1_matches_to_investigate(r):
-                        return TO_INVESTIGATE_RED
+                        return TO_INVESTIGATE_YELLOW
                     if getattr(args, "mark_potential_core_service", False):
                         if "Remote (App label/iplist) used in Bouquets" in str(r.get("Comment", "") or ""):
                             return TO_INVESTIGATE_ORANGE
