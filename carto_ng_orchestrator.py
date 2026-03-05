@@ -1394,8 +1394,8 @@ def build_final_excel(
 # ------------------------------ Main ------------------------------
 
 
-# ------------------------------ To investigate (NZ0_/NZ1_/DNA_ + egress KUB_/LBI_/LBO_/U_) ------------------------------
-INV_INGRESS_PREFIXES = ("NZ0_", "NZ1_", "DNA_")
+# ------------------------------ To investigate (NZ0_/NZ1_/DNA_/DNS_ + egress KUB_/LBI_/LBO_/U_) ------------------------------
+INV_INGRESS_PREFIXES = ("NZ0_", "NZ1_", "DNA_", "DNS_")
 INV_EGRESS_PREFIXES = ("NZ0_", "NZ1_", "KUB_", "LBI_", "LBO_", "U_")
 
 def _toinvest_find_col(headers, candidates):
@@ -1451,7 +1451,7 @@ class _ToInvestDNS:
 
 
 def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> int:
-    """Create/replace a sheet 'To investigate' from Flow-in/Flow-out elected NZ0_/NZ1_/DNA_.
+    """Create/replace a sheet 'To investigate' from Flow-in/Flow-out elected NZ0_/NZ1_/DNA_/DNS_.
 
     Includes egress (Flow-out) rows with elected KUB_/LBI_/LBO_/U_ prefixes.
 
