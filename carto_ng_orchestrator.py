@@ -1394,9 +1394,9 @@ def build_final_excel(
 # ------------------------------ Main ------------------------------
 
 
-# ------------------------------ To investigate (NZ0_/NZ1_ + egress KUB_/LBI_/LBO_) ------------------------------
-INV_DEFAULT_PREFIXES = ("NZ0_", "NZ1_")
-INV_EGRESS_PREFIXES = ("KUB_", "LBI_", "LBO_")
+# ------------------------------ To investigate (NZ0_/NZ1_/DNA_ + egress KUB_/LBI_/LBO_/U_) ------------------------------
+INV_INGRESS_PREFIXES = ("NZ0_", "NZ1_", "DNA_")
+INV_EGRESS_PREFIXES = ("NZ0_", "NZ1_", "KUB_", "LBI_", "LBO_", "U_")
 
 def _toinvest_find_col(headers, candidates):
     if not headers:
@@ -1451,9 +1451,9 @@ class _ToInvestDNS:
 
 
 def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> int:
-    """Create/replace a sheet 'To investigate' from Flow-in/Flow-out elected NZ0_/NZ1_.
+    """Create/replace a sheet 'To investigate' from Flow-in/Flow-out elected NZ0_/NZ1_/DNA_.
 
-    Includes egress (Flow-out) rows with elected KUB_/LBI_/LBO_ prefixes.
+    Includes egress (Flow-out) rows with elected KUB_/LBI_/LBO_/U_ prefixes.
 
     Trivial branch only (small/normal workbook). Best-effort reverse DNS.
 
@@ -1525,7 +1525,7 @@ def build_to_investigate_sheet(xlsx_path: Path, *, dns_timeout: float = 1.5) -> 
             elected_val = ''
             if idx_elected is not None and idx_elected < len(r):
                 elected_val = str(r[idx_elected] or '')
-            prefixes = INV_DEFAULT_PREFIXES if direction != 'out' else INV_DEFAULT_PREFIXES + INV_EGRESS_PREFIXES
+            prefixes = INV_EGRESS_PREFIXES if direction == 'out' else INV_INGRESS_PREFIXES
             if not elected_val.startswith(prefixes):
                 continue
 
