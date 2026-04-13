@@ -3280,13 +3280,24 @@ def _app_prefix(app_value: str) -> str:
         return s.split("_", 1)[0]
     return s
 
+def _is_managed_app_prefix(prefix: str) -> bool:
+    """Return True when an app prefix belongs to the managed family.
+
+    Historical convention: managed prefixes ended with 'M' (e.g. APM_).
+    New convention also includes APMA_ which must be treated as managed.
+    """
+    p = _as_text(prefix or "").strip().upper()
+    if not p:
+        return False
+    return p.endswith("M") or p == "APMA"
+
 def _source_selector_for_peer_labels(peer_value: str) -> str:
     """
     Build the Source selector for ingress/labels proposals (Extrascope rules).
 
     Rules:
       - Always include app + env
-      - If app prefix ends with 'M' (managed family), also include role
+      - If app prefix is managed family (historical '*M' + APMA), also include role
       - Never include loc / OS
 
     Output format: 'app=...|env=...|role=...' (role optional)
@@ -3300,7 +3311,7 @@ def _source_selector_for_peer_labels(peer_value: str) -> str:
     role = _as_text(kv.get("role") or "").strip()
 
     pref = _app_prefix(app)
-    managed = bool(pref) and pref.endswith("M")
+    managed = _is_managed_app_prefix(pref)
 
     parts: List[str] = []
     if app:
@@ -4122,7 +4133,7 @@ def _peer_labels_components(peer_value: str) -> Tuple[str, str, str, str, bool]:
     peer_env = _as_text(kv.get("env") or "").strip()
     peer_role = _as_text(kv.get("role") or "").strip()
     pref = _app_prefix(peer_app)
-    is_managed = bool(pref and pref.endswith("M"))
+    is_managed = _is_managed_app_prefix(pref)
     return peer_app, peer_env, peer_role, pref, is_managed
 
 
@@ -4135,7 +4146,7 @@ def build_egress_labels_proposed_rules_v1(
     """Proposed rules V1 for egress flows where peer_type='labels' and matched_rule_category != Bouquets.
 
     Egress placement rules (per spec):
-      - If destination label is Managed (app prefix ends with 'M'):
+      - If destination label is Managed (managed family prefix: historical '*M' and APMA):
           Ruleset = <peer_app>-<peer_env>-RS
           Rule Section = 'Extrascope in other scope'
           Destination = 'app=<peer_app>|env=<peer_env>|role=<peer_role_or_All Roles>'
