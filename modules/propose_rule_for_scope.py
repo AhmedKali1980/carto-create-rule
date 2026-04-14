@@ -2127,7 +2127,7 @@ def _filter_flows_ns_egress_to_managed_labels(
     """Keep only **egress** North/South flows where:
       - Source IP is inside the provided networks (in-zone)
       - Destination IP is outside the provided networks (out-of-zone)
-      - Destination peer is **Managed labels** (app prefix ends with 'M')
+      - Destination peer is **Managed labels** (managed family prefix)
 
     Used ONLY when --network-zone is active to avoid missing rules required
     on the remote managed destination side.
@@ -2151,7 +2151,7 @@ def _filter_flows_ns_egress_to_managed_labels(
         dst_labels = _labels_from_flow_row(r, "destination")
         dst_app = (dst_labels.get("app") or "").strip()
         pref = _app_prefix(dst_app)
-        if not (pref and pref.endswith("M")):
+        if not _is_managed_app_prefix(pref):
             continue
 
         out.append(r)
@@ -2195,7 +2195,7 @@ def _flow_row_is_ns_egress_to_managed_labels(
     dst_labels = _labels_from_flow_row(r, "destination")
     dst_app = (dst_labels.get("app") or "").strip()
     pref = _app_prefix(dst_app)
-    return bool(pref and pref.endswith("M"))
+    return _is_managed_app_prefix(pref)
 
 
 def build_kub_iplist_network_index(raw_dir: Path, debug: bool=False) -> List[Tuple[ipaddress._BaseNetwork, str]]:
