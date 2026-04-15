@@ -2073,6 +2073,12 @@ def main() -> int:
         default=True,
         help=argparse.SUPPRESS,
     )
+    ap.add_argument(
+        "--skip-pce-fqdn-enrichment",
+        action="store_true",
+        default=False,
+        help=argparse.SUPPRESS,
+    )
     ap.add_argument("--dns-timeout", type=float, default=5.0, help=argparse.SUPPRESS)
 
     # Legacy (backward compatible): when only one direction is in blacklist mode, this applies to that direction.
@@ -2706,19 +2712,22 @@ def main() -> int:
             print("[ERROR] excel-stream-update failed; final Excel may be missing Flow-out/Flow-in sheets.")
             return 2
 
-    # Final step: enrich unknown Flow-out IPs with FQDN from PCE flows.
-    try:
-        enrich_unknown_ips_with_pce_fqdn(
-            xlsx_path=final_xlsx,
-            bin_dir=bin_dir,
-            env=env,
-            derived_dir=der,
-            start=start,
-            end=end,
-            tmp_stamp=base_ts,
-        )
-    except Exception as e:
-        print(f"[WARN] [To investigate] PCE FQDN enrichment skipped due to: {e}")
+    # Final step (optional): enrich unknown Flow-out IPs with FQDN from PCE flows.
+    if args.skip_pce_fqdn_enrichment:
+        print("[INFO] [To investigate] PCE FQDN enrichment disabled (--skip-pce-fqdn-enrichment).")
+    else:
+        try:
+            enrich_unknown_ips_with_pce_fqdn(
+                xlsx_path=final_xlsx,
+                bin_dir=bin_dir,
+                env=env,
+                derived_dir=der,
+                start=start,
+                end=end,
+                tmp_stamp=base_ts,
+            )
+        except Exception as e:
+            print(f"[WARN] [To investigate] PCE FQDN enrichment skipped due to: {e}")
 
     try:
         n_egress, n_ingress = build_to_investigate_ip_sheets(final_xlsx)
