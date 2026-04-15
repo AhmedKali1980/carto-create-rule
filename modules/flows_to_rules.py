@@ -1,10 +1,11 @@
 
 # -*- coding: utf-8 -*-
 """
-flows_to_rules.py — Carto NG (v2.3.4-min)
+flows_to_rules.py — Carto NG (v2.3.5-min)
 - Tolère les arguments hérités de l'orchestrateur (ex. --ruleset-name-contains) pour éviter tout crash,
   mais ne les utilise PAS (on ne filtre jamais par ruleset_name).
-- Écrit derived/scope.params.txt (app/env/role) en récupérant les labels du nom de l'Excel
+- Écrit derived/scope.params.txt (app/env/role) depuis les arguments explicites de scope
+  (si fournis), sinon fallback en récupérant les labels depuis le nom de l'Excel
   export_dupecheck.final_<app>-<env>-<role>_<ts>.xlsx (ordre: app, env, role). [orchestrateur]
 - Appelle scope_rules_applicability.get_applicable_rules() qui filtre uniquement par ruleset_scope exact.
 - Ajoute l’onglet "Scope Applicable Rules" dans l’Excel.
@@ -35,7 +36,7 @@ except ModuleNotFoundError:
         append_scope_rules_sheet
     )
 
-__version__ = "2.3.4-min"
+__version__ = "2.3.5-min"
 
 # --------------------------- logging -----------------------------------------
 logger = logging.getLogger("flows_to_rules")
@@ -80,7 +81,29 @@ def iter_csv_rows(path: Path):
     return _Wrap()
 
 # ----------------------- ensure selected scope file --------------------------
-def _ensure_selected_scope_file(derived_dir: Path, excel_path: Optional[str]) -> None:
+def _split_scope_tokens(base_scope: str) -> tuple[str, str, str]:
+    """
+    Split a scope string formatted as "<app>-<env>-<role>".
+
+    App labels may contain '-' (UUID-like values). We therefore split from the right:
+      - if 2 tokens => app, env
+      - if >=3 tokens => app='-'.join(all but last two), env=penultimate, role=last
+    """
+    tokens = [t for t in (base_scope or "").split("-") if t]
+    if len(tokens) < 2:
+        return ("", "", "")
+    if len(tokens) == 2:
+        return (tokens[0], tokens[1], "")
+    return ("-".join(tokens[:-2]), tokens[-2], tokens[-1])
+
+
+def _ensure_selected_scope_file(
+    derived_dir: Path,
+    excel_path: Optional[str],
+    scope_app: str = "",
+    scope_env: str = "",
+    scope_role: str = "",
+) -> None:
     """
     Crée derived/scope.params.txt si absent, en extrayant <app>-<env>-<role> du nom de l'Excel:
       export_dupecheck.final_<base>_<ts>.xlsx   où <base> = "app-env-role"
@@ -90,19 +113,21 @@ def _ensure_selected_scope_file(derived_dir: Path, excel_path: Optional[str]) ->
     if scope_file.exists() and scope_file.stat().st_size > 0:
         return
 
-    app = env = role = ""
+    app = (scope_app or "").strip()
+    env = (scope_env or "").strip()
+    role = (scope_role or "").strip()
     # 1) depuis excel path (préféré)
-    if excel_path:
+    if (not app or not env) and excel_path:
         try:
             base = Path(excel_path).name  # export_dupecheck.final_<base>_<ts>.xlsx
             if ".final_" in base and base.endswith(".xlsx"):
                 after = base.split(".final_", 1)[1]
                 mid = after[:-5]  # enlever ".xlsx"
                 base_seg = mid.rsplit("_", 1)[0] if "_" in mid else mid
-                tokens = [t for t in base_seg.split("-") if t]
-                if len(tokens) >= 1: app = tokens[0]
-                if len(tokens) >= 2: env = tokens[1]
-                if len(tokens) >= 3: role = tokens[2]
+                a, e, r = _split_scope_tokens(base_seg)
+                if a and not app: app = a
+                if e and not env: env = e
+                if r and not role: role = r
         except Exception:
             pass
 
@@ -112,10 +137,10 @@ def _ensure_selected_scope_file(derived_dir: Path, excel_path: Optional[str]) ->
             run_name = derived_dir.parent.name  # <timestamp>_<app>-<env>-<role>
             if "_" in run_name:
                 suffix = run_name.split("_", 1)[1]
-                tokens = [t for t in suffix.split("-") if t]
-                if len(tokens) >= 1 and not app: app = tokens[0]
-                if len(tokens) >= 2 and not env: env = tokens[1]
-                if len(tokens) >= 3 and not role: role = tokens[2]
+                a, e, r = _split_scope_tokens(suffix)
+                if a and not app: app = a
+                if e and not env: env = e
+                if r and not role: role = r
         except Exception:
             pass
 
@@ -138,6 +163,9 @@ def main() -> int:
     ap.add_argument('--start', required=True)
     ap.add_argument('--end', required=True)
     ap.add_argument('--excel')  # utilisé pour extraire app/env/role (strict minimum)
+    ap.add_argument('--scope-app', default='', help='Scope app label (prioritaire pour scope.params.txt)')
+    ap.add_argument('--scope-env', default='', help='Scope env label (prioritaire pour scope.params.txt)')
+    ap.add_argument('--scope-role', default='', help='Scope role label (prioritaire pour scope.params.txt)')
     ap.add_argument('--log-level', default='INFO')
 
     # >>> Compat héritée orchestrateur (ACCEPTÉS MAIS IGNORÉS)
@@ -154,7 +182,13 @@ def main() -> int:
     der = Path(args.derived_dir)
 
     # 1) Assurer la présence des labels utilisateur (strict minimum)
-    _ensure_selected_scope_file(der, args.excel)
+    _ensure_selected_scope_file(
+        der,
+        args.excel,
+        scope_app=args.scope_app,
+        scope_env=args.scope_env,
+        scope_role=args.scope_role,
+    )
 
     # 2) Calculer Strictement les règles applicables (via ruleset_scope exact)
     rules_applicables, unmatched_rows, eff_rows = get_applicable_rules(raw, der)
@@ -172,4 +206,3 @@ def main() -> int:
 
 if __name__ == '__main__':
     sys.exit(main())
-

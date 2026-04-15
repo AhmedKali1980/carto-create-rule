@@ -2507,6 +2507,9 @@ def main() -> int:
                 "--conf", "carto.conf",
                 "--start", start, "--end", end,
                 "--excel", str(final_xlsx),
+                "--scope-app", str(app or ""),
+                "--scope-env", str(envl or ""),
+                "--scope-role", str(role or ""),
                 "--log-level", "INFO",
             ],
             env, Path(".")
@@ -2608,6 +2611,9 @@ def main() -> int:
             "--conf", "carto.conf",
             "--start", start, "--end", end,
             "--excel", str(final_xlsx),
+            "--scope-app", str(app or ""),
+            "--scope-env", str(envl or ""),
+            "--scope-role", str(role or ""),
             "--log-level", args.frh_log_level
         ]
         # default filters if explicitly provided
