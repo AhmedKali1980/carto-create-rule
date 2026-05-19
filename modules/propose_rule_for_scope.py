@@ -1005,7 +1005,7 @@ def propose(raw_dir: Path,
             debug: bool=False,
             enable_avoid_label_pairs: bool=False,
             avoid_label_pairs: Optional[Set[str]]=None,
-            kub_iplist_resolver: Optional[Callable[[str], str]]=None,
+            avoid_iplist_resolver: Optional[Callable[[str], str]]=None,
     network_zone_nets: Optional[List[ipaddress._BaseNetwork]] = None,
     network_zone_name: str = "",
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
@@ -1014,10 +1014,10 @@ def propose(raw_dir: Path,
 
     agg: Dict[ProposalKey, Dict[str, Any]] = {}
 
-    # Optional: avoid some peer app labels by replacing them with KUB_* IPLISTS (deterministic).
+    # Optional: avoid some peer app labels by replacing them with best matching IPLISTS (deterministic).
     # This is gated behind CLI option --enable-avoid-label-pairs (non-regression).
     avoid_label_pairs = set(avoid_label_pairs or [])
-    _kub_resolve_cache: Dict[str, str] = {}
+    _avoid_resolve_cache: Dict[str, str] = {}
     _avoid_stats = {"hits": 0, "resolved_to_iplist": 0, "fallback_to_ip": 0, "no_ip": 0}
 
 
@@ -1089,17 +1089,17 @@ def propose(raw_dir: Path,
             ip = (peer_ip or "").strip()
             if ip:
                 iplist_name = ""
-                if kub_iplist_resolver:
-                    if ip in _kub_resolve_cache:
-                        iplist_name = _kub_resolve_cache[ip]
+                if avoid_iplist_resolver:
+                    if ip in _avoid_resolve_cache:
+                        iplist_name = _avoid_resolve_cache[ip]
                     else:
                         try:
-                            iplist_name = (kub_iplist_resolver(ip) or "").strip()
+                            iplist_name = (avoid_iplist_resolver(ip) or "").strip()
                         except Exception:
                             iplist_name = ""
-                        _kub_resolve_cache[ip] = iplist_name
+                        _avoid_resolve_cache[ip] = iplist_name
                 if iplist_name:
-                    peer_type, peer_value, peer_reason = "iplist", iplist_name, "avoid_label_pairs:kub_iplist"
+                    peer_type, peer_value, peer_reason = "iplist", iplist_name, "avoid_label_pairs:iplist_match"
                     peer_labels_disabled = True
                     _avoid_stats["resolved_to_iplist"] += 1
                 else:
@@ -1451,7 +1451,7 @@ def propose(raw_dir: Path,
                     f"resolved_iplist={_avoid_stats.get('resolved_to_iplist', 0)}",
                     f"fallback_ip={_avoid_stats.get('fallback_to_ip', 0)}",
                     f"no_ip={_avoid_stats.get('no_ip', 0)}",
-                    f"kub_resolver={'yes' if kub_iplist_resolver else 'no'}",
+                    f"iplist_resolver={'yes' if avoid_iplist_resolver else 'no'}",
                 ]
             )
         )
@@ -2198,8 +2198,17 @@ def _flow_row_is_ns_egress_to_managed_labels(
     return _is_managed_app_prefix(pref)
 
 
-def build_kub_iplist_network_index(raw_dir: Path, debug: bool=False) -> List[Tuple[ipaddress._BaseNetwork, str]]:
-    """Build a deterministic (network → iplist_name) index for KUB_* IPLISTS."""
+def build_avoid_iplist_network_index(raw_dir: Path,
+                                     allowed_pats: List[str],
+                                     prio_pats: List[str],
+                                     debug: bool=False) -> List[Tuple[ipaddress._BaseNetwork, str]]:
+    """Build deterministic (network → iplist_name) index for avoid-label-pairs resolution.
+
+    - Read all IPLISTS from raw/export_iplists.csv
+    - Keep only names allowed by IPLIST_ALLOWED_PREFIXES when configured
+    - Resolve precedence using IPLIST_NAME_PRIORITY (first match wins)
+    - Keep longest-prefix-first network ordering
+    """
     path = raw_dir / "export_iplists.csv"
     if not path.exists():
         warn(f"export_iplists.csv not found: {path}")
@@ -2216,23 +2225,42 @@ def build_kub_iplist_network_index(raw_dir: Path, debug: bool=False) -> List[Tup
         warn(f"export_iplists.csv missing required columns (need name/include): {path}")
         return []
 
-    out: List[Tuple[ipaddress._BaseNetwork, str]] = []
-    iplist_names: Set[str] = set()
+    net_to_names: Dict[str, Set[str]] = {}
     for r in rows:
         name = (r.get(c_name) or "").strip()
-        if not name.startswith("KUB_"):
+        if not name:
             continue
-        iplist_names.add(name)
+        if allowed_pats and (not any(_match_prefix_or_glob(name, p) for p in allowed_pats)):
+            continue
         inc = (r.get(c_inc) or "").strip()
         for net in _extract_networks_from_include(inc):
-            out.append((net, name))
+            key = str(net)
+            net_to_names.setdefault(key, set()).add(name)
+
+    out: List[Tuple[ipaddress._BaseNetwork, str]] = []
+    selected_names: Set[str] = set()
+    for net_str, names in net_to_names.items():
+        elected, _reason = elect_iplist_from_tokens(
+            ";".join(sorted(names)),
+            allowed_pats=allowed_pats,
+            prio_pats=prio_pats,
+            debug=debug,
+        )
+        if not elected:
+            continue
+        try:
+            net_obj = ipaddress.ip_network(net_str, strict=False)
+        except Exception:
+            continue
+        out.append((net_obj, elected))
+        selected_names.add(elected)
 
     out_sorted = sorted(out, key=lambda t: (t[0].version, -t[0].prefixlen, t[1], str(t[0])))
-    dbg(debug, f"KUB_* IPLIST index built: {len(iplist_names)} lists, {len(out_sorted)} networks")
+    dbg(debug, f"avoid-label-pairs IPLIST index built: {len(selected_names)} lists, {len(out_sorted)} networks")
     return out_sorted
 
 
-def make_kub_iplist_resolver(index: List[Tuple[ipaddress._BaseNetwork, str]]) -> Callable[[str], str]:
+def make_iplist_resolver(index: List[Tuple[ipaddress._BaseNetwork, str]]) -> Callable[[str], str]:
     """Return a resolver(ip_str) -> iplist_name (best match) or ""."""
     def _resolve(ip_str: str) -> str:
         s = (ip_str or "").strip()
@@ -4650,7 +4678,7 @@ def main() -> int:
     ap.add_argument("--group-by", choices=["labels", "hostnames"], default="labels")
     ap.add_argument("--conf", default="carto.conf", help="Path to carto.conf for IPList patterns")
     ap.add_argument("--enable-avoid-label-pairs", action="store_true", default=False,
-                    help="If enabled: when a peer app is listed in carto.conf AVOID_LABEL_PAIRS, replace peer labels selector by the best-matching KUB_* IPList (from raw/export_iplists.csv include). Fallback to raw peer IP when no match.")
+                    help="If enabled: when a peer app is listed in carto.conf AVOID_LABEL_PAIRS, replace peer labels selector by the best-matching IPList (from raw/export_iplists.csv include), using IPLIST_ALLOWED_PREFIXES and IPLIST_NAME_PRIORITY. Fallback to raw peer IP when no match.")
     ap.add_argument("--sheet-name", default="Flow-Rule Match", help="Main analysis sheet name")
     ap.add_argument("--log-level", default="INFO")
     ap.add_argument("--debug", action="store_true")
@@ -4694,19 +4722,20 @@ def main() -> int:
         info(f"conf (resolved): {conf_path}")
     allowed, prio = load_conf(conf_path, debug=args.debug)
 
-    # Optional: replace some peer app labels by KUB_* IPLISTS (used to avoid proposing rules based on those labels).
+    # Optional: replace some peer app labels by best matching IPLISTS
+    # (used to avoid proposing rules based on those labels).
     avoid_apps: Set[str] = set()
-    kub_resolver: Optional[Callable[[str], str]] = None
+    avoid_iplist_resolver: Optional[Callable[[str], str]] = None
     if args.enable_avoid_label_pairs:
         avoid_apps = load_avoid_label_pairs(conf_path, debug=args.debug)
         if not avoid_apps:
             warn("AVOID_LABEL_PAIRS is empty; --enable-avoid-label-pairs has no effect.")
-        kub_index = build_kub_iplist_network_index(raw_dir, debug=args.debug)
-        if not kub_index:
-            warn("KUB_* IPList index is empty (raw/export_iplists.csv missing or no KUB_ entries); fallback to raw peer IP.")
-            kub_resolver = None
+        avoid_index = build_avoid_iplist_network_index(raw_dir, allowed_pats=allowed, prio_pats=prio, debug=args.debug)
+        if not avoid_index:
+            warn("Avoid-label-pairs IPList index is empty (raw/export_iplists.csv missing/unreadable or no eligible entries); fallback to raw peer IP.")
+            avoid_iplist_resolver = None
         else:
-            kub_resolver = make_kub_iplist_resolver(kub_index)
+            avoid_iplist_resolver = make_iplist_resolver(avoid_index)
 
     finegrained_single_ports, _fg_lists = _load_default_finegrained_single_ports(conf_path)
     if _fg_lists:
@@ -4756,7 +4785,7 @@ def main() -> int:
         debug=args.debug,
         enable_avoid_label_pairs=args.enable_avoid_label_pairs,
         avoid_label_pairs=avoid_apps,
-        kub_iplist_resolver=kub_resolver,
+        avoid_iplist_resolver=avoid_iplist_resolver,
         network_zone_nets=network_zone_nets,
         network_zone_name=network_zone_name,
     )

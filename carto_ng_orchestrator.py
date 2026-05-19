@@ -2077,14 +2077,14 @@ def main() -> int:
         "--skip-pce-fqdn-enrichment",
         action="store_true",
         default=False,
-        help=argparse.SUPPRESS,
+        help="Disable PCE FQDN enrichment for the 'To investigate' sheet.",
     )
     ap.add_argument("--dns-timeout", type=float, default=5.0, help=argparse.SUPPRESS)
 
     # Legacy (backward compatible): when only one direction is in blacklist mode, this applies to that direction.
     ap.add_argument("--ports-to-blacklist", default="", help=argparse.SUPPRESS)
     # Optional: replace some peer app labels (configured in carto.conf AVOID_LABEL_PAIRS)
-    # by KUB_* IPLISTS when building Proposed rules (ingress/egress label-based peers).
+    # by best-matching IPLISTS (using conf priority) when building Proposed rules.
     # Non-regression: disabled by default unless this flag is set.
     ap.add_argument("--enable-avoid-label-pairs", action="store_true", default=True, help=argparse.SUPPRESS)
     # Default behavior: enabled in propose_rule_for_scope. Use this flag to disable.
