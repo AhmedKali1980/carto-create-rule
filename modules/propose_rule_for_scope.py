@@ -1514,7 +1514,7 @@ WRAP_COLUMNS = {
 }
 
 TO_INVESTIGATE_INGRESS_PREFIXES = ("NZ0_", "NZ1_", "DNA_", "DNS_")
-TO_INVESTIGATE_EGRESS_PREFIXES = ("NZ0_", "NZ1_", "KUB_", "LBI_", "LBO_", "U_")
+TO_INVESTIGATE_EGRESS_PREFIXES = ("NZ0_", "NZ1_", "KUB_", "LBI_", "LBO_", "USR_", "U_")
 TO_INVESTIGATE_RED = "E06666"
 TO_INVESTIGATE_ORANGE = "FFFFC000"
 
@@ -3272,7 +3272,7 @@ def add_flow_rule_match_legend(excel_path: Path, sheet_name: str = "Flow-Rule Ma
 # Never group IPLISTs together if they don't share a significant prefix.
 # Longest-prefix-first to avoid CS_ catching CSD_.
 IPLIST_PREFIXES_RAW = [
-    "CSD_", "DNS_", "SSD_", "U_", "NZ4_", "KUB_", "NZ3_", "LBI_", "LBO_",
+    "CSD_", "DNS_", "SSD_", "USR_", "U_", "NZ4_", "KUB_", "NZ3_", "LBI_", "LBO_",
     "CS_", "SS_", "NZ2_", "NZ1_", "NZ0"
 ]
 IPLIST_PREFIXES = sorted(IPLIST_PREFIXES_RAW, key=len, reverse=True)
