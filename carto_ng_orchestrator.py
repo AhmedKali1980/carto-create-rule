@@ -159,7 +159,7 @@ def finalize_email_notification() -> None:
 
 def rename_final_excel(xlsx_path: Path, app: str, envl: str) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
-    name_parts = [p for p in (app, envl) if p]
+    name_parts = [sanitize_token(p) for p in (app, envl) if p]
     scope = "-".join(name_parts) if name_parts else "scope"
     target_name = f"carto_{scope}_{ts}.xlsx"
     target_path = xlsx_path.with_name(target_name)
@@ -242,12 +242,17 @@ def find_label_hrefs(rows: List[Dict[str, str]], filters: Dict[str, str]) -> Lis
     for k, v in filters.items():
         if not v:
             continue
-        kv = v.strip().lower()
         s: List[str] = []
+        role_spec = parse_role_filter(v) if k.lower() == "role" else None
         for row in rows:
             if (row.get("key", "").strip().lower()) != k.lower():
                 continue
-            if (row.get("value", "").strip().lower()) == kv:
+            row_value = row.get("value", "").strip()
+            if role_spec is not None:
+                matched = role_value_matches(row_value, role_spec)
+            else:
+                matched = row_value.lower() == v.strip().lower()
+            if matched:
                 h = (row.get("href") or "").strip()
                 if h:
                     s.append(norm_href(h))
@@ -259,6 +264,55 @@ def find_label_hrefs(rows: List[Dict[str, str]], filters: Dict[str, str]) -> Lis
     for s in hits.values():
         out |= set(s)
     return sorted(out)
+
+def normalize_arg_value(value: object) -> str:
+    if isinstance(value, list):
+        return " ".join(str(v) for v in value)
+    return str(value or "")
+
+def normalize_csv_arg_value(value: object) -> str:
+    if isinstance(value, list):
+        return ",".join(str(v).strip().rstrip(",") for v in value if str(v).strip())
+    return str(value or "")
+
+def parse_csv_tokens(value: str) -> List[str]:
+    return [part.strip() for part in (value or "").split(",") if part.strip()]
+
+def parse_role_filter(value: str) -> Dict[str, object]:
+    raw = (value or "").strip()
+    if not raw:
+        return {"mode": "include", "values": []}
+    exclude = raw.startswith("!") or raw.lower().startswith("not:")
+    token_source = raw[1:] if raw.startswith("!") else raw[4:] if raw.lower().startswith("not:") else raw
+    values = parse_csv_tokens(token_source)
+    if not values:
+        raise SystemExit("--role cannot be empty when using exclusion. Example: --exclude-role FRONTEND")
+    if any(tok.startswith("!") for tok in values):
+        raise SystemExit("--role does not support mixing include and exclude tokens. Use either A,B or --exclude-role A,B.")
+    return {"mode": "exclude" if exclude else "include", "values": values}
+
+def build_role_filter_arg(role_value: object, exclude_role_value: object) -> str:
+    role = normalize_arg_value(role_value)
+    exclude_role = normalize_csv_arg_value(exclude_role_value)
+    if role and exclude_role:
+        raise SystemExit("Choose only one role exclusion syntax: --role or --exclude-role")
+    if exclude_role:
+        return f"!{exclude_role}"
+    return role
+
+def role_value_matches(value: str, role_spec: Dict[str, object]) -> bool:
+    val = (value or "").strip().lower()
+    values = {str(v).strip().lower() for v in role_spec.get("values", []) if str(v).strip()}
+    if role_spec.get("mode") == "exclude":
+        return bool(val) and val not in values
+    return val in values
+
+def filter_value_matches(key: str, value: str, expected: str) -> bool:
+    if not expected:
+        return True
+    if key.lower() == "role":
+        return role_value_matches(value, parse_role_filter(expected))
+    return (value or "").strip().lower() == (expected or "").strip().lower()
 
 def pick(cols: List[str], *cands: str) -> str:
     low = {c.strip().lower(): c for c in cols if c is not None}
@@ -443,7 +497,11 @@ def find_managed_wkld_hrefs_for_filters(wkld_m_path: Path, filters: Dict[str, st
             v = filters.get(key)
             if v:
                 rv = (r.get(col) or r.get(col.lower()) or "").strip()
-                if not eq(rv, v):
+                if key == "role":
+                    if not filter_value_matches(key, rv, v):
+                        ok = False
+                        break
+                elif not eq(rv, v):
                     ok = False
                     break
         if ok:
@@ -565,7 +623,11 @@ def enrich_workloads(base_rows: List[Dict[str,str]],
             v = filters.get(key)
             if v:
                 mv = (m.get(col) or m.get((col or '').lower()) or '').strip()
-                if not eq(mv, v):
+                if key == 'role':
+                    if not filter_value_matches(key, mv, v):
+                        ok = False
+                        break
+                elif not eq(mv, v):
                     ok = False
                     break
         if ok:
@@ -936,7 +998,7 @@ def build_final_excel(
     network_zone_name: Optional[str] = None,
 ) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
-    name_parts = [p for p in (app, envl, role) if p]
+    name_parts = [sanitize_token(p) for p in (app, envl, role) if p]
     base = "-".join(name_parts) if name_parts else "scope"
     final_xlsx = excel_dir / f"export_dupecheck.final_{base}_{ts}.xlsx"
     ensure_dir(final_xlsx)
@@ -1979,14 +2041,44 @@ def enrich_unknown_ips_with_pce_fqdn(
 
 def main() -> int:
     if "--helpdev" in sys.argv:
-        ap = argparse.ArgumentParser("carto_ng_orchestrator.py")
+        ap = argparse.ArgumentParser("carto_ng_orchestrator.py", formatter_class=argparse.RawTextHelpFormatter)
     else:
-        ap = argparse.ArgumentParser("carto_ng_orchestrator.py", add_help=False)
+        ap = argparse.ArgumentParser(
+            "carto_ng_orchestrator.py",
+            add_help=False,
+            formatter_class=argparse.RawTextHelpFormatter,
+        )
         ap.add_argument("-h", "--help", action="help", help="show this help message and exit")
         ap.add_argument("--helpdev", action="help", help="show full help (including dev and frh options)")
 
     # Scope labels
-    for k in ["role", "app", "env", "loc"]:
+    ap.add_argument(
+        "--role",
+        nargs="+",
+        help=(
+            "Role label filter.\n"
+            "  - Single role: --role FRONTEND\n"
+            "  - Multiple roles: --role FRONTEND,DATABASE,MG01\n"
+            "    Also accepted with spaces: --role FRONTEND, DATABASE, MG01\n"
+            "  - Exclusion with --role (quote or escape ! in bash):\n"
+            "      --role '!DEFAULT'\n"
+            "      --role \\!DEFAULT\n"
+            "  - Exclusion with not: syntax: --role not:DEFAULT\n"
+            "  - Recommended shell-safe exclusion: --exclude-role DEFAULT"
+        ),
+    )
+    ap.add_argument(
+        "--exclude-role",
+        nargs="+",
+        help=(
+            "Shell-safe exclusion filter for role labels.\n"
+            "  - Single exclusion: --exclude-role DEFAULT\n"
+            "  - Multiple exclusions: --exclude-role FRONTEND,DATABASE\n"
+            "    Also accepted with spaces: --exclude-role FRONTEND, DATABASE\n"
+            "Equivalent to --role '!DEFAULT', without bash history-expansion issues."
+        ),
+    )
+    for k in ["app", "env", "loc"]:
         ap.add_argument(f"--{k}")
     ap.add_argument("--OS", dest="OS")
     ap.add_argument("--days", type=int, required=True, help="Number of days")
@@ -2143,8 +2235,9 @@ def main() -> int:
     base_ts = now_stamp(date_fmt)
     app = sanitize_token(getattr(args, "app", "") or "")
     envl = sanitize_token(getattr(args, "env", "") or "")
-    role = sanitize_token(getattr(args, "role", "") or "")
-    label_suffix = "-".join([x for x in (app, envl, role) if x])
+    role = build_role_filter_arg(getattr(args, "role", ""), getattr(args, "exclude_role", ""))
+    role_for_path = sanitize_token(role)
+    label_suffix = "-".join([x for x in (app, envl, role_for_path) if x])
     run_ts = f"{base_ts}" if not label_suffix else f"{base_ts}_{label_suffix}"
     run_dir = root/run_ts
     raw = run_dir/"raw"; der = run_dir/"derived"; xls = run_dir/"excel"
@@ -2212,7 +2305,13 @@ def main() -> int:
             print("WARN: label-export failed; continuing if file exists")
 
     labels = read_labels_csv(raw/"export_label.csv")
-    filters = {k: getattr(args, k) for k in ["app", "env", "loc", "role", "OS"] if getattr(args, k)}
+    filters = {
+        k: normalize_arg_value(getattr(args, k))
+        for k in ["app", "env", "loc", "role", "OS"]
+        if normalize_arg_value(getattr(args, k, ""))
+    }
+    if role:
+        filters["role"] = role
     hrefs_labels = find_label_hrefs(labels, filters)
     include_file = der/"include_labels_semicolon.csv"; write_list_semicolon(include_file, hrefs_labels)
 
