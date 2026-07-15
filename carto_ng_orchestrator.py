@@ -2059,10 +2059,12 @@ def main() -> int:
             "Role label filter.\n"
             "  - Single role: --role FRONTEND\n"
             "  - Multiple roles: --role FRONTEND,DATABASE,MG01\n"
-            "    Also accepted: --role FRONTEND, DATABASE, MG01\n"
-            "  - Exclusion (recommended, shell-safe): --exclude-role DEFAULT\n"
-            "  - Exclusion with --role: --role '!DEFAULT' or --role \\!DEFAULT\n"
-            "    Also accepted: --exclude-role FRONTEND,DATABASE"
+            "    Also accepted with spaces: --role FRONTEND, DATABASE, MG01\n"
+            "  - Exclusion with --role (quote or escape ! in bash):\n"
+            "      --role '!DEFAULT'\n"
+            "      --role \\!DEFAULT\n"
+            "  - Exclusion with not: syntax: --role not:DEFAULT\n"
+            "  - Recommended shell-safe exclusion: --exclude-role DEFAULT"
         ),
     )
     ap.add_argument(
@@ -2070,7 +2072,10 @@ def main() -> int:
         nargs="+",
         help=(
             "Shell-safe exclusion filter for role labels.\n"
-            "Example: --exclude-role DEFAULT means all roles except DEFAULT."
+            "  - Single exclusion: --exclude-role DEFAULT\n"
+            "  - Multiple exclusions: --exclude-role FRONTEND,DATABASE\n"
+            "    Also accepted with spaces: --exclude-role FRONTEND, DATABASE\n"
+            "Equivalent to --role '!DEFAULT', without bash history-expansion issues."
         ),
     )
     for k in ["app", "env", "loc"]:
