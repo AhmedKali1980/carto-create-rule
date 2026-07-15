@@ -159,7 +159,7 @@ def finalize_email_notification() -> None:
 
 def rename_final_excel(xlsx_path: Path, app: str, envl: str) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
-    name_parts = [p for p in (app, envl) if p]
+    name_parts = [sanitize_token(p) for p in (app, envl) if p]
     scope = "-".join(name_parts) if name_parts else "scope"
     target_name = f"carto_{scope}_{ts}.xlsx"
     target_path = xlsx_path.with_name(target_name)
@@ -998,7 +998,7 @@ def build_final_excel(
     network_zone_name: Optional[str] = None,
 ) -> Path:
     ts = now_stamp('%Y%m%d-%H%M%S')
-    name_parts = [p for p in (app, envl, role) if p]
+    name_parts = [sanitize_token(p) for p in (app, envl, role) if p]
     base = "-".join(name_parts) if name_parts else "scope"
     final_xlsx = excel_dir / f"export_dupecheck.final_{base}_{ts}.xlsx"
     ensure_dir(final_xlsx)
