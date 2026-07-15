@@ -270,6 +270,11 @@ def normalize_arg_value(value: object) -> str:
         return " ".join(str(v) for v in value)
     return str(value or "")
 
+def normalize_csv_arg_value(value: object) -> str:
+    if isinstance(value, list):
+        return ",".join(str(v).strip().rstrip(",") for v in value if str(v).strip())
+    return str(value or "")
+
 def parse_csv_tokens(value: str) -> List[str]:
     return [part.strip() for part in (value or "").split(",") if part.strip()]
 
@@ -277,14 +282,23 @@ def parse_role_filter(value: str) -> Dict[str, object]:
     raw = (value or "").strip()
     if not raw:
         return {"mode": "include", "values": []}
-    exclude = raw.startswith("!")
-    token_source = raw[1:] if exclude else raw
+    exclude = raw.startswith("!") or raw.lower().startswith("not:")
+    token_source = raw[1:] if raw.startswith("!") else raw[4:] if raw.lower().startswith("not:") else raw
     values = parse_csv_tokens(token_source)
     if not values:
-        raise SystemExit("--role cannot be empty when using '!'. Example: --role !FRONTEND")
+        raise SystemExit("--role cannot be empty when using exclusion. Example: --exclude-role FRONTEND")
     if any(tok.startswith("!") for tok in values):
-        raise SystemExit("--role does not support mixing include and exclude tokens. Use either A,B or !A,B.")
+        raise SystemExit("--role does not support mixing include and exclude tokens. Use either A,B or --exclude-role A,B.")
     return {"mode": "exclude" if exclude else "include", "values": values}
+
+def build_role_filter_arg(role_value: object, exclude_role_value: object) -> str:
+    role = normalize_arg_value(role_value)
+    exclude_role = normalize_csv_arg_value(exclude_role_value)
+    if role and exclude_role:
+        raise SystemExit("Choose only one role exclusion syntax: --role or --exclude-role")
+    if exclude_role:
+        return f"!{exclude_role}"
+    return role
 
 def role_value_matches(value: str, role_spec: Dict[str, object]) -> bool:
     val = (value or "").strip().lower()
@@ -2046,8 +2060,17 @@ def main() -> int:
             "  - Single role: --role FRONTEND\n"
             "  - Multiple roles: --role FRONTEND,DATABASE,MG01\n"
             "    Also accepted: --role FRONTEND, DATABASE, MG01\n"
-            "  - Exclusion: --role !FRONTEND (all roles except FRONTEND)\n"
-            "    Also accepted: --role !FRONTEND,DATABASE"
+            "  - Exclusion (recommended, shell-safe): --exclude-role DEFAULT\n"
+            "  - Exclusion with --role: --role '!DEFAULT' or --role \\!DEFAULT\n"
+            "    Also accepted: --exclude-role FRONTEND,DATABASE"
+        ),
+    )
+    ap.add_argument(
+        "--exclude-role",
+        nargs="+",
+        help=(
+            "Shell-safe exclusion filter for role labels.\n"
+            "Example: --exclude-role DEFAULT means all roles except DEFAULT."
         ),
     )
     for k in ["app", "env", "loc"]:
@@ -2207,7 +2230,7 @@ def main() -> int:
     base_ts = now_stamp(date_fmt)
     app = sanitize_token(getattr(args, "app", "") or "")
     envl = sanitize_token(getattr(args, "env", "") or "")
-    role = normalize_arg_value(getattr(args, "role", "") or "")
+    role = build_role_filter_arg(getattr(args, "role", ""), getattr(args, "exclude_role", ""))
     role_for_path = sanitize_token(role)
     label_suffix = "-".join([x for x in (app, envl, role_for_path) if x])
     run_ts = f"{base_ts}" if not label_suffix else f"{base_ts}_{label_suffix}"
@@ -2282,6 +2305,8 @@ def main() -> int:
         for k in ["app", "env", "loc", "role", "OS"]
         if normalize_arg_value(getattr(args, k, ""))
     }
+    if role:
+        filters["role"] = role
     hrefs_labels = find_label_hrefs(labels, filters)
     include_file = der/"include_labels_semicolon.csv"; write_list_semicolon(include_file, hrefs_labels)
 
