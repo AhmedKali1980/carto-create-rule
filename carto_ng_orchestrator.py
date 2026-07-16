@@ -2312,7 +2312,13 @@ def main() -> int:
     }
     if role:
         filters["role"] = role
-    hrefs_labels = find_label_hrefs(labels, filters)
+
+    # Keep role constraints out of PCE traffic extraction for now. Inclusion/exclusion
+    # role filters (e.g. --role A,B, --role '!DEFAULT', --exclude-role DEFAULT)
+    # are intentionally applied later by downstream rule proposal logic, so raw
+    # flows stay complete for the selected non-role scope.
+    traffic_filters = {k: v for k, v in filters.items() if k.lower() != "role"}
+    hrefs_labels = find_label_hrefs(labels, traffic_filters)
     include_file = der/"include_labels_semicolon.csv"; write_list_semicolon(include_file, hrefs_labels)
 
     # flows out
