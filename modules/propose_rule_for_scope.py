@@ -514,6 +514,53 @@ def load_flows(raw_dir: Path, derived_dir: Path, start: str, end: str, prefer_ra
     in_rows, _ = _iter_csv_rows(in_path, debug=debug)
     return out_rows, in_rows
 
+def _parse_scope_role_filter(value: str) -> Optional[Dict[str, Any]]:
+    raw = (value or "").strip()
+    if not raw:
+        return None
+    exclude = raw.startswith("!") or raw.lower().startswith("not:")
+    token_source = raw[1:] if raw.startswith("!") else raw[4:] if raw.lower().startswith("not:") else raw
+    values = {part.strip().lower() for part in token_source.split(",") if part.strip()}
+    if not values:
+        return None
+    return {"mode": "exclude" if exclude else "include", "values": values}
+
+
+def _scope_role_matches(role: str, role_filter: Optional[Dict[str, Any]]) -> bool:
+    if not role_filter:
+        return True
+    val = (role or "").strip().lower()
+    if not val:
+        return False
+    values = role_filter.get("values", set())
+    if role_filter.get("mode") == "exclude":
+        return val not in values
+    return val in values
+
+
+def _filter_rows_by_scope_role(rows: List[Dict[str, Any]], role_filter: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    if not role_filter:
+        return rows
+    kept: List[Dict[str, Any]] = []
+    for r in rows:
+        if not _scope_role_matches(_as_text(r.get("anchor_role") or "").strip(), role_filter):
+            continue
+        # Intra-app proposals have both endpoints inside the scoped app/env, so the
+        # peer role must also respect the run role filter to prevent excluded roles
+        # from reappearing as Source/Destination in Proposed rules1.
+        if _as_text(r.get("direction") or "").strip().lower() == "intra-app":
+            peer_role = _as_text(r.get("peer_role") or "").strip()
+            if peer_role and not _scope_role_matches(peer_role, role_filter):
+                continue
+        kept.append(r)
+    return kept
+
+
+def _filter_role_set_by_scope(roles: Set[str], role_filter: Optional[Dict[str, Any]]) -> Set[str]:
+    if not role_filter:
+        return roles
+    return {r for r in roles if _scope_role_matches(r, role_filter)}
+
 # -----------------------------------------------------------------------------
 # Extract flow side labels / iplist / names
 # -----------------------------------------------------------------------------
@@ -2701,6 +2748,7 @@ def build_intra_app_proposed_rules(
     blacklist_intervals: Optional[Dict[str, List[Tuple[int, int]]]] = None,
     blacklist_lists_used: Optional[List[str]] = None,
     finegrained_single_ports: Optional[Dict[str, List[Tuple[int, int]]]] = None,
+    scope_role_filter: Optional[Dict[str, Any]] = None,
 ) -> List[Dict[str, str]]:
     """
     Build rows for the 'Proposed rules' sheet (intra-app).
@@ -2730,7 +2778,10 @@ def build_intra_app_proposed_rules(
         return []
 
     # Best-effort: roles from managed workloads, fallback to roles seen in flows
-    roles = _gather_roles_from_wkld_m(raw_dir / "export_wkld.m.csv", run_app, run_env)
+    roles = _filter_role_set_by_scope(
+        _gather_roles_from_wkld_m(raw_dir / "export_wkld.m.csv", run_app, run_env),
+        scope_role_filter,
+    )
     if not roles:
         for p in proposals:
             arole = _as_text(p.get("anchor_role") or "").strip()
@@ -4680,6 +4731,7 @@ def main() -> int:
     ap.add_argument("--enable-avoid-label-pairs", action="store_true", default=False,
                     help="If enabled: when a peer app is listed in carto.conf AVOID_LABEL_PAIRS, replace peer labels selector by the best-matching IPList (from raw/export_iplists.csv include), using IPLIST_ALLOWED_PREFIXES and IPLIST_NAME_PRIORITY. Fallback to raw peer IP when no match.")
     ap.add_argument("--sheet-name", default="Flow-Rule Match", help="Main analysis sheet name")
+    ap.add_argument("--scope-role", default="", help="Optional role include/exclude filter to apply to Flow-Rule Match rows before rule proposal")
     ap.add_argument("--log-level", default="INFO")
     ap.add_argument("--debug", action="store_true")
     ap.add_argument("--debug-proposed-rules", action="store_true", help="Emit full stack traces + dump non-string fields when Proposed rules generation fails")
@@ -4770,6 +4822,8 @@ def main() -> int:
         lg_map = {}
         warn(f"export_labelgroup.csv not found in {raw_dir} — labelgroup matching will be degraded.")
 
+    scope_role_filter = _parse_scope_role_filter(getattr(args, "scope_role", ""))
+
     rows, action_rows = propose(
         raw_dir=raw_dir,
         derived_dir=derived_dir,
@@ -4789,6 +4843,12 @@ def main() -> int:
         network_zone_nets=network_zone_nets,
         network_zone_name=network_zone_name,
     )
+
+    if scope_role_filter:
+        before_rows = len(rows)
+        rows = _filter_rows_by_scope_role(rows, scope_role_filter)
+        action_rows = _filter_rows_by_scope_role(action_rows, scope_role_filter)
+        info(f"scope role filter applied to Flow-Rule Match rows: kept {len(rows)}/{before_rows} rows for scope_role={args.scope_role!r}")
 
     rr = run_root_from(raw_dir) or run_root_from(derived_dir) or (excel_path and run_root_from(excel_path))
     if rr:
@@ -4829,6 +4889,7 @@ def main() -> int:
                         intra_bl_intervals,
                         intra_bl_lists,
                         finegrained_single_ports,
+                        scope_role_filter,
                     ))
                 else:
                     pr_rows.extend(build_intra_app_proposed_rules(
@@ -4838,6 +4899,7 @@ def main() -> int:
                         None,
                         None,
                         finegrained_single_ports,
+                        scope_role_filter,
                     ))
 
             # Ingress
@@ -4897,8 +4959,9 @@ def main() -> int:
                                     rr0 = _as_text(r0.get("anchor_role") or "").strip()
                                     if rr0:
                                         roles0.add(rr0)
+                        roles0 = _filter_role_set_by_scope(roles0, scope_role_filter)
                         if not roles0:
-                            roles0 = {"All Roles"}
+                            continue
                         roles_list = sorted(list(roles0))
 
                         # Ingress NS default rule
@@ -4976,6 +5039,7 @@ def main() -> int:
                     intra_bl_intervals,
                     intra_bl_lists,
                     finegrained_single_ports,
+                    scope_role_filter,
                 )
                 for rr in intra_rows_pr1:
                     r2 = dict(rr)
