@@ -2637,6 +2637,7 @@ def main() -> int:
             "--conf", "carto.conf",
             "--start", start, "--end", end,
             "--excel", str(final_xlsx),
+            "--scope-role", str(role or ""),
             "--log-level", "INFO",
         ]
         # Reuse existing debug toggles to enable verbose mode (keeps CLI stable)
