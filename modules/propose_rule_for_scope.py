@@ -1057,6 +1057,9 @@ def propose(raw_dir: Path,
     network_zone_name: str = "",
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     out_path, in_path = _find_flow_files(raw_dir, derived_dir, start, end, prefer_raw=prefer_raw, debug=debug)
+    if not out_path or not in_path:
+        warn("Flow proposal skipped because the inbound/outbound source pair is unavailable")
+        return [], []
     info(f"flows source files: out={out_path.name} in={in_path.name}")
 
     agg: Dict[ProposalKey, Dict[str, Any]] = {}
