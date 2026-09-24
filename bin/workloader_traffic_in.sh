@@ -10,18 +10,10 @@ EXCLUDE_LABELS="${5:-}"
 EXCLUDE_IPLISTS="${6:-}"
 
 FILTERS=(--incl-dst-file "${INCLUDE}")
-EXCLUDE_SRC=""
-TRAFFIC_TMP=$(mktemp -d "${OUT}.parts.XXXXXX")
-if [[ -n "${EXCLUDE_LABELS}" && -n "${EXCLUDE_IPLISTS}" ]]; then
-  EXCLUDE_SRC="${TRAFFIC_TMP}/exclude_src.csv"
-  awk '1' "${EXCLUDE_LABELS}" "${EXCLUDE_IPLISTS}" > "${EXCLUDE_SRC}"
-elif [[ -n "${EXCLUDE_LABELS}" ]]; then
-  EXCLUDE_SRC="${EXCLUDE_LABELS}"
-elif [[ -n "${EXCLUDE_IPLISTS}" ]]; then
-  EXCLUDE_SRC="${EXCLUDE_IPLISTS}"
-fi
-[[ -n "${EXCLUDE_SRC}" ]] && FILTERS+=(--excl-src-file "${EXCLUDE_SRC}")
+[[ -n "${EXCLUDE_LABELS}" ]] && FILTERS+=(--excl-src-file "${EXCLUDE_LABELS}")
+[[ -n "${EXCLUDE_IPLISTS}" ]] && FILTERS+=(--excl-src-file "${EXCLUDE_IPLISTS}")
 
+TRAFFIC_TMP=$(mktemp -d "${OUT}.parts.XXXXXX")
 NOT_ALLOWED="${TRAFFIC_TMP}/not_allowed.csv"
 ALLOWED="${TRAFFIC_TMP}/allowed.csv"
 trap 'rm -rf -- "$TRAFFIC_TMP"' EXIT
