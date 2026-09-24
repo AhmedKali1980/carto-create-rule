@@ -152,3 +152,20 @@ retry_backoff() {
     (( attempt++ ))
   done
 }
+
+merge_traffic_csv() {
+  # Keep the header from the first extraction and append only data rows from
+  # the second one. Write through a temporary file so consumers never see a
+  # partially merged export.
+  local first="$1" second="$2" output="$3"
+  local merged
+  merged=$(mktemp "${output}.merge.XXXXXX")
+  if ! awk 'FNR == 1 && NR != 1 { next } { print }' "$first" "$second" > "$merged"; then
+    rm -f -- "$merged"
+    return 1
+  fi
+  if ! mv -f -- "$merged" "$output"; then
+    rm -f -- "$merged"
+    return 1
+  fi
+}
