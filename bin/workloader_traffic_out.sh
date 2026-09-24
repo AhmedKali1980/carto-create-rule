@@ -6,9 +6,10 @@ START="${2:?start YYYY-mm-dd}"
 END="${3:?end YYYY-mm-dd}"
 OUT="${4:?output csv}"
 
-NOT_ALLOWED=$(mktemp "${OUT}.not_allowed.XXXXXX")
-ALLOWED=$(mktemp "${OUT}.allowed.XXXXXX")
-trap 'rm -f -- "$NOT_ALLOWED" "$ALLOWED"' EXIT
+TRAFFIC_TMP=$(mktemp -d "${OUT}.parts.XXXXXX")
+NOT_ALLOWED="${TRAFFIC_TMP}/not_allowed.csv"
+ALLOWED="${TRAFFIC_TMP}/allowed.csv"
+trap 'rm -rf -- "$TRAFFIC_TMP"' EXIT
 
 retry_backoff "traffic-out-not-allowed" -- traffic -c "${INCLUDE}" -s "${START}" -e "${END}" \
   --excl-allowed --output-file "${NOT_ALLOWED}"

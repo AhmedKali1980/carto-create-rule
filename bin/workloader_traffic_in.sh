@@ -11,10 +11,9 @@ EXCLUDE_IPLISTS="${6:-}"
 
 FILTERS=(--incl-dst-file "${INCLUDE}")
 EXCLUDE_SRC=""
-TEMP_EXCLUDE=""
+TRAFFIC_TMP=$(mktemp -d "${OUT}.parts.XXXXXX")
 if [[ -n "${EXCLUDE_LABELS}" && -n "${EXCLUDE_IPLISTS}" ]]; then
-  EXCLUDE_SRC=$(mktemp "${OUT}.exclude_src.XXXXXX")
-  TEMP_EXCLUDE="${EXCLUDE_SRC}"
+  EXCLUDE_SRC="${TRAFFIC_TMP}/exclude_src.csv"
   awk '1' "${EXCLUDE_LABELS}" "${EXCLUDE_IPLISTS}" > "${EXCLUDE_SRC}"
 elif [[ -n "${EXCLUDE_LABELS}" ]]; then
   EXCLUDE_SRC="${EXCLUDE_LABELS}"
@@ -23,9 +22,9 @@ elif [[ -n "${EXCLUDE_IPLISTS}" ]]; then
 fi
 [[ -n "${EXCLUDE_SRC}" ]] && FILTERS+=(--excl-src-file "${EXCLUDE_SRC}")
 
-NOT_ALLOWED=$(mktemp "${OUT}.not_allowed.XXXXXX")
-ALLOWED=$(mktemp "${OUT}.allowed.XXXXXX")
-trap 'rm -f -- "$NOT_ALLOWED" "$ALLOWED"; [[ -z "$TEMP_EXCLUDE" ]] || rm -f -- "$TEMP_EXCLUDE"' EXIT
+NOT_ALLOWED="${TRAFFIC_TMP}/not_allowed.csv"
+ALLOWED="${TRAFFIC_TMP}/allowed.csv"
+trap 'rm -rf -- "$TRAFFIC_TMP"' EXIT
 
 retry_backoff "traffic-in-not-allowed" -- traffic "${FILTERS[@]}" -s "${START}" -e "${END}" \
   --excl-allowed --output-file "${NOT_ALLOWED}"
