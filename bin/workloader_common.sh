@@ -164,6 +164,12 @@ merge_traffic_csv() {
     rm -f -- "$merged"
     return 1
   fi
+  # mktemp starts with mode 0600. Allow colleagues in the output directory's
+  # shared group to read/copy both traffic exports, even with a restrictive umask.
+  if ! chmod 0640 -- "$merged"; then
+    rm -f -- "$merged"
+    return 1
+  fi
   if ! mv -f -- "$merged" "$output"; then
     rm -f -- "$merged"
     return 1
